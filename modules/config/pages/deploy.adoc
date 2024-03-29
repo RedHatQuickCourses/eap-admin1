@@ -1,1 +1,21 @@
 = Deploying Applications
+
+High level overview of what deployment of Jakarta EE apps mean...
+
+== Deployment using web console
+
+== Deployment using EAP CLI
+
+== Managing Deployments
+
+* Hot deployment of WAR files....
+
+== References
+
+== Lab: Deploying using web console
+
+* Provide a prebuilt WAR file that can be deployed
+
+== Lab: Deploying using EAP CLI
+
+* Undeploy the previous example and then either re-deploy the same using CLI or deploy a new web app

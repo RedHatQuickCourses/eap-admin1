@@ -1,4 +1,24 @@
 = Extensions, Subsystems, and Profiles
 
-Mostly summarize content from AD248 Ch01 Section 5 with the same title.
+Brief blurb about the architecture of JBoss EAP (Do not repeat what will be already be covered in the Tech Overview course 1 in the path)
+
+== Extensions
+
+== Subsystems
+
+== Profiles
+
+== Lab: Extensions, Subsystems and Profiles
+
+
+. Step 1
+. Step 2
+.. Step 2.a
+.. Step 2.b
+. Step 3
+
+* Unravel the actual file system layout and show some XML snippets and JBoss EAP CLI list commands
+* Some nice web console screenshots can go here...
+* Do not go too much into details about EAP CLI or web console here. Remember there is a separate chapter for EAP config...
+* Different modes - standalone, standalone-ha, domain etc,  but not too much detail. We have details in the advanced admin course
 

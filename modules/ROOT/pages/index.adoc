@@ -48,6 +48,8 @@ Red Hat partners and others who do not have access to RHDP, should provision the
 ** Red Hat Hybrid Cloud Console (https://console.redhat.com)
 ** OpenShift on Hyperscaler clouds - ROSA or ARO
 
+NOTE: TODO: Add more details of DNS names, IPs and a nice network diagram
+
 == Prerequisites
 
 * Basic knowledge of Linux administration

@@ -1,3 +1,67 @@
 = Installing JBoss EAP
 
-This is _Section 1_ of _Chapter 1_ in the *hello* quick course....
+Brief blurb about how JBoss EAP offers multiple ways to install...
+
+== Pre-requisites
+
+Talk about what pre-requisites are needed:
+
+* Red Hat supported OpenJDK 17 or higher (21 recommended?)
+* Recommended to create a separate *jboss* user account with no shell access (/sbin/nologin) 
+* Recommended to install under /opt. Can be a dedicated partition. Ensure there is enough space (suggest a good minimum number)
+
+== Installing JBoss EAP using the Zip file
+
+Brief overview only. Details in lab section below....
+
+== Installing JBoss EAP using the JAR installer
+
+Brief overview only. Details in lab section below....
+
+== Installing JBoss EAP using other methods....
+
+Brief overview only. Details in lab section below....
+
+== Starting JBoss EAP
+
+Provide a brief explanation of different flags for the _standalone.sh_ script, especially *-b* flag....default is bound only to localhost (127.0.0.1) for security.
+
+NOTE: Mention that the installation can be automated using a response file (kinda like kickstart), and that this will be covered in the second course in the path (_Advanced JBoss EAP Administration_)
+
+NOTE: Mention that the installation can be automated using _Ansible Middleware_, and that this will be covered in the second course in the path (_Advanced JBoss EAP Administration_)
+
+NOTE: Make sure you talk about how to start JBoss EAP as an OS service using systemd on RHEL 9 and other Linux's. Provide links to EAP systemd unit files in the code repo.
+
+NOTE: Talk about which ports to open in the firewall.
+
+== Uninstalling JBoss EAP
+
+Brief blurb about uninstall.....
+
+== References
+
+* Links to all relevant product docs
+
+== Lab 1: Installing JBoss EAP using the Zip file
+
+. Step 1
+. Step 2
+.. Step 2.a
+.. Step 2.b
+. Step 3
+
+== Lab 2: Installing JBoss EAP using the JAR installer
+
+. Step 1
+. Step 2
+.. Step 2.a
+.. Step 2.b
+. Step 3
+
+== Lab 3: Installing JBoss EAP using other methods....
+
+. Step 1
+. Step 2
+.. Step 2.a
+.. Step 2.b
+. Step 3

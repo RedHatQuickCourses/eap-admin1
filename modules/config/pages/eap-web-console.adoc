@@ -1,1 +1,6 @@
 = JBoss EAP Web Console
+
+* Top level screenshots of different sections in the web console and what each does....
+* Investigate if the web console keeps track of config file revisions and how to fallback and recover.....
+* Talk about how EAP can be started with different flags and how to bind to separate NICs for management accounts
+* You can start EAP such that HTTP(s) and application traffic comes in on one NIC and the other NIC can be used exclusively for management. This private network is not accessible to external users for improved security

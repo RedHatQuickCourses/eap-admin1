@@ -1,3 +1,8 @@
 = Configuration
 
-This is the home page of _Chapter 2_ in the *hello* quick course....
+Copy the structure of chapter home page from the RHOAI and DevHub quick courses. At minimum, it lists the objectives of this chapter
+
+== Objectives
+
+* Objective 1
+* Objective 2
