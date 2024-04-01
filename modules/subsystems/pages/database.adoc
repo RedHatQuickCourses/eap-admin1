@@ -1,3 +1,15 @@
 = Configuring Datasources
 
-This is _Section 1_ of _Chapter 3_ in the *hello* quick course....
+Brief overview of why and what are managed connections. Why do you need them? advantages etc....
+
+
+== Creating Data Sources using EAP Web Console
+
+== Creating Data Sources using EAP CLI
+
+== Creating Data Sources using Installation Manager Feature Packs
+
+== Lab: Creating PostgreSQL Datasources
+
+* Explore use of Podman container for PgSQL DB and then make your EAP instance talk to it
+* We will need a small app to test the connection out. Should be one in jboss-quickstarts. explore...
