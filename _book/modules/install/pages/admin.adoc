@@ -1,0 +1,24 @@
+= Creating Administration Accounts
+
+Brief overview of how to create admin users
+
+== Creating Administrator Accounts
+
+* Talk about the *add-user* script and other ways to create accounts
+* Distinguish between management users and application users
+* CSV file format
+* Accessing the JBoss EAP web console
+* Accessing the JBoss EAP CLI
+* Do not go too much into details about EAP CLI or web console here. Remember there is a separate chapter for EAP config...
+
+== References
+
+* Add links to product docs
+
+== Lab: Creating an Administrator Account
+
+. Step 1
+. Step 2
+.. Step 2.a
+.. Step 2.b
+. Step 3

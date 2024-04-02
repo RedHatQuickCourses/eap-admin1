@@ -1,0 +1,11 @@
+= JBoss EAP Configuration
+
+Brief blurb about the different ways to configure JBoss EAP....
+
+== Section Header
+
+lorem ipsem...
+
+== References
+
+This section may not possibly have any hands-on....investigate what we can do here....

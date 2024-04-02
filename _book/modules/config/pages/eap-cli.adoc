@@ -1,0 +1,16 @@
+= JBoss EAP CLI
+
+Brief overview of the EAP CLI and it's config languages
+
+* Lots of commonly used command examples go here....but remember we have dedicated chapter for specific subsystems - DB, web, JMS etc
+
+== JBoss EAP CLI
+
+== References
+
+== Lab: Accessing the JBoss EAP CLI
+
+* Log in to EAP CLI - different ways
+* Start and Stop from CLI
+* Common commands
+* Access and list values in different subsystems

@@ -1,0 +1,13 @@
+= Configuring Logging
+
+Brief overview of logging in EAP....
+
+== JBoss EAP Logging Subsystem
+
+== Controlling Log Levels using the EAP Web Console
+
+== Controlling Log Levels using the EAP CLI
+
+== Log Formatters and Appenders
+
+== Lab: Configuring Logging

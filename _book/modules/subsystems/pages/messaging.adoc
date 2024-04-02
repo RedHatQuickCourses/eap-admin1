@@ -1,0 +1,11 @@
+= Configuring Messaging (JMS)
+
+Overview of Messaging Subsystem in EAP....
+
+== Configuring the Messaging Subsystem using the EAP Web Console
+
+== Configuring the Messaging Subsystem using the EAP CLI
+
+== Lab: Configuring a JMS Broker
+
+* We need a sample app for this. Look in the quickstarts repo.
