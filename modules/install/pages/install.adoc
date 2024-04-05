@@ -41,9 +41,10 @@ Let us see each of these methods in detail.
 * This method can also be called the GUI installer method.
 * In this method, the jar file is a Java based application that is responsible for providing a step-by-step way to customize the environment setup.
 * This method is preferred when:
-** You can use it on *multiple platforms* and it requires OpenJDK 17 installed on the host OS.
-** It can be ran using either a graphical interface or a text based console.
-** Due to its flexible nature, the installer can install JBoss EAP by using a response file, with all the options passed as an XML file.
+** You want to install on *multiple platforms* like Windows server, Linux etc.
+** You need either graphical interface or a text based console.
+** You want to customise JBoss EAP installation.
+* Due to its flexible nature, the installer can install JBoss EAP by using a response file, with all the options passed as an XML file.
 
 == Pre-requisites
 
