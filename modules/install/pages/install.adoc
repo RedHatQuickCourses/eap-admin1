@@ -2,28 +2,17 @@
 
 You can install JBoss EAP 8.0 by using one of the following installation methods:
 
-* *JBoss EAP using the Zip file*
-* *JBoss EAP using archive installation method*
-* *JBoss EAP by using the RPM installation method*
-* *JBoss EAP using the JAR installer*
+* *Using the Zip or archive file*
+* *Using the RPM installation method*
+* *Using the JAR installer*
 
 Let us see each of these methods in detail.
 
-== Installing JBoss EAP using the Zip file
+== Installing JBoss EAP using the Zip file or archive file
 
-* In this method, the JBoss EAP 8 is distributed as a zip file that you can extract and execute on an operating system (OS) with  OpenJDK 17 installed.
-* The zip file contains all the libraries, configuration files, and scripts needed to start JBoss EAP, *without* further customization.
+* In this method, the JBoss EAP 8 is distributed as a zip or archive file that you can extract and execute on an operating system (OS) with  OpenJDK 17 installed.
+* These file contains all the libraries, configuration files, and scripts needed to start JBoss EAP, *without* further customization.
 * This method is preferred when:
-** You don't have GUI support for the EAP 8 installation.
-** You don't want to have any custom configuration.
-** You need text based console for the EAP 8 installation.
-* Due to its portable nature, you can use it on multiple platforms(like Windows, Linux, etc.) and it requires OpenJDK 17 installed on the host OS.
-
-== Installing JBoss EAP using archive installation method
-
-* In this method, the JBoss EAP 8 is distributed as an archive file that you can extract and execute on an operating system (OS) with  OpenJDK 17 installed.
-* The archive file contains all the libraries, configuration files, and scripts needed to start JBoss EAP, *without* further customization.
-* Just like zip file method, this method is preferred when:
 ** You don't have GUI support for the EAP 8 installation.
 ** You don't want to have any custom configuration.
 ** You need text based console for the EAP 8 installation.
@@ -38,7 +27,7 @@ Let us see each of these methods in detail.
 
 == Installing JBoss EAP using the JAR installer
 
-* This method can also be called the GUI installer method.
+* This provides an "interactive" graphical approach where you can customize the JBoss EAP installation process.
 * In this method, the jar file is a Java based application that is responsible for providing a step-by-step way to customize the environment setup.
 * This method is preferred when:
 ** You want to install on *multiple platforms* like Windows server, Linux etc.
@@ -48,10 +37,6 @@ Let us see each of these methods in detail.
 
 == Pre-requisites
 
-* You have access to the internet.
-* You have reviewed https://access.redhat.com/articles/6961381[JBoss EAP 8.0 supported configurations].
-* You have created an account on the https://access.redhat.com/[Red Hat Customer Portal] to download JBoss EAP files.
-* You are operating a RHEL 9 server equipped with a graphical user interface (GUI) package.
 * You have installed https://access.redhat.com/articles/6961381[Red Hat supported OpenJDK 17] on RHEL 9 server.
 * Recommended to create a separate *jboss* user account with no shell access (/sbin/nologin).
 * Recommended to download all installation file under /opt partition.
@@ -59,7 +44,7 @@ Let us see each of these methods in detail.
 
 == (Optional) Pre-configured RHEL9 settings using Vagrant
 
-* You can refer https://github.com/RedHatQuickCourses/eap-qc-apps[this eap8 vagrant settings] to configure the RHEL 9 server to get started.
+* You can refer https://github.com/RedHatQuickCourses/eap-qc-apps[EAP8 vagrant settings] to configure the RHEL 9 server to get started.
 
 == Lab 1: Installing JBoss EAP using the Zip file
 
@@ -67,13 +52,13 @@ Let us see each of these methods in detail.
 
 * Take GUI access of RHEL 9 server.
 
-* Download the `jboss-eap-8.0.0-installation-manager.zip` by following below steps:
+* Download the zip or archive file by following below steps:
 ** Open a firefox browser.
 ** Log in to the https://access.redhat.com/[Red Hat Customer Portal].
 ** Click Downloads.
 ** Select `Red Hat JBoss Enterprise Application Platform` from the `Product Downloads` list.
 ** In the Version drop-down list, select `8.0`.
-** Find `Red Hat JBoss Enterprise Application Platform 8.0 Installation Manager` in the list and click the `Download` link.
+** Find `Red Hat JBoss Enterprise Application Platform 8.0 Installation Manager` in the list if you want to download zip file or find `Red Hat JBoss Enterprise Application Platform 8.0.0` in the list if you want to download archive file and click the `Download` link. This lab assumes you have downloaded the zip file.
 ** The file would get downloaded under your `~/Downloads` directory.
 
 * Open a terminal instance and copy `jboss-eap-8.0.0-installation-manager.zip` file present under `~/Downloads` directory to `/opt` directory as a sudo user.
@@ -133,7 +118,7 @@ Operation completed in 541.33 seconds.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server bin]$ sudo /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8/bin/standalone.sh
+[vagrant@server bin]$ sudo -u jboss /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8/bin/standalone.sh
 =========================================================================
   JBoss Bootstrap Environment
   JBOSS_HOME: /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8
@@ -143,7 +128,7 @@ _...output omitted..._
 05:56:12,488 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: JBoss EAP 8.0 Update 1.0 (WildFly Core 21.0.5.Final-redhat-00001) started in 3561ms - Started 282 of 524 services (318 services are lazy, passive or on-demand) - Server configuration file in use: standalone.xml
 ----
 
-* Navigate to the JBoss EAP console at `http://localhost:8080` using firefox browser and confirm JBoss EAP is running as shown in the below screenshot.
+* Navigate to the JBoss EAP console at `http://localhost:8080` using browser and confirm you are able to see the JBoss EAP home page.
 +
 image::ui.png[align="center"]
 
@@ -152,101 +137,9 @@ image::ui.png[align="center"]
 The jboss-eap-installation-manager is also supported on Microsoft Windows. To use this script on a Windows machine, replace the `.sh` with `.bat` in your script.
 --
 
-* Shutdown the JBoss EAP 8 server by pressing `Ctrl+C` in the terminal window where you started JBoss EAP 8.
+* You can shutdown the JBoss EAP 8 server by pressing `Ctrl+C` in the terminal window where you started JBoss EAP 8.
 
-* To uninstall the JBoss EAP 8 server, simple remove the `/opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001` directory.
-
-== Lab 2: Installing JBoss EAP using archive method
-
-*Outcome*: In this lab, you download `jboss-eap-8.0.0.zip` archive file and install JBoss EAP as a standalone server that can be access at `http://localhost:8080`.
-
-* Take GUI access of RHEL 9 server.
-
-* Download the `jboss-eap-8.0.0.zip` by following below steps:
-** Open a firefox browser.
-** Log in to the https://access.redhat.com/[Red Hat Customer Portal].
-** Click Downloads.
-** Select `Red Hat JBoss Enterprise Application Platform` from the `Product Downloads` list.
-** In the Version drop-down list, select `8.0`.
-** Find `Red Hat JBoss Enterprise Application Platform 8.0.0` in the list and click the `Download` link.
-** The file would get downloaded under your `~/Downloads` directory.
-
-* Open a terminal instance and copy the `jboss-eap-8.0.0.zip` file present under `~/Downloads` directory to `/opt` directory as a sudo user.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ sudo cp ~/Downloads/jboss-eap-8.0.0.zip /opt
-----
-
-* Swtich to `/opt` directory and uncompress the `jboss-eap-8.0.0.zip` file as a sudo user.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ cd /opt
-[vagrant@server opt]$ sudo unzip jboss-eap-8.0.0.zip
-----
-
-* Switch to the `bin` directory present under the uncompressed `jboss-eap-8.0.0.zip` file.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server opt]$ cd jboss-eap-8.0/bin/
-[vagrant@server bin]$
-----
-
-* Install JBoss EAP by executing the `./jboss-eap-installation-manager.sh` script as a sudo user.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server bin]$ sudo ./jboss-eap-installation-manager.sh install --profile eap-8.0 --dir eap-8
-Installing profile: eap-8.0
-Using channels:
-# eap-8.0
-  manifest: org.jboss.eap.channels:eap-8.0
-_...output omitted..._
-----
-+
-Review the end user license agreement, and follow the rest of the prompts to install JBoss EAP.
-+
-[subs="+quotes,+macros"]
-----
-Accept the agreement(s) [y/N]y
-Feature-packs resolved.
-Packages installed.
-Downloading artifacts 2/619(0%) jackson-jakarta-rs-json-provider-2.15.2.redhat-000....
-Downloading artifacts 8/619(1%) wildfly-clustering-ee-infinispan-8.0.0.GA-redhat-0....
-_...output omitted..._
-Downloaded artifacts.
-JBoss modules installed.
-Configurations generated.
-JBoss examples installed.
-Server created in /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8
-Operation completed in 541.33 seconds.
-----
-
-* Start the JBoss EAP standalone server using the start script present under `/opt/jboss-eap-8.0/bin/eap-8/bin/standalone.sh`.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server bin]$ sudo /opt/jboss-eap-8.0/bin/eap-8/bin/standalone.sh
-=========================================================================
-  JBoss Bootstrap Environment
-  JBOSS_HOME: /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8
-  JAVA: java
-_...output omitted..._
-05:56:12,465 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
-05:56:12,488 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: JBoss EAP 8.0 Update 1.0 (WildFly Core 21.0.5.Final-redhat-00001) started in 3561ms - Started 282 of 524 services (318 services are lazy, passive or on-demand) - Server configuration file in use: standalone.xml
-----
-
-* Navigate to the JBoss EAP console at `http://localhost:8080` using firefox browser and confirm JBoss EAP is running as shown in the below screenshot.
-+
-image::ui.png[align="center"]
-
-* Shutdown the JBoss EAP 8 server by pressing `Ctrl+C` in the terminal window where you started JBoss EAP 8.
-
-* To uninstall the JBoss EAP 8 standalone server, simply remove the `/opt/jboss-eap-8.0` directory.
-
-== Lab 3: Installing JBoss EAP using RPM method
+== Lab 2: Installing JBoss EAP using RPM method
 
 *Outcome*: In this lab, you subscribe your RHEL9 server and install JBoss EAP package. You configure the JBoss EAP server as a standalone server that can be access at `http://localhost:8080`.
 
@@ -280,30 +173,20 @@ NOTE: The default `EAP_HOME` path for the RPM installation is `/opt/rh/eap8/root
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ /bin/sh /opt/rh/eap8/root/usr/share/wildfly/bin/standalone.sh -c standalone.xml -b 0.0.0.0
+[vagrant@server ~]$ sudo -u jboss /bin/sh /opt/rh/eap8/root/usr/share/wildfly/bin/standalone.sh -c standalone.xml -b 0.0.0.0
 ----
 
-* Navigate to the JBoss EAP console at `http://localhost:8080` using firefox browser and confirm JBoss EAP is running as shown in the below screenshot.
-+
-image::ui.png[align="center"]
+* Navigate to the JBoss EAP console at `http://localhost:8080` using browser and confirm you are able to see the JBoss EAP home page.
 
 * Shutdown the JBoss EAP 8 server by pressing `Ctrl+C` in the terminal window where you started JBoss EAP 8.
 
-* To uninstall the JBoss EAP 8 standalone server, execute the following command.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ sudo dnf groupremove jboss-eap8 -y
-----
-
-== Lab 4: Installing JBoss EAP using GUI method and as a RHEL service
+== Lab 3: Installing JBoss EAP using GUI method and as a RHEL service
 
 *Outcome*: In this lab, you download `jboss-eap-8.0.0-installer.jar` file and install JBoss EAP as a standalone server that can be access at `http://localhost:8080`. You further configure JBoss EAP to run as a service in RHEL to enable the JBoss EAP service to start automatically when the RHEL server starts.
 
 * Take GUI access of RHEL 9 server.
 
 * Download the `jboss-eap-8.0.0-installer.jar` by following below steps:
-* Open a firefox browser.
 ** Log in to the https://access.redhat.com/[Red Hat Customer Portal].
 ** Click Downloads.
 ** Select `Red Hat JBoss Enterprise Application Platform` from the `Product Downloads` list.
@@ -334,7 +217,7 @@ image::lang.png[align="center"]
 +
 image::agree.png[align="center"]
 
-* Select the installation path as `/home/jboss/EAP-8.0.0` for JBoss EAP, and then click `Next`.
+* Select the installation path as `/opt/EAP-8.0.0` for JBoss EAP, and then click `Next`.
 //+
 //image::1.png[align="center"]
 +
@@ -360,11 +243,9 @@ image::complete.png[align="center"]
 +
 image::default.png[align="center"]
 
-* Once the progressing completes, select `Next`.
-+
-image::complete2.png[align="center"]
+* Once the processing completes, select `Next`.
 
-* On the final step of the wizard, click `Generate installation script and properties file`. Save the file as `myinstall.xml` at the `/home/jboss/EAP-8.0.0` directory, which is the default.
+* On the final step of the wizard, click `Generate installation script and properties file`. Save the file as `myinstall.xml` at the `/opt/EAP-8.0.0` directory, which is the default.
 +
 image::complete3.png[align="center"]
 +
@@ -372,64 +253,43 @@ This `myinstall.xml` file can be used by an administrator to automatically perfo
 
 * Click the Done button to close the installer.
 
-* Verify that you now have a directory named `/home/jboss/EAP-8.0.0` directory. This directory is referred to as `JBOSS_HOME`.
+* Verify that you now have a directory named `/opt/EAP-8.0.0` directory. This directory is referred to as `JBOSS_HOME`.
 
 * Set an environment variable called `JBOSS_HOME` pointing to the JBoss EAP installation directory. Open `/home/vagrant/.bashrc` with your preferred text editor and add the following lines at the end of the file:
 +
 [subs="+quotes,+macros"]
 ----
 [vagrant@server ~]$ tail -3 /home/vagrant/.bashrc
-JBOSS_HOME=/home/jboss/EAP-8.0.0
+JBOSS_HOME=/opt/EAP-8.0.0
 PATH=$PATH:$JBOSS_HOME/bin
 export JBOSS_HOME PATH
 ----
 
 Logout and login as vagrant user to make these changes visible for the vagrant user.
 
-* The `JBOSS_HOME` directory needs to be owned by `jboss` user.
+* The `JBOSS_HOME` directory needs to be owned by `jboss` user. If the user `jboss` is not present, please create it.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo chown -R jboss:jboss /home/jboss/EAP-8.0.0
+[vagrant@server ~]$ sudo useradd -s /sbin/nologin jboss
+[vagrant@server ~]$ sudo chown -R jboss:jboss /opt/EAP-8.0.0
 ----
 
-* Open the file `/home/jboss/EAP-8.0.0/myinstall.xml.variables` as root using sudo and add `redhat123` as the value for the adminPassword property.
+* Open the file `/opt/EAP-8.0.0/myinstall.xml.variables` as root using sudo and add `redhat123` as the value for the adminPassword property.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ cat /home/jboss/EAP-8.0.0/myinstall.xml.variables
+[vagrant@server ~]$ cat /opt/EAP-8.0.0/myinstall.xml.variables
 ----
 
 * Verify that the $JBOSS_HOME/uninstaller directory exists. This directory must contain a single executable JAR file named uninstaller.jar.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo ls -l /home/jboss/EAP-8.0.0/uninstaller
+[vagrant@server ~]$ sudo ls -ld /opt/EAP-8.0.0/uninstaller
 total 308
 drwxr-xr-x. 2 root root     29 Apr  5 01:31 uninstaller
 ----
-
-* Start the JBoss EAP standalone server using the start script present under `/home/jboss/EAP-8.0.0/bin/standalone.sh`.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ sudo /home/jboss/EAP-8.0.0/bin/standalone.sh
-=========================================================================
-  JBoss Bootstrap Environment
-  JBOSS_HOME: /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8
-  JAVA: java
-_...output omitted..._
-05:56:12,465 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
-05:56:12,488 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: JBoss EAP 8.0 Update 1.0 (WildFly Core 21.0.5.Final-redhat-00001) started in 3561ms - Started 282 of 524 services (318 services are lazy, passive or on-demand) - Server configuration file in use: standalone.xml
-----
-
-* Navigate to the JBoss EAP console at `http://localhost:8080` using firefox browser and confirm JBoss EAP is running as shown in the below screenshot.
-+
-image::ui.png[align="center"]
-
-* Shutdown the JBoss EAP 8 server by pressing `Ctrl+C` in the terminal window where you started JBoss EAP 8.
-
-* You can install JBoss EAP as a service to initialize JBoss EAP during the boot time from an OS.
 
 * Configure the RHEL9 server to use Java 17 if you have multiple Java versions installed.
 +
@@ -445,15 +305,45 @@ There is 1 program that provides 'java'.
 Enter to keep the current selection[+], or type selection number: 1
 ----
 
-Press the number corresponding to the Java 17 version, and the press `Enter`. Make a note the Java 17 location mentioned in the above output, in this case `/usr/lib/jvm/java-17-openjdk-17.0.10.0.7-2.el9.x86_64`. We shall need this value in next step.
+Press the number corresponding to the Java 17 version, and the press `Enter`.
 
-* Edit the `/home/jboss/EAP-8.0.0/bin/init.d/jboss-eap.conf` file and remove the `#` in front of each of the following variable and update the following environment variables. Substitude the `JAVA_HOME` value to `/usr/lib/jvm/java-17-openjdk-17.0.10.0.7-2.el9.x86_64/bin/java` or the value you got from the previous step. Similarly, substitute other environment variables as per your environment.
+* Start the JBoss EAP standalone server using the start script present under `/opt/EAP-8.0.0/bin/standalone.sh`.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ cat /home/jboss/EAP-8.0.0/bin/init.d/jboss-eap.conf
-JAVA_HOME="/usr/lib/jvm/java-17-openjdk-17.0.10.0.7-2.el9.x86_64"
-JBOSS_HOME="/home/jboss/EAP-8.0.0"
+[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/standalone.sh
+=========================================================================
+  JBoss Bootstrap Environment
+  JBOSS_HOME: /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8
+  JAVA: java
+_...output omitted..._
+05:56:12,465 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
+05:56:12,488 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: JBoss EAP 8.0 Update 1.0 (WildFly Core 21.0.5.Final-redhat-00001) started in 3561ms - Started 282 of 524 services (318 services are lazy, passive or on-demand) - Server configuration file in use: standalone.xml
+----
+
+* Navigate to the JBoss EAP console at `http://localhost:8080` using browser and confirm you are able to see the JBoss EAP home page.
+
+* Shutdown the JBoss EAP 8 server by pressing `Ctrl+C` in the terminal window where you started JBoss EAP 8.
+
+=== Install JBoss EAP as a service to initialize JBoss EAP during the boot time from an OS.
+
+* The initscripts RHEL package is not installed in RHEL 9 by default. Verify the installation of that package by using the following command:
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ dnf list installed | grep initscripts
+initscripts.x86_64                  ...
+initscripts-rename-device.x86_64    ...
+initscripts-service.noarch          ...
+----
+
+* Edit the `/opt/EAP-8.0.0/bin/init.d/jboss-eap.conf` file and remove the `#` in front of each of the following variable and update the following environment variables. Substitude the `JAVA_HOME` value to `/usr/lib/jvm/java-17-openjdk-17.0.10.0.7-2.el9.x86_64/bin/java` or the value you got from the previous step. Similarly, substitute other environment variables as per your environment.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ cat /opt/EAP-8.0.0/bin/init.d/jboss-eap.conf
+JAVA_HOME="/etc/alternatives/java_sdk"
+JBOSS_HOME="/opt/EAP-8.0.0"
 JBOSS_USER=jboss
 JBOSS_MODE=standalone
 JBOSS_CONFIG=standalone.xml
@@ -464,14 +354,14 @@ JBOSS_CONSOLE_LOG="/var/log/jboss-eap/console.log"
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo cp /home/jboss/EAP-8.0.0/bin/init.d/jboss-eap.conf /etc/default/jboss-eap.conf
+[vagrant@server ~]$ sudo cp /opt/EAP-8.0.0/bin/init.d/jboss-eap.conf /etc/default/jboss-eap.conf
 ----
 
 * Copy the jboss-eap-rhel.sh file to the /etc/init.d directory with jboss-eap as the file name, and change its permission to be executable by running the following commands.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo cp /home/jboss/EAP-8.0.0/bin/init.d/jboss-eap-rhel.sh /etc/init.d/jboss-eap
+[vagrant@server ~]$ sudo cp /opt/EAP-8.0.0/bin/init.d/jboss-eap-rhel.sh /etc/init.d/jboss-eap
 [vagrant@server ~]$ sudo chmod 755 /etc/init.d/jboss-eap
 ----
 
@@ -480,6 +370,8 @@ JBOSS_CONSOLE_LOG="/var/log/jboss-eap/console.log"
 [subs="+quotes,+macros"]
 ----
 [vagrant@server ~]$ sudo systemctl daemon-reload
+jboss-eap.service is not a native service, redirecting to systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable jboss-eap
 ----
 
 * Enable the `jboss-eap` service to start on system boot.
@@ -497,41 +389,51 @@ JBOSS_CONSOLE_LOG="/var/log/jboss-eap/console.log"
 ----
 or reboot the system.
 
-* Navigate to the JBoss EAP console at `http://localhost:8080` using firefox browser and confirm JBoss EAP is running as shown in the below screenshot.
+* Navigate to the JBoss EAP console at `http://localhost:8080` using browser and confirm you are able to see the JBoss EAP home page.
 +
 image::ui.png[align="center"]
 
-== Lab 5: Uninstalling JBoss EAP service on RHEL
+== Lab 4: Uninstalling JBoss EAP
 
-*Prerequisites*:
-You have JBoss EAP installed, or your have followed Lab 4
+=== Uninstalling JBoss EAP (ZIP Installation)
 
-*Outcome*: You remove an instance of JBoss EAP and any services associated with it.
+* Ensure that you back up any modified configuration files and deployments that may be reused.
 
-* Open a terminal and stop the `jboss-eap` service with one of the following command:
+* The zip installation method installs JBoss EAP in a single directory. Delete the installation directory to uninstall JBoss EAP.
+
+* Also delete any other scripts that depended on JBoss EAP being installed on your machine.
+
+=== Uninstalling JBoss EAP (GUI Installer Installation)
+
+* Open a terminal and navigate to EAP_HOME/uninstaller.
+
+* Run the graphical uninstaller using the following command:
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo service jboss-eap-rhel.sh stop
+[vagrant@server ~]$ java -jar uninstaller.jar
 ----
 
-* Remove JBoss EAP from the list of services:
+* The graphical uninstaller is similar to following figure. Click Uninstall to start the uninstall process.
++
+image::uninstall.png[align="center"]
+
+* When the uninstall process is finished, click Quit to exit the uninstaller.
+
+=== Removing JBoss EAP RHEL service
+
+* Delete the JBoss EAP8 configuration file
+* Stop and disable the jboss-eap service.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo chkconfig --del jboss-eap-rhel.sh
+[vagrant@server ~]$ sudo systemctl stop jboss-eap
+[vagrant@server ~]$ sudo systemctl disable jboss-eap
 ----
 
-* Delete the configuration file and startup script:
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ sudo rm /etc/init.d/jboss-eap
-[vagrant@server ~]$ sudo rm /etc/default/jboss-eap.conf
-----
+* Delete the JBoss EAP8 configuration file `/etc/default/jboss-eap.conf`.
 
-
-
+* Delete the JBoss EAP8 script `/etc/init.d/jboss-eap`.
 
 == References
 
