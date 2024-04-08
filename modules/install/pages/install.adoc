@@ -2,7 +2,7 @@
 
 You can install JBoss EAP 8.0 by using one of the following installation methods:
 
-* *Using the Zip or archive file*
+* *Using the zip or archive file*
 * *Using the RPM installation method*
 * *Using the JAR installer*
 
@@ -184,7 +184,16 @@ NOTE: The default `EAP_HOME` path for the RPM installation is `/opt/rh/eap8/root
 
 *Outcome*: In this lab, you download `jboss-eap-8.0.0-installer.jar` file and install JBoss EAP as a standalone server that can be access at `http://localhost:8080`. You further configure JBoss EAP to run as a service in RHEL to enable the JBoss EAP service to start automatically when the RHEL server starts.
 
-* Take GUI access of RHEL 9 server.
+* Take GUI access of RHEL 9 server. You can install graphical pacakges if not already present and set the system to boot into grahical mode using below commands.
++
+[subs="+quotes,+macros"]
+----
+sudo dnf groupinstall "Server with GUI" -y
+sudo systemctl set-default graphical.target
+sudo systemctl isolate graphical.target
+----
+
+If you don't have GUI access, you can take access using X11 forwarding on your local machine.
 
 * Download the `jboss-eap-8.0.0-installer.jar` by following below steps:
 ** Log in to the https://access.redhat.com/[Red Hat Customer Portal].
@@ -437,9 +446,16 @@ image::uninstall.png[align="center"]
 
 === Uninstalling JBoss EAP (RPM Installation)
 
-* Uninstalling a JBoss EAP installation that was installed using the RPM method is not recommended.
+* Remove the `jboss-eap8` package.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$  sudo dnf groupremove jboss-eap8 -y
+----
 
-* Because of the nature of RPM package management, it cannot be guaranteed that all installed packages and dependencies will be completely removed, or that the system will not be left in an inconsistent state caused by missing package dependencies.
+* Because of the nature of RPM package management, it cannot be guaranteed that all installed packages and dependencies will be completely removed. Hence remove other related files manually.
+
+
 
 == References
 
