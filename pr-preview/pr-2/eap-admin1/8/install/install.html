@@ -169,7 +169,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Using the Zip or archive file</strong></p>
+<p><strong>Using the zip or archive file</strong></p>
 </li>
 <li>
 <p><strong>Using the RPM installation method</strong></p>
@@ -529,8 +529,22 @@ The default <code>EAP_HOME</code> path for the RPM installation is <code>/opt/rh
 <div class="ulist">
 <ul>
 <li>
-<p>Take GUI access of RHEL 9 server.</p>
+<p>Take GUI access of RHEL 9 server. You can install graphical pacakges if not already present and set the system to boot into grahical mode using below commands.</p>
+<div class="listingblock">
+<div class="content">
+<pre>sudo dnf groupinstall "Server with GUI" -y
+sudo systemctl set-default graphical.target
+sudo systemctl isolate graphical.target</pre>
+</div>
+</div>
 </li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t have GUI access, you can take access using X11 forwarding on your local machine.</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Download the <code>jboss-eap-8.0.0-installer.jar</code> by following below steps:</p>
 <div class="ulist">
@@ -913,10 +927,15 @@ Executing: /usr/lib/systemd/systemd-sysv-install enable jboss-eap</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Uninstalling a JBoss EAP installation that was installed using the RPM method is not recommended.</p>
+<p>Remove the <code>jboss-eap8</code> package.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$  sudo dnf groupremove jboss-eap8 -y</pre>
+</div>
+</div>
 </li>
 <li>
-<p>Because of the nature of RPM package management, it cannot be guaranteed that all installed packages and dependencies will be completely removed, or that the system will not be left in an inconsistent state caused by missing package dependencies.</p>
+<p>Because of the nature of RPM package management, it cannot be guaranteed that all installed packages and dependencies will be completely removed. Hence remove other related files manually.</p>
 </li>
 </ul>
 </div>
