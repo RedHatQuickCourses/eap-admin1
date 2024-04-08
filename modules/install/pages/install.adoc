@@ -435,6 +435,12 @@ image::uninstall.png[align="center"]
 
 * Delete the JBoss EAP8 script `/etc/init.d/jboss-eap`.
 
+=== Uninstalling JBoss EAP (RPM Installation)
+
+* Uninstalling a JBoss EAP installation that was installed using the RPM method is not recommended.
+
+* Because of the nature of RPM package management, it cannot be guaranteed that all installed packages and dependencies will be completely removed, or that the system will not be left in an inconsistent state caused by missing package dependencies.
+
 == References
 
 * https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/8.0/html/red_hat_jboss_enterprise_application_platform_installation_methods/index[Red Hat JBoss Enterprise Application Platform Installation Methods]
