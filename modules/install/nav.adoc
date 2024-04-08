@@ -1,5 +1,5 @@
 * xref:index.adoc[]
-** xref:install.adoc[]
+** xref:install.adoc[EAP Installation]
 ** xref:admin.adoc[]
 ** xref:upgrade.adoc[]
 ** xref:extensions.adoc[]
