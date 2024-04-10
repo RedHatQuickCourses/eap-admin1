@@ -170,14 +170,14 @@
 <p>JBoss EAP 8 has multiple subsystems that you can customize to support Jakarta EE application requirements, such as database connectivity, batch processing, and integration tools.</p>
 </li>
 <li>
-<p>The subsystem configuration is maintained in the <code>standalone.xml</code> file for the standalone mode, and the <code>domain.xml</code> file for a managed domain mode.</p>
+<p>The JBoss EAP configuration is maintained in the <code>standalone.xml</code> file for the standalone mode, and the <code>domain.xml</code> file for a managed domain mode.</p>
 </li>
 <li>
 <p>These configuration files can be customized using three different approaches:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Management console</strong>: As a system administrator, you can manage most of the capabilities of your standalone or managed domain deployments by using a browser.</p>
+<p><strong>Management console</strong>: As a system administrator, you can manage most of the capabilities of your standalone or managed domain deployments by using a JBoss EAP web console or Management console.</p>
 </li>
 <li>
 <p><strong>Management Command Line Interface(CLI)</strong>:
@@ -191,6 +191,13 @@ The settings of a standalone server or a managed domain are maintained in XML-ba
 </div>
 </li>
 </ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Editing XML files directly should be avoided as much as possible! The CLI or the web console is preferred method for configuration files customization.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -347,48 +354,6 @@ Added user 'newadmin' with groups  to file '/opt/EAP-8.0.0/domain/configuration/
 </li>
 <li>
 <p>Log in to the management console using web browser to <a href="http://localhost:9990/" class="bare">http://localhost:9990/</a>, as the <code>newadmin</code> user and <code>redhat123</code> as the password. You should see the home page of the JBoss EAP 8 management console.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Create a new application user named <code>appuser</code> and password <code>redhat123</code>.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Run the <code>add-user.sh</code> script as the jboss user and enter the values highlighted in bold as shown in below command output.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/add-user.sh
-
-What type of user do you wish to add?
- a) Management User (mgmt-users.properties)
- b) Application User (application-users.properties)
-(a): <strong>b</strong>
-
-Enter the details of the new user to add.
-Using realm 'ApplicationRealm' as discovered from the existing property files.
-Username : <strong>appuser</strong>
-Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
- - The password should be different from the username
- - The password should not be one of the following restricted values {root, admin, administrator}
- - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
-Password : <strong>redhat123</strong>
-WFLYDM0102: Password should have at least 1 non-alphanumeric symbol.
-Are you sure you want to use the password entered yes/no? yes
-Re-enter Password : <strong>redhat123</strong>
-What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]: <strong>Press Enter</strong>
-About to add user 'appuser' for realm 'ApplicationRealm'
-Is this correct yes/no? <strong>yes</strong>
-Added user 'appuser' to file '/opt/EAP-8.0.0/standalone/configuration/application-users.properties'
-Added user 'appuser' to file '/opt/EAP-8.0.0/domain/configuration/application-users.properties'
-Added user 'appuser' with groups  to file '/opt/EAP-8.0.0/standalone/configuration/application-roles.properties'
-Added user 'appuser' with groups  to file '/opt/EAP-8.0.0/domain/configuration/application-roles.properties'</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Application users do not log in to the management console (<a href="http://localhost:9990" class="bare">http://localhost:9990</a>) directly. Instead, they interact with the applications deployed on the server through the application&#8217;s own user interface, APIs, or web pages.</p>
 </li>
 </ul>
 </div>
