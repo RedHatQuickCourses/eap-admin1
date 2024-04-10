@@ -4,17 +4,22 @@
 
 * JBoss EAP 8 has multiple subsystems that you can customize to support Jakarta EE application requirements, such as database connectivity, batch processing, and integration tools.
 
-* The subsystem configuration is maintained in the `standalone.xml` file for the standalone mode, and the `domain.xml` file for a managed domain mode.
+* The JBoss EAP configuration is maintained in the `standalone.xml` file for the standalone mode, and the `domain.xml` file for a managed domain mode.
 
 * These configuration files can be customized using three different approaches:
 
-** **Management console**: As a system administrator, you can manage most of the capabilities of your standalone or managed domain deployments by using a browser.
+** **Management console**: As a system administrator, you can manage most of the capabilities of your standalone or managed domain deployments by using a JBoss EAP web console or Management console.
 
 ** **Management Command Line Interface(CLI)**:
 The CLI offers a management model for viewing and modifying attributes and for performing operations, on a standalone server or a managed domain.
 
 ** **Edit XML configuration files manually**:
 The settings of a standalone server or a managed domain are maintained in XML-based configuration files, which can be modified directly.
+
+[Warning]
+====
+Editing XML files directly should be avoided as much as possible! The CLI or the web console is preferred method for configuration files customization.
+====
 
 == Administrative Users
 
@@ -124,38 +129,3 @@ Added user 'newadmin' with groups  to file '/opt/EAP-8.0.0/domain/configuration/
 ----
 
 ** Log in to the management console using web browser to http://localhost:9990/, as the `newadmin` user and `redhat123` as the password. You should see the home page of the JBoss EAP 8 management console.
-
-* Create a new application user named `appuser` and password `redhat123`.
-
-** Run the `add-user.sh` script as the jboss user and enter the values highlighted in bold as shown in below command output.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/add-user.sh
-
-What type of user do you wish to add?
- a) Management User (mgmt-users.properties) 
- b) Application User (application-users.properties)
-(a): **b**
-
-Enter the details of the new user to add.
-Using realm 'ApplicationRealm' as discovered from the existing property files.
-Username : **appuser**
-Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
- - The password should be different from the username
- - The password should not be one of the following restricted values {root, admin, administrator}
- - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
-Password : **redhat123**
-WFLYDM0102: Password should have at least 1 non-alphanumeric symbol.
-Are you sure you want to use the password entered yes/no? yes
-Re-enter Password : **redhat123**
-What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]: **Press Enter**
-About to add user 'appuser' for realm 'ApplicationRealm'
-Is this correct yes/no? **yes**
-Added user 'appuser' to file '/opt/EAP-8.0.0/standalone/configuration/application-users.properties'
-Added user 'appuser' to file '/opt/EAP-8.0.0/domain/configuration/application-users.properties'
-Added user 'appuser' with groups  to file '/opt/EAP-8.0.0/standalone/configuration/application-roles.properties'
-Added user 'appuser' with groups  to file '/opt/EAP-8.0.0/domain/configuration/application-roles.properties'
-----
-
-** Application users do not log in to the management console (http://localhost:9990) directly. Instead, they interact with the applications deployed on the server through the application's own user interface, APIs, or web pages.
