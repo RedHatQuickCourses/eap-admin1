@@ -65,7 +65,7 @@
     <a class="nav-link" href="install.html">EAP Installation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="admin.html">Creating Administration Accounts</a>
+    <a class="nav-link" href="admin.html">Managing JBoss EAP</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="upgrade.html">Upgrading JBoss EAP</a>
@@ -702,7 +702,8 @@ export JBOSS_HOME PATH</pre>
 <p>Open the file <code>/opt/EAP-8.0.0/myinstall.xml.variables</code> as root using sudo and add <code>redhat123</code> as the value for the adminPassword property.</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server ~]$ cat /opt/EAP-8.0.0/myinstall.xml.variables</pre>
+<pre>[vagrant@server ~]$ sudo vi /opt/EAP-8.0.0/myinstall.xml.variables
+adminPassword=redhat123</pre>
 </div>
 </div>
 </li>
@@ -956,7 +957,7 @@ Executing: /usr/lib/systemd/systemd-sysv-install enable jboss-eap</pre>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="index.html">Installation</a></span>
-  <span class="next"><a href="admin.html">Creating Administration Accounts</a></span>
+  <span class="next"><a href="admin.html">Managing JBoss EAP</a></span>
 </nav>
 </article>
   </div>
