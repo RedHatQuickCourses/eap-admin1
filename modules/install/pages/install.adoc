@@ -288,7 +288,8 @@ Logout and login as vagrant user to make these changes visible for the vagrant u
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ cat /opt/EAP-8.0.0/myinstall.xml.variables
+[vagrant@server ~]$ sudo vi /opt/EAP-8.0.0/myinstall.xml.variables
+adminPassword=redhat123
 ----
 
 * Verify that the $JBOSS_HOME/uninstaller directory exists. This directory must contain a single executable JAR file named uninstaller.jar.
