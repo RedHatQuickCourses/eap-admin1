@@ -6,7 +6,10 @@
 
 == Modules in JBoss EAP
 
-* A module is a bundle composed of a library developed in Java and an XML configuration file that provides Jakarta Enterprise Edition (Jakarta EE) compliant functionalities.
+* JBoss EAP 8 is based on a core infrastructure provided by the https://access.redhat.com/solutions/21906[WildFly 28] Core project that, manages the loading and activation of modules, following the architecture provided by the JBoss Modules project.
+
+* A module basically provides Java code to be used by JBoss EAP services and by applications.
+
 * The modules are located at the `JBOSS_HOME/modules/system/layers/base/` directory.
 +
 [subs="+quotes,+macros"]
@@ -30,7 +33,9 @@ drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 wildflyee
 
 == Extensions
 
-* Extensions are modules that extend the core capabilities of the server.
+* A module that provides features and capabilities to the application server is called an extension.
+
+* An extension does not only provide code, but also provides a management model, which enables the extension to be configured by the core.
 
 * Extensions are added by using the <extension> element, at the beginning of the JBoss EAP main configuration file: `JBOSS_HOME/standalone/configuration/standalone.xml` or `JBOSS_HOME/domain/configuration/domain.xml`.
 
@@ -93,16 +98,11 @@ drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 wildflyee
 
 * The JBoss EAP core loads and activates modules/extensions only when necessary, so that inactive features do not consume memory or CPU resources unnecessarily.
 
-[NOTE]
-====
-If an organizations applications do not need a particular extension, then the system administrator can disable the extension so JBoss EAP does not load its management model anymore. Remove the <extension> entry and its corresponding <subsystem> section from the configuration file. This can be accomplished either by editing the XML directly, or using the Management CLI.
-====
-
 == The Subsystems and Profiles
 
-* A subsystem is where you configure the extensions of the JBoss EAP instance.
-
 * A profile is a collection of subsystems.
+
+* A subsystem is where you configure the extensions of the JBoss EAP instance.
 
 * JBoss EAP profiles are supposed to be customized to a particular application and environment needs, so two real-world standalone server instances probably have different profiles, containing different subsystem configurations.
 
@@ -207,26 +207,6 @@ image::sub.png[align="center"]
 
 They are provided so a standalone server instance can easily be started with more or less subsystems available.
 
-[NOTE]
-====
-Be careful not to confuse a JBoss EAP profile with a Jakarta EE profile. A JBoss EAP profile is a collection of subsystem configurations that are used to define the capabilities and services of a JBoss EAP server instance. A Jakarta EE profile is a collection of Java EE standards.
-====
-
-* In a managed domain, the administrator can create new profiles, either from scratch, or cloned from the ones provided, and then customize the new profiles before associating them to their respective groups.
-
-* A profile can also be a child of another profile, thus inheriting the subsystem configuration from its parent profile, so common configurations can be shared and maintained in a single place.
-
-== Lab 1: Starting different Subsystems
-
-*Outcome*: In this lab, you start the standalone server instance using different subsystems available.
-
-* Navigate to the JBoss_Home directory.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin/
-[vagrant@server bin]$
-----
 
 * Start the JBoss EAP instance using the default `standalone.xml` to start most commonly used subsystems. To use a different configuration file, the `--server-config` or `-c` parameter can be used as follows:
 +
@@ -239,16 +219,12 @@ or
 [student@workstation ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml
 ----
 
-Press `ctrl+C` to stop the JBoss instance.
-
 * Start the JBoss EAP instance using the `standalone-ha.xml` to start clustering capabilities.
 +
 [subs="+quotes,+macros"]
 ----
 [vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-ha.xml
 ----
-
-Press `ctrl+C` to stop the JBoss instance.
 
 * Start the JBoss EAP instance using the `standalone-ha.xml` to start messaging-activemq capabilities.
 +
@@ -257,8 +233,6 @@ Press `ctrl+C` to stop the JBoss instance.
 [vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full.xml
 ----
 
-Press `ctrl+C` to stop the JBoss instance.
-
 * Start the JBoss EAP instance using the `standalone-ha.xml` to start messaging-activemq and clustering capabilities.
 +
 [subs="+quotes,+macros"]
@@ -266,10 +240,16 @@ Press `ctrl+C` to stop the JBoss instance.
 [vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full-ha.xml
 ----
 
-Press `ctrl+C` to stop the JBoss instance.
+[NOTE]
+====
+Be careful not to confuse a JBoss EAP profile with a Jakarta EE profile. A JBoss EAP profile is a collection of subsystem configurations that are used to define the capabilities and services of a JBoss EAP server instance. A Jakarta EE profile is a collection of Java EE standards.
+====
 
+* In a managed domain, the administrator can create new profiles, either from scratch, or cloned from the ones provided, and then customize the new profiles before associating them to their respective groups.
 
-== Lab 2: Configuring Subsystems
+* A profile can also be a child of another profile, thus inheriting the subsystem configuration from its parent profile, so common configurations can be shared and maintained in a single place.
+
+== Lab 1: Configuring Subsystems
 
 *Outcome*: In this lab, you customize the subsystem of JBoss EAP 8 standalone server by updating the log level using management console.
 
@@ -304,7 +284,7 @@ image::con.png[align="center"]
 +
 image::new.png[align="center"]
 
-* Stop the instance of the JBoss EAP listening on port 9990 by pressing `Ctrl+C` on the terminal where it is running and restart the instance to reflect the new changes. Observe the additional debug information provided by the server in the console that reflects the log level change made in the management console.
+* Observe the additional debug information provided by the server in the console that reflects the log level change made in the management console.
 +
 [subs="+quotes,+macros"]
 ----
