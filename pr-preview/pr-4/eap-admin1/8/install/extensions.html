@@ -181,7 +181,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>A module is a bundle composed of a library developed in Java and an XML configuration file that provides Jakarta Enterprise Edition (Jakarta EE) compliant functionalities.</p>
+<p>JBoss EAP 8 is based on a core infrastructure provided by the <a href="https://access.redhat.com/solutions/21906">WildFly 28</a> Core project that, manages the loading and activation of modules, following the architecture provided by the JBoss Modules project.</p>
+</li>
+<li>
+<p>A module basically provides Java code to be used by JBoss EAP services and by applications.</p>
 </li>
 <li>
 <p>The modules are located at the <code>JBOSS_HOME/modules/system/layers/base/</code> directory.</p>
@@ -215,7 +218,10 @@ drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 wildflyee</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Extensions are modules that extend the core capabilities of the server.</p>
+<p>A module that provides features and capabilities to the application server is called an extension.</p>
+</li>
+<li>
+<p>An extension does not only provide code, but also provides a management model, which enables the extension to be configured by the core.</p>
 </li>
 <li>
 <p>Extensions are added by using the &lt;extension&gt; element, at the beginning of the JBoss EAP main configuration file: <code>JBOSS_HOME/standalone/configuration/standalone.xml</code> or <code>JBOSS_HOME/domain/configuration/domain.xml</code>.</p>
@@ -286,20 +292,6 @@ drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 wildflyee</pre>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If an organizations applications do not need a particular extension, then the system administrator can disable the extension so JBoss EAP does not load its management model anymore. Remove the &lt;extension&gt; entry and its corresponding &lt;subsystem&gt; section from the configuration file. This can be accomplished either by editing the XML directly, or using the Management CLI.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -308,10 +300,10 @@ drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 wildflyee</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>A subsystem is where you configure the extensions of the JBoss EAP instance.</p>
+<p>A profile is a collection of subsystems.</p>
 </li>
 <li>
-<p>A profile is a collection of subsystems.</p>
+<p>A subsystem is where you configure the extensions of the JBoss EAP instance.</p>
 </li>
 <li>
 <p>JBoss EAP profiles are supposed to be customized to a particular application and environment needs, so two real-world standalone server instances probably have different profiles, containing different subsystem configurations.</p>
@@ -457,6 +449,46 @@ total 23112
 <div class="paragraph">
 <p>They are provided so a standalone server instance can easily be started with more or less subsystems available.</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Start the JBoss EAP instance using the default <code>standalone.xml</code> to start most commonly used subsystems. To use a different configuration file, the <code>--server-config</code> or <code>-c</code> parameter can be used as follows:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone.xml
+
+or
+
+[student@workstation ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start clustering capabilities.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-ha.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start messaging-activemq capabilities.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start messaging-activemq and clustering capabilities.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full-ha.xml</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -484,88 +516,7 @@ total 23112
 </div>
 </div>
 <div class="sect1">
-<h2 id="_lab_1_starting_different_subsystems"><a class="anchor" href="#_lab_1_starting_different_subsystems"></a>Lab 1: Starting different Subsystems</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Outcome</strong>: In this lab, you start the standalone server instance using different subsystems available.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Navigate to the JBoss_Home directory.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin/
-[vagrant@server bin]$</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Start the JBoss EAP instance using the default <code>standalone.xml</code> to start most commonly used subsystems. To use a different configuration file, the <code>--server-config</code> or <code>-c</code> parameter can be used as follows:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone.xml
-
-or
-
-[student@workstation ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Press <code>ctrl+C</code> to stop the JBoss instance.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start clustering capabilities.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-ha.xml</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Press <code>ctrl+C</code> to stop the JBoss instance.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start messaging-activemq capabilities.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full.xml</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Press <code>ctrl+C</code> to stop the JBoss instance.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start messaging-activemq and clustering capabilities.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full-ha.xml</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Press <code>ctrl+C</code> to stop the JBoss instance.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_lab_2_configuring_subsystems"><a class="anchor" href="#_lab_2_configuring_subsystems"></a>Lab 2: Configuring Subsystems</h2>
+<h2 id="_lab_1_configuring_subsystems"><a class="anchor" href="#_lab_1_configuring_subsystems"></a>Lab 1: Configuring Subsystems</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Outcome</strong>: In this lab, you customize the subsystem of JBoss EAP 8 standalone server by updating the log level using management console.</p>
@@ -624,7 +575,7 @@ or
 </div>
 </li>
 <li>
-<p>Stop the instance of the JBoss EAP listening on port 9990 by pressing <code>Ctrl+C</code> on the terminal where it is running and restart the instance to reflect the new changes. Observe the additional debug information provided by the server in the console that reflects the log level change made in the management console.</p>
+<p>Observe the additional debug information provided by the server in the console that reflects the log level change made in the management console.</p>
 <div class="listingblock">
 <div class="content">
 <pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone.xml
