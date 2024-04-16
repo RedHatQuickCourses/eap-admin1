@@ -1,9 +1,14 @@
-= JBoss EAP Configuration
+= JBoss EAP 8 Configuration
 
-== Overview of Standalone Server
+== Overview of JBoss EAP 8 Standalone mode
 
 * Standalone servers are perfect for running a single instance of Red Hat JBoss EAP.
-* All configurations are managed in the `JBOSS_HOME/standalone/configuration/standalone.xml` file.
+* You can run multiple standalone instances on the same server or across different servers. Each server is managed "standalone", that is, individually.
+* The configurations for standalone server are:
+. `JBOSS_HOME/standalone/configuration/standalone.xml` file
+. `JBOSS_HOME/standalone/configuration/standalone-ha.xml` file
+. `JBOSS_HOME/standalone/configuration/standalone-full.xml` file
+. `JBOSS_HOME/standalone/configuration/standalone-full-ha.xml` file
 * Various subsystems like logging, messaging, and data sources can be configured within this file.
 * JBoss EAP 8 standalone server supports clustering and high availability, configurable through various files alongside `standalone.xml`.
 
@@ -64,7 +69,7 @@ tmp/
 . **tmp**:  For temporary files, like the shared-key mechanism for authenticating local users to the server's command-line interface (CLI).
 
 
-== JBoss EAP Base Directory
+== JBoss EAP 8 Base Directory
 
 * Users can separate the configuration and data directories from the JBoss EAP 8 installation directory, aiding easier upgrades.
 * This allows the binaries to be installed once and run multiple times on the same machine.
@@ -73,17 +78,30 @@ tmp/
 . **jboss.home.dir**: Installation directory for JBoss EAP binaries.
 . **jboss.server.base.dir**: Base directory for server configuration files.
 
-* You can override runtime properties at the command line by using the `-D` option when starting the server.
-* For instance, when starting the server with standalone.sh:
+* You can override runtime properties at the command line by using the `-D` option when starting the server. Some important command-line properties using `-D` option:
+. **jboss.server.base.dir**:
+.. Specifies the base directory for the server instance.
+.. It points to the directory where configuration files, logs, deployments, and other server-related data are stored.
+. **jboss.socket.binding.port-offset**:
+.. This option allows you to offset the port numbers used by the server.
+.. It's useful when you want to run multiple instances of JBoss on the same host without port conflicts.
+.. For example, if the default HTTP port is 8080 and you set jboss.socket.binding.port-offset to 100, then the HTTP port for this instance would be 8180.
+. **jboss.bind.address**:
+.. This option specifies the IP address that the JBoss server binds to for incoming network connections.
+.. By default, it binds to all available network interfaces (0.0.0.0).
+. **jboss.bind.address.management**:
+.. Similar to `jboss.bind.address`, this option specifies the IP address that the JBoss management interfaces (like JMX, CLI, etc.) bind to.
+
+* For instance, when starting the server with standalone.sh, you can use `-D` option to specify the custom configuration using the command line options mentioned above as shown below.
 +
 [subs="+quotes,+macros"]
 ----
-$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.dir=/path/to/home/directory
+$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.dir=/path/to/home/directory -Djboss.socket.binding.port-offset=100 -Djboss.bind.address=172.25.250.9 -Djboss.bind.address.management=172.25.250.9
 ----
 
-== Lab: Run a standalone JBoss EAP 8 server using a custom location for the server base directory.
+== Lab: Configure JBoss EAP 8 standalone server using a customised settings
 
-*Outcome*: In this lab, you should be able to run a standalone JBoss EAP 8 server using a custom location for the server base directory.
+*Outcome*: In this lab, you should be able to run two instances of JBoss EAP on the same server using using a custom location for the server base directory, custom port and a custom binding IP address.
 
 * Create a custom location for the server base directory using below command.
 +
@@ -100,40 +118,22 @@ $ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.d
 [vagrant@server standalone]$ sudo cp -r configuration deployments lib /opt/standalone-running
 ----
 
-* Modify the standalone server port offset.
-
-. To verify that the JBoss EAP server is utilizing the new, copied configuration files, update the port offset. You can run multiple instances of EAP, by using the port offset to avoid port conflicts.
-
-. Update the new configuration file by editing the standalone.xml file to verify that JBoss EAP is using the configuration files in the new directory. Open the `/opt/standalone-running/configuration/standalone.xml` file with a text editor.
-
-. In the standard-sockets socket binding group, change the default value of the port-offset attribute from 0 to 10000. This adds 10,000 to every port number used in the standard-sockets binding group.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ sudo vi /opt/standalone-running/configuration/standalone.xml
-...
-<socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:10000}">
-...
-----
-
-Save your changes to the standalone.xml file, and close the text editor.
-
 * Run and test the JBoss EAP Server.
 
-. Run the following command to start the JBoss EAP server by using the standalone.sh script in the original JBoss EAP installation, but using the new configuration files:
+. Run the following command to start the JBoss EAP server by using the `standalone.sh` script in the original JBoss EAP installation, but using the new configuration files. Change the port-offset attribute to `10000` using the `jboss.socket.binding.port-offset` property on the command line. Also modify the IP address that the JBoss server binds to for incoming network connections using the `jboss.bind.address` and `jboss.bind.address.management`.
 +
 [subs="+quotes,+macros"]
 ----
 [vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
 [vagrant@server bin]$ sudo ./standalone.sh \
--Djboss.server.base.dir=/opt/standalone-running/
+-Djboss.server.base.dir=/opt/standalone-running/ -Djboss.socket.binding.port-offset=10000 -Djboss.bind.address=172.25.250.9 -Djboss.bind.address.management=172.25.250.9
 ----
 
 . The server starts up successfully with an output similar to the following:
 +
 [subs="+quotes,+macros"]
 ----
-10:24:24,663 INFO  [org.jboss.ws.common.management] (MSC service thread 1-4) JBWS022052: Starting JBossWS 7.0.0.Final-redhat-00001 (Apache CXF 4.0.0.redhat-00002) 
+10:24:24,663 INFO  [org.jboss.ws.common.management] (MSC service thread 1-4) JBWS022052: Starting JBossWS 7.0.0.Final-redhat-00001 (Apache CXF 4.0.0.redhat-00002)
 10:24:24,666 INFO  [org.jboss.as.server.deployment.scanner] (MSC service thread 1-2) WFLYDS0013: Started FileSystemDeploymentService for directory /opt/standalone-running/deployments
 10:24:24,793 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0212: Resuming server
 10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:19990/management
@@ -154,6 +154,4 @@ configuration  data   deployments  lib  log  tmp
 
 Notice the three data, log, and tmp new directories . These directories are automatically created when the JBoss EAP server starts.
 
-* Clean Up
-
-Stop the running instance of JBoss EAP that was started in the previous step. Press `Ctrl+C` in the terminal window in which the server is running.
+* Stop the running instance of JBoss EAP that was started in the previous step. Press `Ctrl+C` in the terminal window in which the server is running.
