@@ -96,7 +96,11 @@ tmp/
 +
 [subs="+quotes,+macros"]
 ----
-$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.dir=/path/to/home/directory -Djboss.socket.binding.port-offset=100 -Djboss.bind.address=172.25.250.9 -Djboss.bind.address.management=172.25.250.9
+$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory \
+-Djboss.home.dir=/path/to/home/directory \
+-Djboss.socket.binding.port-offset=100  \
+-Djboss.bind.address=172.25.250.9 \
+-Djboss.bind.address.management=172.25.250.9
 ----
 
 == Lab: Configure JBoss EAP 8 standalone server using a customised settings
@@ -115,7 +119,8 @@ $ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.d
 [subs="+quotes,+macros"]
 ----
 [vagrant@server ~]$ cd /opt/EAP-8.0.0/standalone/
-[vagrant@server standalone]$ sudo cp -r configuration deployments lib /opt/standalone-running
+[vagrant@server standalone]$ sudo cp -r configuration deployments lib  \
+/opt/standalone-running
 ----
 
 * Run and test the JBoss EAP Server.
@@ -126,7 +131,10 @@ $ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.d
 ----
 [vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
 [vagrant@server bin]$ sudo ./standalone.sh \
--Djboss.server.base.dir=/opt/standalone-running/ -Djboss.socket.binding.port-offset=10000 -Djboss.bind.address=172.25.250.9 -Djboss.bind.address.management=172.25.250.9
+-Djboss.server.base.dir=/opt/standalone-running/ \
+-Djboss.socket.binding.port-offset=10000 \
+-Djboss.bind.address=172.25.250.9 \
+-Djboss.bind.address.management=172.25.250.9
 ----
 
 . The server starts up successfully with an output similar to the following:
@@ -136,13 +144,13 @@ $ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.d
 10:24:24,663 INFO  [org.jboss.ws.common.management] (MSC service thread 1-4) JBWS022052: Starting JBossWS 7.0.0.Final-redhat-00001 (Apache CXF 4.0.0.redhat-00002)
 10:24:24,666 INFO  [org.jboss.as.server.deployment.scanner] (MSC service thread 1-2) WFLYDS0013: Started FileSystemDeploymentService for directory /opt/standalone-running/deployments
 10:24:24,793 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0212: Resuming server
-10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:19990/management
-10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:19990
+10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://172.25.250.9:19990/management
+10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://172.25.250.9:19990
 ----
 
-* Navigate to http://localhost:18080 to see the JBoss EAP welcome page with the new port offset.
+* Navigate to http://172.25.250.9:18080 to see the JBoss EAP welcome page with the new port offset.
 
-* Navigate to http://localhost:19990 to see the JBoss EAP management console, which runs with the same port offset.
+* Navigate to http://172.25.250.9:19990 to see the JBoss EAP management console, which runs with the same port offset.
 
 * Explore the contents of the directory `/opt/standalone-running` in a new terminal window:
 +
