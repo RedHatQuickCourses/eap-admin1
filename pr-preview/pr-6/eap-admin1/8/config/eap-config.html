@@ -407,7 +407,11 @@ tmp/</pre>
 <p>For instance, when starting the server with standalone.sh, you can use <code>-D</code> option to specify the custom configuration using the command line options mentioned above as shown below.</p>
 <div class="listingblock">
 <div class="content">
-<pre>$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.dir=/path/to/home/directory -Djboss.socket.binding.port-offset=100 -Djboss.bind.address=172.25.250.9 -Djboss.bind.address.management=172.25.250.9</pre>
+<pre>$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory \
+-Djboss.home.dir=/path/to/home/directory \
+-Djboss.socket.binding.port-offset=100  \
+-Djboss.bind.address=172.25.250.9 \
+-Djboss.bind.address.management=172.25.250.9</pre>
 </div>
 </div>
 </li>
@@ -436,7 +440,8 @@ tmp/</pre>
 <div class="listingblock">
 <div class="content">
 <pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/standalone/
-[vagrant@server standalone]$ sudo cp -r configuration deployments lib /opt/standalone-running</pre>
+[vagrant@server standalone]$ sudo cp -r configuration deployments lib  \
+/opt/standalone-running</pre>
 </div>
 </div>
 </li>
@@ -450,7 +455,10 @@ tmp/</pre>
 <div class="content">
 <pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
 [vagrant@server bin]$ sudo ./standalone.sh \
--Djboss.server.base.dir=/opt/standalone-running/ -Djboss.socket.binding.port-offset=10000 -Djboss.bind.address=172.25.250.9 -Djboss.bind.address.management=172.25.250.9</pre>
+-Djboss.server.base.dir=/opt/standalone-running/ \
+-Djboss.socket.binding.port-offset=10000 \
+-Djboss.bind.address=172.25.250.9 \
+-Djboss.bind.address.management=172.25.250.9</pre>
 </div>
 </div>
 </li>
@@ -461,8 +469,8 @@ tmp/</pre>
 <pre>10:24:24,663 INFO  [org.jboss.ws.common.management] (MSC service thread 1-4) JBWS022052: Starting JBossWS 7.0.0.Final-redhat-00001 (Apache CXF 4.0.0.redhat-00002)
 10:24:24,666 INFO  [org.jboss.as.server.deployment.scanner] (MSC service thread 1-2) WFLYDS0013: Started FileSystemDeploymentService for directory /opt/standalone-running/deployments
 10:24:24,793 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0212: Resuming server
-10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on <a href="http://127.0.0.1:19990/management" class="bare">http://127.0.0.1:19990/management</a>
-10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on <a href="http://127.0.0.1:19990" class="bare">http://127.0.0.1:19990</a></pre>
+10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on <a href="http://172.25.250.9:19990/management" class="bare">http://172.25.250.9:19990/management</a>
+10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on <a href="http://172.25.250.9:19990" class="bare">http://172.25.250.9:19990</a></pre>
 </div>
 </div>
 </li>
@@ -470,10 +478,10 @@ tmp/</pre>
 </div>
 </li>
 <li>
-<p>Navigate to <a href="http://localhost:18080" class="bare">http://localhost:18080</a> to see the JBoss EAP welcome page with the new port offset.</p>
+<p>Navigate to <a href="http://172.25.250.9:18080" class="bare">http://172.25.250.9:18080</a> to see the JBoss EAP welcome page with the new port offset.</p>
 </li>
 <li>
-<p>Navigate to <a href="http://localhost:19990" class="bare">http://localhost:19990</a> to see the JBoss EAP management console, which runs with the same port offset.</p>
+<p>Navigate to <a href="http://172.25.250.9:19990" class="bare">http://172.25.250.9:19990</a> to see the JBoss EAP management console, which runs with the same port offset.</p>
 </li>
 <li>
 <p>Explore the contents of the directory <code>/opt/standalone-running</code> in a new terminal window:</p>
