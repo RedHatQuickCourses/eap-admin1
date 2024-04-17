@@ -256,7 +256,8 @@ Password: XXXXX
 <p>Optionally you can use --user and --password to pass credentials if needed.</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  --user=XXXXX --password=XXXXX</pre>
+<pre>[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  \
+--user=XXXXX --password=XXXXX</pre>
 </div>
 </div>
 </li>
@@ -538,7 +539,8 @@ os.version: 5.14.0-284.25.1.el9_2.x86_64</pre>
 <p>You can enter /. Then, press Tab to view all possible values after the / character.</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server ~]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  --user=XXXXX --password=XXXXX
+<pre>[vagrant@server ~]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  \
+--user=XXXXX --password=XXXXX
 [standalone@localhost:9990 /] /
 core-service          extension             socket-binding-group
 deployment            interface             subsystem
@@ -593,10 +595,10 @@ management  public</pre>
 <p>JBoss EAP 8 supports script files for CLI management, aiding in repetitive tasks.</p>
 </li>
 <li>
-<p>For instance, you can configure a data source and test its connection using a script:</p>
+<p>For instance, you can configure a data source and test its connection by create a script as shown below:</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server ~]$ sudo vi /opt/create-datasource.cli
+<pre>[vagrant@server ~]$ <strong>sudo vi /opt/create-datasource.cli</strong>
 /subsystem=datasources/data-source=appDs:add(jndi-name=java:jboss/datasources/appDS,driver-name=h2,user-name=jb248,password=jb248,connection-url="jdbc:h2:mem:app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
 /subsystem=datasources/data-source=appDs:test-connection-in-pool</pre>
 </div>
@@ -606,7 +608,9 @@ management  public</pre>
 <p>Execute script <code>/opt/create-datasource.cli</code> as shown below:</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh --connect --controller=localhost:9990 --file=/opt/create-datasource.cli
+<pre>[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh \
+--connect --controller=localhost:9990 \
+--file=/opt/create-datasource.cli
 {
     "outcome" =&gt; "success",
     "response-headers" =&gt; {"process-state" =&gt; "reload-required"}
@@ -623,7 +627,9 @@ management  public</pre>
 <p>Also, you can execute multiple commands using the <code>--commands</code> attribute:</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh --connect --controller=localhost:9990 --commands="cd /subsystem=datasources, ls"
+<pre>[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh \
+--connect --controller=localhost:9990 \
+--commands="cd /subsystem=datasources, ls"
 data-source
 jdbc-driver
 xa-data-source
