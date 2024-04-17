@@ -65,7 +65,8 @@ Note: Authentication relies on the OS user running the management CLI being the 
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  --user=XXXXX --password=XXXXX
+[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  \
+--user=XXXXX --password=XXXXX
 ----
 
 === JBoss EAP 8 Commands
@@ -264,7 +265,8 @@ Replace myDataSource with the name of the data source you want to remove.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  --user=XXXXX --password=XXXXX
+[vagrant@server ~]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  \
+--user=XXXXX --password=XXXXX
 [standalone@localhost:9990 /] /
 core-service          extension             socket-binding-group
 deployment            interface             subsystem
@@ -292,11 +294,11 @@ management  public
 
 * JBoss EAP 8 supports script files for CLI management, aiding in repetitive tasks.
 
-* For instance, you can configure a data source and test its connection using a script:
+* For instance, you can configure a data source and test its connection by create a script as shown below:
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo vi /opt/create-datasource.cli
+[vagrant@server ~]$ *sudo vi /opt/create-datasource.cli*
 /subsystem=datasources/data-source=appDs:add(jndi-name=java:jboss/datasources/appDS,driver-name=h2,user-name=jb248,password=jb248,connection-url="jdbc:h2:mem:app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
 /subsystem=datasources/data-source=appDs:test-connection-in-pool
 ----
@@ -305,7 +307,9 @@ management  public
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh --connect --controller=localhost:9990 --file=/opt/create-datasource.cli
+[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh \
+--connect --controller=localhost:9990 \
+--file=/opt/create-datasource.cli
 {
     "outcome" => "success",
     "response-headers" => {"process-state" => "reload-required"}
@@ -321,7 +325,9 @@ management  public
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh --connect --controller=localhost:9990 --commands="cd /subsystem=datasources, ls"
+[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh \
+--connect --controller=localhost:9990 \
+--commands="cd /subsystem=datasources, ls"
 data-source
 jdbc-driver
 xa-data-source
