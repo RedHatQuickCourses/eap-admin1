@@ -2,9 +2,9 @@
 
 * JBoss EAP 8 employs XML files for configuration, offering three methods:
 
-. **Management console**: A web app for modifying XML configs.
-. **Management CLI**: A command-line tool for remote configuration and script writing.
-. **Manual XML editing**: Discouraged by Red Hat.
+. **Management console**: JBoss EAP 8 offers an easy to use web console to configure various subsystems of JBoss EAP.
+. **Management CLI**: A command-line tool for configuration and scripting.
+. **Manual XML editing**: It's typically advised to avoid directly modifying XML configuration files, although there are situations where it may become necessary.
 
 Benefits of the management CLI include GUI-free server management and scriptable task execution, while offering comprehensive configuration control compared to the console.
 
@@ -36,23 +36,12 @@ Password: XXXXXXX
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect
-Authenticating against security realm: ManagementRealm
-Username: XXXXX
-Password: XXXXX
+[vagrant@server bin]$ sudo -u jboss $JBOSS_HOME/bin/jboss-cli.sh --connect
 [standalone@localhost:9990 /]
 
-[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh -c
-Authenticating against security realm: ManagementRealm
-Username: XXXXX
-Password: XXXXX
+[vagrant@server bin]$ sudo -u jboss $JBOSS_HOME/bin/jboss-cli.sh -c
 [standalone@localhost:9990 /]
 ----
-
-[Note]
-====
-Note: Authentication relies on the OS user running the management CLI being the same as the one starting JBoss EAP.
-====
 
 * For connecting to a different host, use the --controller argument:
 +
@@ -75,135 +64,16 @@ Note: Authentication relies on the OS user running the management CLI being the 
 
 * Basic supported commands include:
 . **connect**: Connect to the server or domain controller.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh
-[disconnected /] connect
-[standalone@localhost:9990 /]
-----
-
 . **cn or cd**: Change the current node path.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] cd path=user.home
-[standalone@localhost:9990 /] cd /
-[standalone@localhost:9990 /]
-----
-
 . **ls**: List contents of the node path.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] cd path=user.home
-[standalone@localhost:9990 path=user.home] ls
-name=user.home         read-only=true
-path=/home/jboss       relative-to=undefined
-----
-
 . **help**: Display the help page.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] help
-SYNOPSIS
-    help ( [<command or operation name>] | [--commands] )
-...output_omitted...
-----
-
 . **history**: Manage history expansion.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] history
-ls
-connect
-...output_omitted...
-----
-
 . **version**: Print version and environment information.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] version
-JBoss Admin Command-line Interface
-JBOSS_HOME: /opt/EAP-8.0.0
-Release: 21.0.5.Final-redhat-00001
-Product: JBoss EAP 8.0 Update 1.0
-JAVA_HOME: null
-java.version: 17.0.6
-java.vm.vendor: Red Hat, Inc.
-java.vm.version: 17.0.6+10-LTS
-os.name: Linux
-os.version: 5.14.0-284.25.1.el9_2.x86_64
-----
-
 . **pwn or pwd**: Print the current working node.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] cd path=user.home
-[standalone@localhost:9990 path=user.home] pwd
-/path=user.home
-----
-
 . **data-source**: Manage resources of the /subsystem=datasources/data-source type.
-.. Let's say you want to create a data source named "myDataSource" with the following configuration:
-
-... **JNDI name**: java:jboss/datasources/myDataSource
-... **Driver name**: h2
-... **Username**: myUsername
-... **Password**: myPassword
-... **Connection URL**: jdbc:h2:mem:test
-
-.. Connect to the JBoss EAP server:
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect
-----
-
-.. Add the data source:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:add(jndi-name=java:jboss/datasources/myDataSource, driver-name=h2, user-name=myUsername, password=myPassword, connection-url="jdbc:h2:mem:test")
-{"outcome" => "success"}
-----
-
-.. Test the connection:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:test-connection-in-pool
-{
-    "outcome" => "success",
-    "result" => [true]
-}
-----
-
-.. This will create the data source and test the connection to ensure it's functioning correctly. You can adjust the configuration parameters as needed for your specific use case.
-
 . **deploy**: Deploy an application.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] deploy /path/to/myapp.war --name=myapp.war
-----
-
 . **undeploy**: Undeploy an application.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] undeploy myapp.war
-----
-
 . **exit or quit**: Quit the management CLI.
-+
-----
-[standalone@localhost:9990 /] exit
-----
 
 === Operations
 
@@ -332,4 +202,119 @@ data-source
 jdbc-driver
 xa-data-source
 installed-drivers=[{"driver-name" => "h2","deployment-name" => undefined,"driver-module-name" => "com.h2database.h2","module-slot" => "main","driver-datasource-class-name" => "","driver-xa-datasource-class-name" => "org.h2.jdbcx.JdbcDataSource","datasource-class-info" => [{"org.h2.jdbcx.JdbcDataSource" => {"URL" => "java.lang.String","description" => "java.lang.String","loginTimeout" => "int","password" => "java.lang.String","url" => "java.lang.String","user" => "java.lang.String"}}],"driver-class-name" => "org.h2.Driver","driver-major-version" => 2,"driver-minor-version" => 1,"jdbc-compliant" => true}]
+----
+
+== Lab: Executing JBoss EAP 8 commands
+
+**Outcome**: In this lab, you execute different JBoss EAP 8 commands.
+
+* Connect to the server or domain controller.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh
+[disconnected /] connect
+[standalone@localhost:9990 /]
+----
+
+* Change the current node path to `user.home` as shown in below command.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 /] cd /
+[standalone@localhost:9990 /]
+----
+
+* List contents of current node path.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 path=user.home] ls
+name=user.home         read-only=true
+path=/home/jboss       relative-to=undefined
+----
+
+* Display the help page.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] help
+SYNOPSIS
+    help ( [<command or operation name>] | [--commands] )
+...output_omitted...
+----
+
+* Display the history of commands executed so far.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] history
+help
+...output_omitted...
+----
+
+* Print version and environment information.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] version
+JBoss Admin Command-line Interface
+JBOSS_HOME: /opt/EAP-8.0.0
+Release: 21.0.5.Final-redhat-00001
+Product: JBoss EAP 8.0 Update 1.0
+JAVA_HOME: null
+java.version: 17.0.6
+java.vm.vendor: Red Hat, Inc.
+java.vm.version: 17.0.6+10-LTS
+os.name: Linux
+os.version: 5.14.0-284.25.1.el9_2.x86_64
+----
+
+* Print the current working node.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 path=user.home] pwd
+/path=user.home
+----
+
+* Manage resources of the /subsystem=datasources/data-source type.
+
+. Create a data source named "myDataSource" with the following configuration:
+
+... **JNDI name**: java:jboss/datasources/myDataSource
+... **Driver name**: h2
+... **Username**: myUsername
+... **Password**: myPassword
+... **Connection URL**: jdbc:h2:mem:test
+
+. Add the data source:
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:add(jndi-name=java:jboss/datasources/myDataSource, driver-name=h2, user-name=myUsername, password=myPassword, connection-url="jdbc:h2:mem:test")
+{"outcome" => "success"}
+----
+
+. Test the connection:
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:test-connection-in-pool
+{
+    "outcome" => "success",
+    "result" => [true]
+}
+----
+
+. This will create the data source and test the connection to ensure it's functioning correctly. You can adjust the configuration parameters as needed for your specific use case.
+
+* Quit the management CLI.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] exit
 ----
