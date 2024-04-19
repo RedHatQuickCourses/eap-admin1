@@ -90,7 +90,7 @@
     <a class="nav-link" href="eap-cli.html">JBoss EAP CLI</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="deploy.html">Deploying Applications</a>
+    <a class="nav-link" href="deploy.html">Deploying Applications to a Standalone Server</a>
   </li>
 </ul>
   </li>
@@ -167,13 +167,13 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Management console</strong>: A web app for modifying XML configs.</p>
+<p><strong>Management console</strong>: JBoss EAP 8 offers an easy to use web console to configure various subsystems of JBoss EAP.</p>
 </li>
 <li>
-<p><strong>Management CLI</strong>: A command-line tool for remote configuration and script writing.</p>
+<p><strong>Management CLI</strong>: A command-line tool for configuration and scripting.</p>
 </li>
 <li>
-<p><strong>Manual XML editing</strong>: Discouraged by Red Hat.</p>
+<p><strong>Manual XML editing</strong>: It&#8217;s typically advised to avoid directly modifying XML configuration files, although there are situations where it may become necessary.</p>
 </li>
 </ol>
 </div>
@@ -219,31 +219,14 @@ Password: XXXXXXX
 <p>To automatically connect, use the <code>--connect</code> or <code>-c</code> argument:</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect
-Authenticating against security realm: ManagementRealm
-Username: XXXXX
-Password: XXXXX
+<pre>[vagrant@server bin]$ sudo -u jboss $JBOSS_HOME/bin/jboss-cli.sh --connect
 [standalone@localhost:9990 /]
 
-[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh -c
-Authenticating against security realm: ManagementRealm
-Username: XXXXX
-Password: XXXXX
+[vagrant@server bin]$ sudo -u jboss $JBOSS_HOME/bin/jboss-cli.sh -c
 [standalone@localhost:9990 /]</pre>
 </div>
 </div>
 </li>
-</ul>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>Note: Authentication relies on the OS user running the management CLI being the same as the one starting JBoss EAP.</p>
-</div>
-</div>
-</div>
-<div class="ulist">
-<ul>
 <li>
 <p>For connecting to a different host, use the --controller argument:</p>
 <div class="listingblock">
@@ -276,169 +259,36 @@ Password: XXXXX
 <ol class="arabic">
 <li>
 <p><strong>connect</strong>: Connect to the server or domain controller.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh
-[disconnected /] connect
-[standalone@localhost:9990 /]</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>cn or cd</strong>: Change the current node path.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] cd path=user.home
-[standalone@localhost:9990 /] cd /
-[standalone@localhost:9990 /]</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>ls</strong>: List contents of the node path.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] cd path=user.home
-[standalone@localhost:9990 path=user.home] ls
-name=user.home         read-only=true
-path=/home/jboss       relative-to=undefined</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>help</strong>: Display the help page.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] help
-SYNOPSIS
-    help ( [&lt;command or operation name&gt;] | [--commands] )
-...output_omitted...</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>history</strong>: Manage history expansion.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] history
-ls
-connect
-...output_omitted...</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>version</strong>: Print version and environment information.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] version
-JBoss Admin Command-line Interface
-JBOSS_HOME: /opt/EAP-8.0.0
-Release: 21.0.5.Final-redhat-00001
-Product: JBoss EAP 8.0 Update 1.0
-JAVA_HOME: null
-java.version: 17.0.6
-java.vm.vendor: Red Hat, Inc.
-java.vm.version: 17.0.6+10-LTS
-os.name: Linux
-os.version: 5.14.0-284.25.1.el9_2.x86_64</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>pwn or pwd</strong>: Print the current working node.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] cd path=user.home
-[standalone@localhost:9990 path=user.home] pwd
-/path=user.home</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>data-source</strong>: Manage resources of the /subsystem=datasources/data-source type.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Let&#8217;s say you want to create a data source named "myDataSource" with the following configuration:</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p><strong>JNDI name</strong>: java:jboss/datasources/myDataSource</p>
-</li>
-<li>
-<p><strong>Driver name</strong>: h2</p>
-</li>
-<li>
-<p><strong>Username</strong>: myUsername</p>
-</li>
-<li>
-<p><strong>Password</strong>: myPassword</p>
-</li>
-<li>
-<p><strong>Connection URL</strong>: jdbc:h2:mem:test</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Connect to the JBoss EAP server:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Add the data source:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:add(jndi-name=java:jboss/datasources/myDataSource, driver-name=h2, user-name=myUsername, password=myPassword, connection-url="jdbc:h2:mem:test")
-{"outcome" =&gt; "success"}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Test the connection:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:test-connection-in-pool
-{
-    "outcome" =&gt; "success",
-    "result" =&gt; [true]
-}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>This will create the data source and test the connection to ensure it&#8217;s functioning correctly. You can adjust the configuration parameters as needed for your specific use case.</p>
-</li>
-</ol>
-</div>
 </li>
 <li>
 <p><strong>deploy</strong>: Deploy an application.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] deploy /path/to/myapp.war --name=myapp.war</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>undeploy</strong>: Undeploy an application.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] undeploy myapp.war</pre>
-</div>
-</div>
 </li>
 <li>
 <p><strong>exit or quit</strong>: Quit the management CLI.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost:9990 /] exit</pre>
-</div>
-</div>
 </li>
 </ol>
 </div>
@@ -642,9 +492,162 @@ installed-drivers=[{"driver-name" =&gt; "h2","deployment-name" =&gt; undefined,"
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_lab_executing_jboss_eap_8_commands"><a class="anchor" href="#_lab_executing_jboss_eap_8_commands"></a>Lab: Executing JBoss EAP 8 commands</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Outcome</strong>: In this lab, you execute different JBoss EAP 8 commands.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Connect to the server or domain controller.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh
+[disconnected /] connect
+[standalone@localhost:9990 /]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Change the current node path to <code>user.home</code> as shown in below command.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 /] cd /
+[standalone@localhost:9990 /]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>List contents of current node path.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 path=user.home] ls
+name=user.home         read-only=true
+path=/home/jboss       relative-to=undefined</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the help page.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] help
+SYNOPSIS
+    help ( [&lt;command or operation name&gt;] | [--commands] )
+...output_omitted...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Display the history of commands executed so far.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] history
+help
+...output_omitted...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Print version and environment information.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] version
+JBoss Admin Command-line Interface
+JBOSS_HOME: /opt/EAP-8.0.0
+Release: 21.0.5.Final-redhat-00001
+Product: JBoss EAP 8.0 Update 1.0
+JAVA_HOME: null
+java.version: 17.0.6
+java.vm.vendor: Red Hat, Inc.
+java.vm.version: 17.0.6+10-LTS
+os.name: Linux
+os.version: 5.14.0-284.25.1.el9_2.x86_64</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Print the current working node.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 path=user.home] pwd
+/path=user.home</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Manage resources of the /subsystem=datasources/data-source type.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a data source named "myDataSource" with the following configuration:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p><strong>JNDI name</strong>: java:jboss/datasources/myDataSource</p>
+</li>
+<li>
+<p><strong>Driver name</strong>: h2</p>
+</li>
+<li>
+<p><strong>Username</strong>: myUsername</p>
+</li>
+<li>
+<p><strong>Password</strong>: myPassword</p>
+</li>
+<li>
+<p><strong>Connection URL</strong>: jdbc:h2:mem:test</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Add the data source:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:add(jndi-name=java:jboss/datasources/myDataSource, driver-name=h2, user-name=myUsername, password=myPassword, connection-url="jdbc:h2:mem:test")
+{"outcome" =&gt; "success"}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Test the connection:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:test-connection-in-pool
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; [true]
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>This will create the data source and test the connection to ensure it&#8217;s functioning correctly. You can adjust the configuration parameters as needed for your specific use case.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Quit the management CLI.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] exit</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="eap-web-console.html">JBoss EAP Web Console</a></span>
-  <span class="next"><a href="deploy.html">Deploying Applications</a></span>
+  <span class="next"><a href="deploy.html">Deploying Applications to a Standalone Server</a></span>
 </nav>
 </article>
   </div>
