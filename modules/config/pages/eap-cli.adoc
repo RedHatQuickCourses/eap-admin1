@@ -1,200 +1,320 @@
 = JBoss EAP CLI
 
-Connect to an instance of JBoss EAP standalone with the management CLI and execute general commands.
+* JBoss EAP 8 employs XML files for configuration, offering three methods:
 
-Management Command-line Interface (CLI) Tool Overview
-In Red Hat JBoss Enterprise Application Platform (JBoss EAP) the configuration values reside in XML files. There are three different options for configuring for JBoss EAP servers:
+. **Management console**: JBoss EAP 8 offers an easy to use web console to configure various subsystems of JBoss EAP.
+. **Management CLI**: A command-line tool for configuration and scripting.
+. **Manual XML editing**: It's typically advised to avoid directly modifying XML configuration files, although there are situations where it may become necessary.
 
-Management console
-A web application that modifies the underlying XML configuration files.
+Benefits of the management CLI include GUI-free server management and scriptable task execution, while offering comprehensive configuration control compared to the console.
 
-Management command-line interface (CLI)
-A command-line tool to manage and configure JBoss EAP instances remotely from the operating system terminal, including writing scripts for repetitive tasks.
+== Executing Commands
 
-XML
-The action of manually editing XML configuration files. Red Hat does not recommend manually editing configuration files.
+* Run the `jboss-cli.sh` script to start the management CLI from the bin directory of the JBoss EAP installation.
 
-Some of the benefits of using the management CLI include:
-
-Managing servers without the need of a GUI.
-
-Writing commands in a separate file and execute them as a batch. This capability enables you to write scripts for common tasks.
-
-The management console has limitations, but the management CLI configures almost every aspect of the XML configuration files.
-
-Admin-Only Mode of Management CLI
-JBoss EAP 7 embeds a JBoss EAP server instance inside the management CLI process. By using the embedded JBoss EAP 7 server, you can access the management CLI remote administration without connecting to a running server.
-
-The main goal of using this approach is to enable the local administration of JBoss EAP without requiring a socket-based connection. This can be very useful when, for example, for security reasons, the 9990 management port is not available.
-
-Another example of how this is useful is that you can perform some configuration offline and apply in production only when the update can be made.
-
-To use this feature, it is necessary to start the management CLI without providing the connection parameter:
-
-# $JBOSS_HOME/bin/jboss-cli.sh
-Then, you can start the embedded server:
-
-[disconnected /] embed-server --server-config=standalone-ha.xml
-In the previous example, every change made by the management CLI persists on the standalone-ha.xml file, which is available in the JBOSS_HOME/standalone/configuration directory. If you do not specify the --server-config parameter, then the standalone.xml contains the changes.
-
-It is possible to start with an empty configuration using the parameter --empty-config
-
-[disconnected /] embed-server --server-config=production-ha.xml --empty-config
-The production-ha.xml file is created in the JBOSS_HOME/standalone/configuration directory. This file only contains the XML tags related to configurations performed in the management CLI. If the file already exists, then the command fails. This condition prevents the accidental deletion of the configuration file.
-
-NOTE
-If the --empty-config parameter is not specified, then the file specified in the --server-config parameter must exist on the JBOSS_HOME/standalone/configuration directory.
-
-Executing Commands
-The management CLI is started by running the jboss-cli.sh script, which is in the bin directory of the JBoss EAP installation. This script does not require any arguments and if arguments are not provided, then it runs in disconnected mode:
-
-# $JBOSS_HOME/bin/jboss-cli.sh
+* Without arguments, it runs in disconnected mode:
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh
+You are disconnected at the moment. Type 'connect' to connect to the server or 'help' for the list of supported commands.
 [disconnected /]
-The connect command is responsible for connecting to the server. If no argument is provided, then the command tries to connect to the default host,localhost, using the default port, 9990.
+----
 
+* The connect command connects to the default host (localhost) and port (9990) if no arguments are provided:
++
+[subs="+quotes,+macros"]
+----
 [disconnected /] connect localhost:9990
-To automatically connect using the jboss-cli.sh script, use the --connect argument:
+Authenticating against security realm: ManagementRealm
+Username: XXXXXXX
+Password: XXXXXXX
+[standalone@localhost:9990 /]
+----
 
-# $JBOSS_HOME/bin/jboss-cli.sh --connect
-NOTE
-The OS user that runs the management CLI must be the same as the one that started JBoss EAP. The authentication is based on creating a file to pass a one-time token. The JBoss EAP instance creates the file. If the management CLI can read the file, then it sends the token to JBoss EAP to authenticate.
+* To automatically connect, use the `--connect` or `-c` argument:
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server bin]$ sudo -u jboss $JBOSS_HOME/bin/jboss-cli.sh --connect
+[standalone@localhost:9990 /]
 
-If JBoss EAP and the management CLI are started by different OS users, then the management CLI cannot read the file and the local authentication fails. Then, authentication falls back, and the management CLI requests for a username and a password.
+[vagrant@server bin]$ sudo -u jboss $JBOSS_HOME/bin/jboss-cli.sh -c
+[standalone@localhost:9990 /]
+----
 
-You can use a shortcut to connect to a server:
+* For connecting to a different host, use the --controller argument:
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect --controller=ip:port
+----
 
-# $JBOSS_HOME/bin/jboss-cli.sh -c
-To connect to a different host machine, use the --controller argument:
+* Optionally you can use --user and --password to pass credentials if needed.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  \
+--user=XXXXX --password=XXXXX
+----
 
-# $JBOSS_HOME/bin/jboss-cli.sh --connect --controller=ip:port
-NOTE
-By default, the management CLI does not request credentials if it is running in the same host that started the server. The credentials can be passed with the --user and --password arguments.
+=== JBoss EAP 8 Commands
 
-Operations
-Operations are a low level way to manage the JBoss EAP server.
+* The management CLI for JBoss EAP 8 offers user-friendly commands that translate into operation requests.
 
-An operation in the management CLI has the following format:
+* Basic supported commands include:
+. **connect**: Connect to the server or domain controller.
+. **cn or cd**: Change the current node path.
+. **ls**: List contents of the node path.
+. **help**: Display the help page.
+. **history**: Manage history expansion.
+. **version**: Print version and environment information.
+. **pwn or pwd**: Print the current working node.
+. **data-source**: Manage resources of the /subsystem=datasources/data-source type.
+. **deploy**: Deploy an application.
+. **undeploy**: Undeploy an application.
+. **exit or quit**: Quit the management CLI.
 
-[node] : operation_name [ parameters ] [ headers ]
-The node represents the target resource address or the node where the operation is invoked. It is a key/value pair with the node type and the node name. An example of a node is /subsystem=datasources.
+=== Operations
 
-After specifying the desired node, you must define the operation name with an optional list of parameters. The colon is required before the operation name because it serves as a separator between the node and the operation. A colon is required even if the node is empty. In this case, the operation is executed in the current node level.
+* Operations are a low level way to manage the JBoss EAP server.
+* Operations in the JBoss EAP 8 server management CLI follow this format:
++
+[subs="+quotes,+macros"]
+----
+[node] :operation_name [ parameters ] [ headers ]
+----
 
-The following operations are very common:
+* Format explaination:
+. The node is a key/value pair representing the target resource address.
+. You define the operation name with optional parameters.
+. Common operations include -
+.. **:read-resource** for reading attributes. Eg:
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] :read-resource
+{
+    "outcome" => "success",
+    "result" => {
+        "management-major-version" => 22,
+        "management-micro-version" => 0,
+...output_omitted...
+----
 
-:read-resource
-Reads a model resource attribute value.
+.. **:reload** for server restart. The Java process is not restarted.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] :reload
+{
+    "outcome" => "success",
+    "result" => undefined
+}
+----
 
-:read-operation-names
-Gets the names of all the operations for the given resource.
+.. **:remove** for node deletion
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:remove
+{
+    "outcome" => "success",
+    "response-headers" => {
+        "operation-requires-reload" => true,
+        "process-state" => "reload-required"
+    }
+}
+----
+Replace myDataSource with the name of the data source you want to remove.
 
-:read-operation-description
-Gets the description of given operation.
+=== Tab Completion
+* Tab completion displays available commands at any point in a command.
 
-:reload
-Reloads the server by shutting down all its services and starting them again. The java process is not restarted.
-
-:read-attribute
-Gets the value of an attribute for the selected resource.
-
-:write-attribute
-Sets the value of an attribute for the selected resource.
-
-:remove
-Removes the node.
-
-Commands
-The commands contains a user friendly syntax and translate into operation requests.
-
-The following commands are the basic supported commands for the management CLI:
-
-cn or cd: Change the current node path to the argument.
-
-connect: Connect to the server or domain controller.
-
-data-source: Used to manage resources of the /subsystem=datasources/data-source type .
-
-deploy: Deploy an application.
-
-help: Display the help page.
-
-history: Print, disable, enable, or clear the history expansion.
-
-ls: list the contents of the node path.
-
-pwn or pwd: Prints the current working node.
-
-exit or quit: Quit the management CLI.
-
-undeploy: Undeploy an application.
-
-version: Prints the version and environment information.
-
-Tab Completion
-Tab completion shows all possible commands available at any point in a current command. For example, enter /. Then, press Tab to view all possible values after the / character.
-
+* You can enter /. Then, press Tab to view all possible values after the / character.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ $JBOSS_HOME/bin/jboss-cli.sh --connect  \
+--user=XXXXX --password=XXXXX
 [standalone@localhost:9990 /] /
-core-service          deployment-overlay    interface             socket-binding-group  system-property
-deployment            extension             path                  subsystem
-Start typing interface after the / character, and press Tab. The management CLI not only completes the interface sub-level, but it adds an equals sign, because an equals sign is the only possible value after /interface.
+core-service          extension             socket-binding-group
+deployment            interface             subsystem
+deployment-overlay    path                  system-property
+----
 
-Press Tab again and all the interfaces display:
+* Scripts can be executed using text files, and batch commands support multiple operations in one atomic unit, ensuring rollback if any operation fails.
+* External scripts can integrate with the CLI using the `--command` or `--commands` attribute.
 
+[Tip]
+====
+* Tip:
+. Start typing interface after the / character, and press Tab.
+. The management CLI not only completes the interface sub-level, but it adds an equals sign, because an equals sign is the only possible value after /interface.
+. Press Tab again and all the interfaces display:
++
+[subs="+quotes,+macros"]
+----
 [standalone@localhost:9990 /] /interface=
 management  public
-Running a Management CLI Script File
-JBoss EAP supports using a text file for the management CLI as a script. Using this approach, you can create scripts for repetitive tasks. For example, you can create a script file that configures a data source and test a connection from the pool:
+----
+====
 
-/subsystem=datasources/data-source=appDs:add\
-(jndi-name=java:jboss/datasources/appDS,driver-name=h2,user-name=jb248, \
-password=jb248,connection-url="jdbc:h2:mem:app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
+=== Running a Management CLI Script File
+
+* JBoss EAP 8 supports script files for CLI management, aiding in repetitive tasks.
+
+* For instance, you can configure a data source and test its connection by create a script as shown below:
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ *sudo vi /opt/create-datasource.cli*
+/subsystem=datasources/data-source=appDs:add(jndi-name=java:jboss/datasources/appDS,driver-name=h2,user-name=jb248,password=jb248,connection-url="jdbc:h2:mem:app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
 /subsystem=datasources/data-source=appDs:test-connection-in-pool
-You can execute the previous content from a /home/student/create-datasource.cli text file:
+----
 
-# $JBOSS_HOME/jboss-cli.sh --connect --controller=localhost:9990 \
---file=/home/student/create-datasource.cli
-The management CLI provides a batch command that supports multiple commands in one atomic unit. If one of the commands or operations fails, then all the other successfully commands and operations in the batch are rolled back.
+* Execute script `/opt/create-datasource.cli` as shown below:
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh \
+--connect --controller=localhost:9990 \
+--file=/opt/create-datasource.cli
+{
+    "outcome" => "success",
+    "response-headers" => {"process-state" => "reload-required"}
+}
+{
+    "outcome" => "success",
+    "result" => [true],
+    "response-headers" => {"process-state" => "reload-required"}
+}
+----
 
-In the previous example, it as good idea to create the data source using the batch command. If testing a connection from the pool fails, then the data source creation is rolled back. To execute a batch, use the run-batch command:
+* Also, you can execute multiple commands using the `--commands` attribute:
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/jboss-cli.sh \
+--connect --controller=localhost:9990 \
+--commands="cd /subsystem=datasources, ls"
+data-source
+jdbc-driver
+xa-data-source
+installed-drivers=[{"driver-name" => "h2","deployment-name" => undefined,"driver-module-name" => "com.h2database.h2","module-slot" => "main","driver-datasource-class-name" => "","driver-xa-datasource-class-name" => "org.h2.jdbcx.JdbcDataSource","datasource-class-info" => [{"org.h2.jdbcx.JdbcDataSource" => {"URL" => "java.lang.String","description" => "java.lang.String","loginTimeout" => "int","password" => "java.lang.String","url" => "java.lang.String","user" => "java.lang.String"}}],"driver-class-name" => "org.h2.Driver","driver-major-version" => 2,"driver-minor-version" => 1,"jdbc-compliant" => true}]
+----
 
-batch
-/subsystem=datasources/data-source=appDs:add\
-(jndi-name=java:jboss/datasources/appDS,driver-name=h2,user-name=jb248,\
-password=jb248,connection-url="jdbc:h2:mem:app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
-/subsystem=datasources/data-source=appDs:test-connection-in-pool
-run-batch
-Running a Command from an External Script
-The management CLI enables integration with external scripts. You can pass a command or an operation to the CLI by using the --command attribute:
+== Lab: Executing JBoss EAP 8 commands
 
-# $JBOSS_HOME/jboss-cli.sh -c --controller=localhost:9990 \
---command="/subsystem=datasources:read-resource"
-The result of the operation returns, in DMR syntax, to the script that invoked the CLI. You can specify a set of commands by using the commands attribute. This attribute specifies a comma-separated list (the list must not contain whitespace) of commands and operations that should be executed in the management CLI session.
+**Outcome**: In this lab, you execute different JBoss EAP 8 commands.
 
-# ./jboss-cli.sh -c --controller=localhost:9990 --commands="cd /subsystem=datasources,ls"
+* Connect to the server or domain controller.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server bin]$ $JBOSS_HOME/bin/jboss-cli.sh
+[disconnected /] connect
+[standalone@localhost:9990 /]
+----
 
-== Section Header
+* Change the current node path to `user.home` as shown in below command.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 /] cd /
+[standalone@localhost:9990 /]
+----
 
-lorem ipsem...
+* List contents of current node path.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 path=user.home] ls
+name=user.home         read-only=true
+path=/home/jboss       relative-to=undefined
+----
 
-== References
+* Display the help page.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] help
+SYNOPSIS
+    help ( [<command or operation name>] | [--commands] )
+...output_omitted...
+----
 
-This section may not possibly have any hands-on....investigate what we can do here....
+* Display the history of commands executed so far.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] history
+help
+...output_omitted...
+----
 
+* Print version and environment information.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] version
+JBoss Admin Command-line Interface
+JBOSS_HOME: /opt/EAP-8.0.0
+Release: 21.0.5.Final-redhat-00001
+Product: JBoss EAP 8.0 Update 1.0
+JAVA_HOME: null
+java.version: 17.0.6
+java.vm.vendor: Red Hat, Inc.
+java.vm.version: 17.0.6+10-LTS
+os.name: Linux
+os.version: 5.14.0-284.25.1.el9_2.x86_64
+----
 
+* Print the current working node.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] cd path=user.home
+[standalone@localhost:9990 path=user.home] pwd
+/path=user.home
+----
 
+* Manage resources of the /subsystem=datasources/data-source type.
 
+. Create a data source named "myDataSource" with the following configuration:
 
-Brief overview of the EAP CLI and it's config languages
+... **JNDI name**: java:jboss/datasources/myDataSource
+... **Driver name**: h2
+... **Username**: myUsername
+... **Password**: myPassword
+... **Connection URL**: jdbc:h2:mem:test
 
-* Lots of commonly used command examples go here....but remember we have dedicated chapter for specific subsystems - DB, web, JMS etc
+. Add the data source:
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:add(jndi-name=java:jboss/datasources/myDataSource, driver-name=h2, user-name=myUsername, password=myPassword, connection-url="jdbc:h2:mem:test")
+{"outcome" => "success"}
+----
 
-== JBoss EAP CLI
+. Test the connection:
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] /subsystem=datasources/data-source=myDataSource:test-connection-in-pool
+{
+    "outcome" => "success",
+    "result" => [true]
+}
+----
 
-== References
+. This will create the data source and test the connection to ensure it's functioning correctly. You can adjust the configuration parameters as needed for your specific use case.
 
-== Lab: Accessing the JBoss EAP CLI
-
-* Log in to EAP CLI - different ways
-* Start and Stop from CLI
-* Common commands
-* Access and list values in different subsystems
+* Quit the management CLI.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] exit
+----
