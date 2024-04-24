@@ -232,7 +232,7 @@ image::new1.png[align="center"]
 +
 image::new2.png[align="center"]
 
-* Click `Choose a file or drag it here` and select the `kitchensink.war` file, located in your /home/vagrant/eap-qc-apps/admin1 directory. Click `Next`.
+* Click `Choose a file or drag it here` and select the `kitchensink.war` file, located in your `/home/vagrant/eap-qc-apps/admin1/material` directory. Click `Next`.
 +
 image::new3.png[align="center"]
 
@@ -344,7 +344,7 @@ Password: XXXXX
 [subs="+quotes,+macros"]
 ----
 [standalone@localhost:19990 /] deploy \
-/home/vagrant/eap-qc-apps/admin1/temperature-converter.war
+/home/vagrant/eap-qc-apps/admin1/material/temperature-converter.war
 ----
 
 * Look in the terminal window of your running instance of JBoss EAP. You should see output similar to the following:
