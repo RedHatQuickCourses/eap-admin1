@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JBoss EAP 8 Configuration :: Red Hat JBoss EAP Administration I</title>
+    <link rel="prev" href="index.html">
+    <link rel="next" href="eap-web-console.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img
+          src="../../../_/img/redhat-logo.png"
+          height="40px"
+          alt="Red Hat"
+        /></a>
+      <a
+        class="navbar-item"
+        style="font-size: 24px; color: white"
+        href="../../.."
+      >Red Hat JBoss EAP Administration I</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a
+          class="navbar-item"
+          href="https://github.com/RedHatQuickCourses/eap-admin1/issues"
+          target="_blank"
+        >Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="eap-admin1" data-version="8">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Red Hat JBoss EAP Administration I</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../install/index.html">Installation</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/install.html">install.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/admin.html">Managing JBoss EAP</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/extensions.html">Interpreting Extensions, Subsystems, and Profiles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="eap-config.html">JBoss EAP 8 Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="eap-web-console.html">JBoss EAP Web Console</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="eap-cli.html">JBoss EAP CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="deploy.html">Deploying Applications to a Standalone Server</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../subsystems/index.html">Subsystems</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/database.html">Exploring the Data Source Subsystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/logging.html">Configuring Logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/messaging.html">Configuring Messaging (JMS)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/web.html">Configuring the Web Subsystem</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Red Hat JBoss EAP Administration I</span>
+    <span class="version">8</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Red Hat JBoss EAP Administration I</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">8</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Red Hat JBoss EAP Administration I</a></li>
+    <li><a href="index.html">Configuration</a></li>
+    <li><a href="eap-config.html">JBoss EAP 8 Configuration</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">JBoss EAP 8 Configuration</h1>
+<div class="sect1">
+<h2 id="_overview_of_jboss_eap_8_standalone_mode"><a class="anchor" href="#_overview_of_jboss_eap_8_standalone_mode"></a>Overview of JBoss EAP 8 Standalone mode</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Standalone servers are perfect for running a single instance of Red Hat JBoss EAP.</p>
+</li>
+<li>
+<p>You can run multiple standalone instances on the same server or across different servers. Each server is managed "standalone", that is, individually.</p>
+</li>
+<li>
+<p>The configurations for standalone server are:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>JBOSS_HOME/standalone/configuration/standalone.xml</code> file</p>
+</li>
+<li>
+<p><code>JBOSS_HOME/standalone/configuration/standalone-ha.xml</code> file</p>
+</li>
+<li>
+<p><code>JBOSS_HOME/standalone/configuration/standalone-full.xml</code> file</p>
+</li>
+<li>
+<p><code>JBOSS_HOME/standalone/configuration/standalone-full-ha.xml</code> file</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Various subsystems like logging, messaging, and data sources can be configured within this file.</p>
+</li>
+<li>
+<p>JBoss EAP 8 standalone server supports clustering and high availability, configurable through various files alongside <code>standalone.xml</code>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Avoid direct editing of <code>standalone.xml</code> file, opt for the JBoss EAP management CLI or console for safer configuration adjustments. Changes via these interfaces take effect immediately, unlike XML edits, which may not apply instantly and can be overwritten at runtime.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The standalone server and managed domain modes differ primarily in how they manage and configure JBoss EAP instances, not in their capabilities.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_standalone_directory_structure"><a class="anchor" href="#_the_standalone_directory_structure"></a>The Standalone Directory Structure</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>After installing a JBoss EAP 8 distribution, the standalone directory initially contains the following subdirectories:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server standalone]$ pwd
+/opt/EAP-8.0.0/standalone
+
+[vagrant@server ~]$ ls
+configuration/
+deployments/
+lib/</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Breif description of these subdirectories:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>configuration</strong>: This directory holds:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Standalone server configuration files</p>
+</li>
+<li>
+<p><code>standalone_xml_history</code> subdirectory for version control</p>
+</li>
+<li>
+<p><code>logging.properties</code> for logger configuration</p>
+</li>
+<li>
+<p><code>mgmt-users.properties</code> for login credentials</p>
+</li>
+<li>
+<p><code>mgmt-groups.properties</code> for login roles.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>deployments</strong>: This directory holds:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Application deployment files used by Jakarta EE, such as EAR, WAR, and JAR files.</p>
+</li>
+<li>
+<p>Marker files</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>lib</strong>: Contains common JAR files.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>After running JBoss EAP 8 the first time, the following subdirectories of standalone are created:</p>
+<div class="listingblock">
+<div class="content">
+<pre>data/
+log/
+tmp/</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Breif description of these subdirectories:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>data</strong>: A storage location for subsystems handling file system content, like message queues, in-memory databases, or distributed transaction information.</p>
+</li>
+<li>
+<p><strong>log</strong>: The default location for the server log files.</p>
+</li>
+<li>
+<p><strong>tmp</strong>:  For temporary files, like the shared-key mechanism for authenticating local users to the server&#8217;s command-line interface (CLI).</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jboss_eap_8_base_directory"><a class="anchor" href="#_jboss_eap_8_base_directory"></a>JBoss EAP 8 Base Directory</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Users can separate the configuration and data directories from the JBoss EAP 8 installation directory, aiding easier upgrades.</p>
+</li>
+<li>
+<p>This allows the binaries to be installed once and run multiple times on the same machine.</p>
+</li>
+<li>
+<p>Two command-line properties enable this:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>jboss.home.dir</strong>: Installation directory for JBoss EAP binaries.</p>
+</li>
+<li>
+<p><strong>jboss.server.base.dir</strong>: Base directory for server configuration files.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>You can override runtime properties at the command line by using the <code>-D</code> option when starting the server. Some important command-line properties using <code>-D</code> option:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>jboss.server.base.dir</strong>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Specifies the base directory for the server instance.</p>
+</li>
+<li>
+<p>It points to the directory where configuration files, logs, deployments, and other server-related data are stored.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>jboss.socket.binding.port-offset</strong>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>This option allows you to offset the port numbers used by the server.</p>
+</li>
+<li>
+<p>It&#8217;s useful when you want to run multiple instances of JBoss on the same host without port conflicts.</p>
+</li>
+<li>
+<p>For example, if the default HTTP port is 8080 and you set jboss.socket.binding.port-offset to 100, then the HTTP port for this instance would be 8180.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>jboss.bind.address</strong>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>This option specifies the IP address that the JBoss server binds to for incoming network connections.</p>
+</li>
+<li>
+<p>By default, it binds to all available network interfaces (0.0.0.0).</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>jboss.bind.address.management</strong>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Similar to <code>jboss.bind.address</code>, this option specifies the IP address that the JBoss management interfaces (like JMX, CLI, etc.) bind to.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>For instance, when starting the server with standalone.sh, you can use <code>-D</code> option to specify the custom configuration using the command line options mentioned above as shown below.</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory \
+-Djboss.home.dir=/path/to/home/directory \
+-Djboss.socket.binding.port-offset=100  \
+-Djboss.bind.address=172.25.250.9 \
+-Djboss.bind.address.management=172.25.250.9</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lab_configure_jboss_eap_8_standalone_server_using_a_customised_settings"><a class="anchor" href="#_lab_configure_jboss_eap_8_standalone_server_using_a_customised_settings"></a>Lab: Configure JBoss EAP 8 standalone server using a customised settings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Outcome</strong>: In this lab, you should be able to run two instances of JBoss EAP on the same server using using a custom location for the server base directory, custom port and a custom binding IP address.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a custom location for the server base directory using below command.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ sudo mkdir -p /opt/standalone-running</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy the configuration, deployments, and lib directories to the new location.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/standalone/
+[vagrant@server standalone]$ sudo cp -r configuration deployments lib  \
+/opt/standalone-running</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run and test the JBoss EAP Server.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the following command to start the JBoss EAP server by using the <code>standalone.sh</code> script in the original JBoss EAP installation, but using the new configuration files. Change the port-offset attribute to <code>10000</code> using the <code>jboss.socket.binding.port-offset</code> property on the command line. Also modify the IP address that the JBoss server binds to for incoming network connections using the <code>jboss.bind.address</code> and <code>jboss.bind.address.management</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
+[vagrant@server bin]$ sudo ./standalone.sh \
+-Djboss.server.base.dir=/opt/standalone-running/ \
+-Djboss.socket.binding.port-offset=10000 \
+-Djboss.bind.address=172.25.250.9 \
+-Djboss.bind.address.management=172.25.250.9</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The server starts up successfully with an output similar to the following:</p>
+<div class="listingblock">
+<div class="content">
+<pre>10:24:24,663 INFO  [org.jboss.ws.common.management] (MSC service thread 1-4) JBWS022052: Starting JBossWS 7.0.0.Final-redhat-00001 (Apache CXF 4.0.0.redhat-00002)
+10:24:24,666 INFO  [org.jboss.as.server.deployment.scanner] (MSC service thread 1-2) WFLYDS0013: Started FileSystemDeploymentService for directory /opt/standalone-running/deployments
+10:24:24,793 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0212: Resuming server
+10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on <a href="http://172.25.250.9:19990/management" class="bare">http://172.25.250.9:19990/management</a>
+10:24:24,797 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on <a href="http://172.25.250.9:19990" class="bare">http://172.25.250.9:19990</a></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Navigate to <a href="http://172.25.250.9:18080" class="bare">http://172.25.250.9:18080</a> to see the JBoss EAP welcome page with the new port offset.</p>
+</li>
+<li>
+<p>Navigate to <a href="http://172.25.250.9:19990" class="bare">http://172.25.250.9:19990</a> to see the JBoss EAP management console, which runs with the same port offset.</p>
+</li>
+<li>
+<p>Explore the contents of the directory <code>/opt/standalone-running</code> in a new terminal window:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ ls /opt/standalone-running/
+configuration  data   deployments  lib  log  tmp</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Notice the three data, log, and tmp new directories . These directories are automatically created when the JBoss EAP server starts.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the running instance of JBoss EAP that was started in the previous step. Press <code>Ctrl+C</code> in the terminal window in which the server is running.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Configuration</a></span>
+  <span class="next"><a href="eap-web-console.html">JBoss EAP Web Console</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
