@@ -1,13 +1,223 @@
 = Configuring Logging
 
-Brief overview of logging in EAP....
+== JBoss EAP 8 Logging Subsystem
 
-== JBoss EAP Logging Subsystem
+* Logging is vital for application servers like JBoss EAP 8.
 
-== Controlling Log Levels using the EAP Web Console
+* JBoss EAP 8's logging subsystem, consistent with its modular design, is managed by a subsystem and configured in `domain.xml` for managed domain mode and `standalone.xml` for standalone servers.
 
-== Controlling Log Levels using the EAP CLI
+* The subsystem comprises three key components:
 
-== Log Formatters and Appenders
+. **Handlers**:
+.. These dictate where and how server events are logged.
+.. JBoss EAP offers various built-in handlers for logging application messages.
 
-== Lab: Configuring Logging
+. **Loggers**:
+.. Also known as log categories, these organize events into logical groups based on package namespaces within the Java Virtual Machine.
+.. They specify which handlers process and log messages.
+
+. **Root Logger**:
+.. Positioned atop the logger hierarchy, the root logger captures all log messages of a specified level not handled by specific log categories.
+
+* Handlers are activated based on logger references, with loggers able to reference multiple handlers or none at all.
+
+* By default, the log level is **INFO**, with two enabled handlers:
+. **CONSOLE**:  For logging to the console window
+. **FILE**: For logging to a file named server.log.
+
+=== Default Log File Locations
+
+* **Standalone Mode**:
+. Log files reside in the **standalone/log** directory within the base directory.
+. This directory contains two key log files:
+.. **gc.log.0.current**: Managed by settings in **BASE_DIR/bin/standalone.sh**, exclusively logs JVM flags and memory management events from the latest server startup.
+.. **server.log**: Containing server log events, with ongoing additions, this file's configurations are specified within the logging subsystem section of **standalone.xml**.
+
+* **Domain Mode**:
+. Logging spans several locations relative to the base directory.
+.. **domain/log/host-controller.log**: Documents host controller startup events, including connection issues, debug messages, and runtime errors.
+.. **domain/log/process-controller.log**: Records process startup and shutdown events on the host, including those of the host controller and individual servers.
+.. **domain/servers/<server-name>/log/server.log**: Houses log events specific to each server on the host.
+
+* Each server on a host possesses its own log directory. For instance, if a host includes a server named dev-server-one, its log file resides in **domain/servers/dev-server-one/log/server.log**.
+
+* The default log directory location can be altered using the **jboss.server.log.dir** property, relative to **jboss.domain.base.dir**.
+
+[Note]
+====
+It's advisable to regularly rotate server.log files, typically on an hourly or daily basis, or when file size thresholds are met.
+====
+
+== Built-in Log Handlers
+
+* JBoss EAP features built-in handlers, including:
+. **Console handler**: Writes to the console. Configured using the **<console-handler>** element.
+. **File handler**: Writes to a file. Configured using the **<file-handler>** element.
+. **Periodic-rotating file handler**: Rotates logs based on time intervals. Configured using the **<periodic-rotating-file-handler>** element.
+. **Size-rotating file handler**: Rotates logs based on file size. Configured using the **<size-rotating-file-handler>** element.
+. **Asynchronous handler**: Writes logs asynchronously to sub-handlers. Configured using the **<async-handler>** element.
+. **Syslog handler**: Sends events to a remote syslog server. configured using the **<syslog-handler>** element.
+
+* Handlers dictate where and how events are logged, configured within the logging subsystem section of the server configuration file.
+
+[Note]
+====
+Defining a handler doesn't automatically activate it; this is done in either the <logger> or <root-logger> tags. Custom handlers can also be developed.
+====
+
+* Handlers are configured within the logging subsystem section of the server configuration file.
+
+* For example, the **standalone.xml** file and most of the profiles in the **domain.xml** file come preconfigured with a **<console-handler>** definition.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] /subsystem=logging/console-handler=CONSOLE:read-resource
+{
+    "outcome" => "success",
+    "result" => {
+        "autoflush" => true,
+        "enabled" => true,
+        "encoding" => undefined,
+        "filter" => undefined,
+        "filter-spec" => undefined,
+        "formatter" => "%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n",
+        "level" => "DEBUG",
+        "name" => "CONSOLE",
+        "named-formatter" => "COLOR-PATTERN",
+        "target" => "System.out"
+    }
+}
+----
+
+* The corresponding XML looks like:
++
+image::new4.png[align="center"]
+
+. The **CONSOLE** handler can also be configured using the JBoss EAP management console in the **Configuration → Subsystems → Logging** section.
+
+. The **<level>** element specifies the minimum log level for this handler.
+
+. The **<formatter>** element lets you specify a named pattern to use when logging events.
+
+. The **COLOR-PATTERN** formatter colorizes the log output for different levels and makes it easy to locate errors when parsing large log files.
+
+* When using the JBoss EAP 8 management console, loggers are configured and managed within the **Configuration → Subsytems → Logging** section.
+
+* Click **Configuration**, then click **View** to navigate to the log handler configuration page.
++
+image::log.png[align="center"]
+
+== Lab 1: Configuring Logging Handlers
+
+**Outcome**: Create a size rotating file handler and view log messages generated by the application in the JBoss EAP 8 server log files.
+
+* Start the standalone JBoss EAP 8 server.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin/
+[vagrant@server bin]$ ./standalone.sh
+----
+
+* Use a management CLI script file to create a **size-rotating-file-handler** and deploy the **logtest.war** file.
+
+. In a new terminal window, create the **add_sizerotating_log.cli** file.
++
+[subs="+quotes,+macros"]
+----
+[student@workstation ~]$ sudo vi /opt/add_sizerotating_log.cli
+batch
+/subsystem=logging/size-rotating-file-handler=FILE_BY_SIZE_ROTATING/:add\
+(file={"path"=>"production-server.log",\
+"relative-to"=>"jboss.server.log.dir"},\
+formatter="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n",\
+level=INFO,max-backup-index=3,name=FILE_BY_SIZE_ROTATING,\
+rotate-size=1m)
+/subsystem=logging/logger=com.redhat.training.view:add\
+(category=com.redhat.training.view,handlers=["FILE_BY_SIZE_ROTATING"])
+deploy /opt/logtest.war
+run-batch
+----
+
+.. The batch script configures the logging subsystem to use the handler called **FILE_BY_SIZE_ROTATING**.
+.. This handler captures all of the logs generated by the category **com.redhat.training.view**, which represents a Java package where the logging source code is executed.
+.. It captures all of the logs generated with the INFO level in a file called **/opt/EAP-8.0.0/standalone/log/production-server.log**.
+.. After the log file reaches 1 MB in size, the logging subsystem rotates the log file to a new log file with a numbered suffix.
+.. Finally, the script deploys the logtest application.
+.. It is a Java web application with all of the source code in the **com.redhat.training.view** package.
+
+. Open a new terminal and run the management CLI script.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
+[vagrant@server bin]$ ./jboss-cli.sh -c --file=/opt/add_sizerotating_log.cli
+[standalone@localhost:9990 /]
+----
+
+. Verify that the handler was added successfully.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server bin]$ sudo -u jboss ./jboss-cli.sh -c
+[standalone@localhost:9990 /] /subsystem=logging/\
+> size-rotating-file-handler=FILE_BY_SIZE_ROTATING:read-resource
+{
+    "outcome" => "success",
+    "result" => {
+        "append" => true,
+        "autoflush" => true,
+        "enabled" => true,
+        "encoding" => undefined,
+        "file" => {
+            "path" => "production-server.log",
+            "relative-to" => "jboss.server.log.dir"
+        },
+        "filter" => undefined,
+        "filter-spec" => undefined,
+        "formatter" => "%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n",
+        "level" => "INFO",
+        "max-backup-index" => 3,
+        "name" => "FILE_BY_SIZE_ROTATING",
+        "named-formatter" => undefined,
+        "rotate-on-boot" => false,
+        "rotate-size" => "1m",
+        "suffix" => undefined
+    }
+}
+----
+
+* Verify and observe the server handling the log messages generated by the application.
+
+. In a web browser, navigate to http://127.0.0.1:8080/logtest/ to access the logtest application.
++
+image::LogTest_App.png[align="center"]
+
+* Fill out the form with the following values:
+. **Level**: INFO
+. **Message**: Test INFO Msg
+
+Click *Send Log Messages* to send the log message to the handler you created previously.
+
+* In a new terminal window, view the most recent log messages in the **/opt/EAP-8.0.0/standalone/log/production-server.log** file. The **-f** option continues to print changes to the file as they are added.
++
+[subs="+quotes,+macros"]
+----
+[vagrant@server ~]$ tail -f \
+/opt/EAP-8.0.0/standalone/log/production-server.log
+08:12:05,381 INFO  [com.redhat.training.view] (default task-1) Test INFO Msg
+----
+
+* Clean up the server by removing the application.
+
+. In the JBoss EAP CLI terminal window, undeploy the application and exit the CLI.
++
+[subs="+quotes,+macros"]
+----
+[standalone@localhost:9990 /] undeploy logtest.war
+[standalone@localhost:9990 /] exit
+----
+
+. In the tail command terminal window, stop the command by pressing `Ctrl+C`.
+
+. In the JBoss EAP server terminal window, stop the server by pressing `Ctrl+C`.
