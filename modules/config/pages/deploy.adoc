@@ -195,7 +195,7 @@ Note: Undeploying is different from disabling a deployment. Undeploying removes 
 
 **Outcome**: You should be able to deploy the application on JBoss EAP 8 standalone server using management console.
 
-* Open a terminal window from the workstation machine, and run the following commands to start the JBoss EAP 8 server using the /home/student/AD248/labs/deploying-standalone/standalone-instance as the base directory:
+* Open a terminal window and run the following commands to start the JBoss EAP 8 server using the /opt/standalone-running as the base directory:
 +
 [subs="+quotes,+macros"]
 ----
@@ -387,7 +387,7 @@ kitchensink.war temperature-converter.war
 [subs="+quotes,+macros"]
 ----
 ...output_omitted...
-07:55:54,204 INFO  [org.jboss.as.repository] (management-handler-thread - 2) WFLYDR0002: Content removed from location /home/student/AD248/labs/deploying-standalone/standalone-instance/data/content/55/5df23b973ed9f76f7c817deec3bab6a13a7ea3/content
+07:55:54,204 INFO  [org.jboss.as.repository] (management-handler-thread - 2) WFLYDR0002: Content removed from location /opt/standalone-running/data/content/55/5df23b973ed9f76f7c817deec3bab6a13a7ea3/content
 07:55:55,204 INFO  [org.jboss.as.server] (management-handler-thread - 2) WFLYSRV0009: Undeployed "temperature-converter.war" (runtime-name: "temperature-converter.war")
 ----
 
