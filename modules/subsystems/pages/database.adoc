@@ -293,7 +293,7 @@ image::newthree.png[align="center"]
 [standalone@localhost:9990 /] module add --name=com.mariadb --resources=/opt/mariadb-java-client-3.3.2.jar --dependencies=javaee.api,sun.jdk,ibm.jdk,javax.api,javax.transaction.api
 ----
 
-* Open a new terminal in workstation, and validate that the driver installs as a module by listing the JBOSS_HOME/modules/com/mariadb/main directory.
+* Open a new terminal, and validate that the driver installs as a module by listing the JBOSS_HOME/modules/com/mariadb/main directory.
 
 . Verify that the directory contains the module.xml and `mariadb-java-client-3.3.2.jar` files:
 +

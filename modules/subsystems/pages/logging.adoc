@@ -125,7 +125,7 @@ image::log.png[align="center"]
 +
 [subs="+quotes,+macros"]
 ----
-[student@workstation ~]$ sudo vi /opt/add_sizerotating_log.cli
+[vagrant@server ~]$ sudo vi /opt/add_sizerotating_log.cli
 batch
 /subsystem=logging/size-rotating-file-handler=FILE_BY_SIZE_ROTATING/:add\
 (file={"path"=>"production-server.log",\
