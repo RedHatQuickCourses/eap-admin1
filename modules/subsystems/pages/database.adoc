@@ -100,7 +100,7 @@ More on data source configuration sections:
 . The name attribute for the driver corresponds to the value used in the **<datasource>** definition.
 . The module attribute must be assigned to a deployed module on the server.
 
-== Configuring JDBC Drivers
+=== Configuring JDBC Drivers
 
 * Java Database Connectivity (JDBC) is a Java API to communicate with relational databases.
 
@@ -156,7 +156,7 @@ You can run this command in the management CLI disconnected mode.
 [disconnected /] module remove --name=<module_name>
 ----
 
-=== Defining Drivers
+==== Defining Drivers
 
 * After adding the driver as a module, the next step is to create a <driver> definition in the <drivers> section of the data source subsystem in the JBoss EAP configuration file.
 
@@ -184,7 +184,7 @@ You can run this command in the management CLI disconnected mode.
 
 * After defining the <driver> in the <drivers> section of the data source subsystem, the driver is referenced by its name attribute and users can create data sources that use the driver.
 
-== Creating Data Sources with the Management Console
+=== Creating Data Sources with the Management Console
 
 * The EAP management console simplifies datasource creation by offering preconfigured templates for various database vendors.
 
@@ -220,7 +220,7 @@ image::im7.png[align="center"]
 +
 image::im8.png[align="center"]
 
-=== Testing the Data Source
+==== Testing the Data Source
 
 * The management console provides a **Test Connection** button to verify that the connections from a connection pool can access the database.
 +
@@ -234,7 +234,7 @@ image::newtwo.png[align="center"]
 data-source=datasource_name:test-connection-in-pool
 ----
 
-== Creating Dataources with the EAP Management CLI
+=== Creating Dataources with the EAP Management CLI
 
 * You can create data sources by using the management CLI.
 
@@ -293,7 +293,7 @@ image::newthree.png[align="center"]
 [standalone@localhost:9990 /] module add --name=com.mariadb --resources=/opt/mariadb-java-client-3.3.2.jar --dependencies=javaee.api,sun.jdk,ibm.jdk,javax.api,javax.transaction.api
 ----
 
-* Open a new terminal in workstation, and validate that the driver installs as a module by listing the JBOSS_HOME/modules/com/mariadb/main directory.
+* Open a new terminal, and validate that the driver installs as a module by listing the JBOSS_HOME/modules/com/mariadb/main directory.
 
 . Verify that the directory contains the module.xml and `mariadb-java-client-3.3.2.jar` files:
 +
