@@ -103,7 +103,7 @@
     <a class="nav-link" href="index.html">Subsystems</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="database.html">Configuring Datasources</a>
+    <a class="nav-link" href="database.html">Exploring the Data Source Subsystem</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="logging.html">Configuring Logging</a>
@@ -158,45 +158,436 @@
 </aside>
 <article class="doc">
 <h1 class="page">Configuring Logging</h1>
-<div id="preamble">
+<div class="sect1">
+<h2 id="_jboss_eap_8_logging_subsystem"><a class="anchor" href="#_jboss_eap_8_logging_subsystem"></a>JBoss EAP 8 Logging Subsystem</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Logging is vital for application servers like JBoss EAP 8.</p>
+</li>
+<li>
+<p>JBoss EAP 8&#8217;s logging subsystem, consistent with its modular design, is managed by a subsystem and configured in <code>domain.xml</code> for managed domain mode and <code>standalone.xml</code> for standalone servers.</p>
+</li>
+<li>
+<p>The subsystem comprises three key components:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Handlers</strong>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>These dictate where and how server events are logged.</p>
+</li>
+<li>
+<p>JBoss EAP offers various built-in handlers for logging application messages.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Loggers</strong>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Also known as log categories, these organize events into logical groups based on package namespaces within the Java Virtual Machine.</p>
+</li>
+<li>
+<p>They specify which handlers process and log messages.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Root Logger</strong>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Positioned atop the logger hierarchy, the root logger captures all log messages of a specified level not handled by specific log categories.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Handlers are activated based on logger references, with loggers able to reference multiple handlers or none at all.</p>
+</li>
+<li>
+<p>By default, the log level is <strong>INFO</strong>, with two enabled handlers:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>CONSOLE</strong>:  For logging to the console window</p>
+</li>
+<li>
+<p><strong>FILE</strong>: For logging to a file named server.log.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_default_log_file_locations"><a class="anchor" href="#_default_log_file_locations"></a>Default Log File Locations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Standalone Mode</strong>:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log files reside in the <strong>standalone/log</strong> directory within the base directory.</p>
+</li>
+<li>
+<p>This directory contains two key log files:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>gc.log.0.current</strong>: Managed by settings in <strong>BASE_DIR/bin/standalone.sh</strong>, exclusively logs JVM flags and memory management events from the latest server startup.</p>
+</li>
+<li>
+<p><strong>server.log</strong>: Containing server log events, with ongoing additions, this file&#8217;s configurations are specified within the logging subsystem section of <strong>standalone.xml</strong>.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Domain Mode</strong>:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Logging spans several locations relative to the base directory.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>domain/log/host-controller.log</strong>: Documents host controller startup events, including connection issues, debug messages, and runtime errors.</p>
+</li>
+<li>
+<p><strong>domain/log/process-controller.log</strong>: Records process startup and shutdown events on the host, including those of the host controller and individual servers.</p>
+</li>
+<li>
+<p><strong>domain/servers/&lt;server-name&gt;/log/server.log</strong>: Houses log events specific to each server on the host.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Each server on a host possesses its own log directory. For instance, if a host includes a server named dev-server-one, its log file resides in <strong>domain/servers/dev-server-one/log/server.log</strong>.</p>
+</li>
+<li>
+<p>The default log directory location can be altered using the <strong>jboss.server.log.dir</strong> property, relative to <strong>jboss.domain.base.dir</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>It&#8217;s advisable to regularly rotate server.log files, typically on an hourly or daily basis, or when file size thresholds are met.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_built_in_log_handlers"><a class="anchor" href="#_built_in_log_handlers"></a>Built-in Log Handlers</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>JBoss EAP features built-in handlers, including:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Console handler</strong>: Writes to the console. Configured using the <strong>&lt;console-handler&gt;</strong> element.</p>
+</li>
+<li>
+<p><strong>File handler</strong>: Writes to a file. Configured using the <strong>&lt;file-handler&gt;</strong> element.</p>
+</li>
+<li>
+<p><strong>Periodic-rotating file handler</strong>: Rotates logs based on time intervals. Configured using the <strong>&lt;periodic-rotating-file-handler&gt;</strong> element.</p>
+</li>
+<li>
+<p><strong>Size-rotating file handler</strong>: Rotates logs based on file size. Configured using the <strong>&lt;size-rotating-file-handler&gt;</strong> element.</p>
+</li>
+<li>
+<p><strong>Asynchronous handler</strong>: Writes logs asynchronously to sub-handlers. Configured using the <strong>&lt;async-handler&gt;</strong> element.</p>
+</li>
+<li>
+<p><strong>Syslog handler</strong>: Sends events to a remote syslog server. configured using the <strong>&lt;syslog-handler&gt;</strong> element.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Handlers dictate where and how events are logged, configured within the logging subsystem section of the server configuration file.</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Defining a handler doesn&#8217;t automatically activate it; this is done in either the &lt;logger&gt; or &lt;root-logger&gt; tags. Custom handlers can also be developed.</p>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Handlers are configured within the logging subsystem section of the server configuration file.</p>
+</li>
+<li>
+<p>For example, the <strong>standalone.xml</strong> file and most of the profiles in the <strong>domain.xml</strong> file come preconfigured with a <strong>&lt;console-handler&gt;</strong> definition.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] /subsystem=logging/console-handler=CONSOLE:read-resource
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "autoflush" =&gt; true,
+        "enabled" =&gt; true,
+        "encoding" =&gt; undefined,
+        "filter" =&gt; undefined,
+        "filter-spec" =&gt; undefined,
+        "formatter" =&gt; "%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n",
+        "level" =&gt; "DEBUG",
+        "name" =&gt; "CONSOLE",
+        "named-formatter" =&gt; "COLOR-PATTERN",
+        "target" =&gt; "System.out"
+    }
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The corresponding XML looks like:</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/new4.png" alt="new4">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The <strong>CONSOLE</strong> handler can also be configured using the JBoss EAP management console in the <strong>Configuration → Subsystems → Logging</strong> section.</p>
+</li>
+<li>
+<p>The <strong>&lt;level&gt;</strong> element specifies the minimum log level for this handler.</p>
+</li>
+<li>
+<p>The <strong>&lt;formatter&gt;</strong> element lets you specify a named pattern to use when logging events.</p>
+</li>
+<li>
+<p>The <strong>COLOR-PATTERN</strong> formatter colorizes the log output for different levels and makes it easy to locate errors when parsing large log files.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>When using the JBoss EAP 8 management console, loggers are configured and managed within the <strong>Configuration → Subsytems → Logging</strong> section.</p>
+</li>
+<li>
+<p>Click <strong>Configuration</strong>, then click <strong>View</strong> to navigate to the log handler configuration page.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/log.png" alt="log">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lab_1_configuring_logging_handlers"><a class="anchor" href="#_lab_1_configuring_logging_handlers"></a>Lab 1: Configuring Logging Handlers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Brief overview of logging in EAP&#8230;&#8203;.</p>
+<p><strong>Outcome</strong>: Create a size rotating file handler and view log messages generated by the application in the JBoss EAP 8 server log files.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Start the standalone JBoss EAP 8 server.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin/
+[vagrant@server bin]$ ./standalone.sh</pre>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_jboss_eap_logging_subsystem"><a class="anchor" href="#_jboss_eap_logging_subsystem"></a>JBoss EAP Logging Subsystem</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_controlling_log_levels_using_the_eap_web_console"><a class="anchor" href="#_controlling_log_levels_using_the_eap_web_console"></a>Controlling Log Levels using the EAP Web Console</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_controlling_log_levels_using_the_eap_cli"><a class="anchor" href="#_controlling_log_levels_using_the_eap_cli"></a>Controlling Log Levels using the EAP CLI</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_log_formatters_and_appenders"><a class="anchor" href="#_log_formatters_and_appenders"></a>Log Formatters and Appenders</h2>
-<div class="sectionbody">
-
+</li>
+<li>
+<p>Use a management CLI script file to create a <strong>size-rotating-file-handler</strong> and deploy the <strong>logtest.war</strong> file.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In a new terminal window, create the <strong>add_sizerotating_log.cli</strong> file.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ sudo vi /opt/add_sizerotating_log.cli
+batch
+/subsystem=logging/size-rotating-file-handler=FILE_BY_SIZE_ROTATING/:add\
+(file={"path"=&gt;"production-server.log",\
+"relative-to"=&gt;"jboss.server.log.dir"},\
+formatter="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n",\
+level=INFO,max-backup-index=3,name=FILE_BY_SIZE_ROTATING,\
+rotate-size=1m)
+/subsystem=logging/logger=com.redhat.training.view:add\
+(category=com.redhat.training.view,handlers=["FILE_BY_SIZE_ROTATING"])
+deploy /opt/logtest.war
+run-batch</pre>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_lab_configuring_logging"><a class="anchor" href="#_lab_configuring_logging"></a>Lab: Configuring Logging</h2>
-<div class="sectionbody">
-
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>The batch script configures the logging subsystem to use the handler called <strong>FILE_BY_SIZE_ROTATING</strong>.</p>
+</li>
+<li>
+<p>This handler captures all of the logs generated by the category <strong>com.redhat.training.view</strong>, which represents a Java package where the logging source code is executed.</p>
+</li>
+<li>
+<p>It captures all of the logs generated with the INFO level in a file called <strong>/opt/EAP-8.0.0/standalone/log/production-server.log</strong>.</p>
+</li>
+<li>
+<p>After the log file reaches 1 MB in size, the logging subsystem rotates the log file to a new log file with a numbered suffix.</p>
+</li>
+<li>
+<p>Finally, the script deploys the logtest application.</p>
+</li>
+<li>
+<p>It is a Java web application with all of the source code in the <strong>com.redhat.training.view</strong> package.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Open a new terminal and run the management CLI script.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
+[vagrant@server bin]$ ./jboss-cli.sh -c --file=/opt/add_sizerotating_log.cli
+[standalone@localhost:9990 /]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify that the handler was added successfully.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss ./jboss-cli.sh -c
+[standalone@localhost:9990 /] /subsystem=logging/\
+&gt; size-rotating-file-handler=FILE_BY_SIZE_ROTATING:read-resource
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "append" =&gt; true,
+        "autoflush" =&gt; true,
+        "enabled" =&gt; true,
+        "encoding" =&gt; undefined,
+        "file" =&gt; {
+            "path" =&gt; "production-server.log",
+            "relative-to" =&gt; "jboss.server.log.dir"
+        },
+        "filter" =&gt; undefined,
+        "filter-spec" =&gt; undefined,
+        "formatter" =&gt; "%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n",
+        "level" =&gt; "INFO",
+        "max-backup-index" =&gt; 3,
+        "name" =&gt; "FILE_BY_SIZE_ROTATING",
+        "named-formatter" =&gt; undefined,
+        "rotate-on-boot" =&gt; false,
+        "rotate-size" =&gt; "1m",
+        "suffix" =&gt; undefined
+    }
+}</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Verify and observe the server handling the log messages generated by the application.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In a web browser, navigate to <a href="http://127.0.0.1:8080/logtest/" class="bare">http://127.0.0.1:8080/logtest/</a> to access the logtest application.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/LogTest_App.png" alt="LogTest App">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Fill out the form with the following values:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Level</strong>: INFO</p>
+</li>
+<li>
+<p><strong>Message</strong>: Test INFO Msg</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Click <strong>Send Log Messages</strong> to send the log message to the handler you created previously.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In a new terminal window, view the most recent log messages in the <strong>/opt/EAP-8.0.0/standalone/log/production-server.log</strong> file. The <strong>-f</strong> option continues to print changes to the file as they are added.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ tail -f \
+/opt/EAP-8.0.0/standalone/log/production-server.log
+08:12:05,381 INFO  [com.redhat.training.view] (default task-1) Test INFO Msg</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Clean up the server by removing the application.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the JBoss EAP CLI terminal window, undeploy the application and exit the CLI.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] undeploy logtest.war
+[standalone@localhost:9990 /] exit</pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the tail command terminal window, stop the command by pressing <code>Ctrl+C</code>.</p>
+</li>
+<li>
+<p>In the JBoss EAP server terminal window, stop the server by pressing <code>Ctrl+C</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="database.html">Configuring Datasources</a></span>
+  <span class="prev"><a href="database.html">Exploring the Data Source Subsystem</a></span>
   <span class="next"><a href="messaging.html">Configuring Messaging (JMS)</a></span>
 </nav>
 </article>
