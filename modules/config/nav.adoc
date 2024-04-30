@@ -1,5 +1,4 @@
 * xref:index.adoc[]
 ** xref:eap-config.adoc[]
-** xref:eap-web-console.adoc[]
 ** xref:eap-cli.adoc[]
 ** xref:deploy.adoc[]

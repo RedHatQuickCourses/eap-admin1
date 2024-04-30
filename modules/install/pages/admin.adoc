@@ -1,8 +1,8 @@
-= Managing JBoss EAP
+= Managing Red Hat JBoss EAP 8
 
-== JBoss EAP 8 Management Options
+== Red Hat JBoss EAP 8 Management Options
 
-* JBoss EAP 8 has multiple subsystems that you can customize to support Jakarta EE application requirements, such as database connectivity, batch processing, and integration tools.
+* The Red Hat JBoss EAP 8 has multiple subsystems that you can customize to support Jakarta EE application requirements, such as database connectivity, batch processing, and integration tools.
 
 * The JBoss EAP configuration is maintained in the `standalone.xml` file for the standalone mode, and the `domain.xml` file for a managed domain mode.
 
@@ -18,7 +18,7 @@ The settings of a standalone server or a managed domain are maintained in XML-ba
 
 [Warning]
 ====
-Editing XML files directly should be avoided as much as possible! The CLI or the web console is preferred method for configuration files customization.
+Warning: Editing XML files directly should be avoided as much as possible! The CLI or the web console is preferred method for configuration files customization.
 ====
 
 == Administrative Users

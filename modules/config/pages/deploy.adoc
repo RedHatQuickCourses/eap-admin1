@@ -2,7 +2,7 @@
 
 == The Deployments Section of the standalone.xml file
 
-* You can deploy Jakarta EE applications to a standalone JBoss EAP 8 instance by configuring the <deployments> section in the `standalone.xml` file.
+* You can deploy Jakarta EE applications to a standalone Red JBoss EAP 8 instance by configuring the <deployments> section in the `standalone.xml` file.
 
 * Each `<deployment>` element within `<deployments>` corresponds to an application.
 
@@ -193,7 +193,12 @@ Note: Undeploying is different from disabling a deployment. Undeploying removes 
 
 == Lab 1: Deploy application using the management console
 
-**Outcome**: You should be able to deploy the application on JBoss EAP 8 standalone server using management console.
+**Outcome**: In this lab, you deploy the application on Red Hat JBoss EAP 8 standalone server using management console.
+
+**Pre-requisites**: Download the two applications (WAR files) we will deploy in this exercise under /opt directory:
+
+https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/kitchensink.war
+
 
 * Open a terminal window and run the following commands to start the JBoss EAP 8 server using the /opt/standalone-running as the base directory:
 +
@@ -221,18 +226,11 @@ Note: Undeploying is different from disabling a deployment. Undeploying removes 
 +
 image::new1.png[align="center"]
 
-* Download the `kitchensink.war` as shown below.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ git clone https://github.com/RedHatQuickCourses/eap-qc-apps.git
-----
-
 * Click the plus sign icon, and select the `Upload Deployment` option.
 +
 image::new2.png[align="center"]
 
-* Click `Choose a file or drag it here` and select the `kitchensink.war` file, located in your `/home/vagrant/eap-qc-apps/admin1/material` directory. Click `Next`.
+* Click `Choose a file or drag it here` and select the `kitchensink.war` file, located in your `/opt` directory. Click `Next`.
 +
 image::new3.png[align="center"]
 
@@ -288,7 +286,7 @@ f9
 
 == Lab 2: Disable the deployment by using the management console.
 
-**Outcome**: You should be able to disable the application on JBoss EAP 8 standalone server using management console.
+**Outcome**: In this lab, you disable the application on Red Hat JBoss EAP 8 standalone server using management console.
 
 * You can disable a deployment to undeploy the application without removing it from the server.
 
@@ -316,7 +314,11 @@ The application, and all the services that the application server provides to it
 
 == Lab 3: Deploy application using the Management CLI
 
-**Outcome**: You should be able to deploy the application on JBoss EAP 8 standalone server using management CLI.
+**Outcome**: In this lab, you deploy the application on Red Hat JBoss EAP 8 standalone server using management CLI.
+
+**Pre-requisites**: Download the two applications (WAR files) we will deploy in this exercise under /opt directory:
+
+https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/temperature-converter.war
 
 * Start the management CLI by running the `jboss-cli.sh` script in the bin directory of JBoss EAP.
 +
@@ -344,7 +346,7 @@ Password: XXXXX
 [subs="+quotes,+macros"]
 ----
 [standalone@localhost:19990 /] deploy \
-/home/vagrant/eap-qc-apps/admin1/material/temperature-converter.war
+/opt/temperature-converter.war
 ----
 
 * Look in the terminal window of your running instance of JBoss EAP. You should see output similar to the following:
@@ -362,7 +364,7 @@ image::new7.png[align="center"]
 
 == Lab 4: Disable the deployment by using the management CLI
 
-* You can disable an application by using the management CLI tool.
+**Outcome**: In this lab, you disable an application by using the management CLI tool.
 
 * List the available applications by using the following commands:
 +
@@ -405,6 +407,8 @@ kitchensink.war temperature-converter.war
 
 
 == Lab 5: Clean up the deployment by using the management CLI
+
+**Outcome**: In this lab, you clean up the  application by using the management CLI tool.
 
 * Remove the kitchensink.war application:
 +

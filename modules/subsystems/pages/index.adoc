@@ -1,3 +1,10 @@
 = Subsystems
 
-This is the home page of _Chapter 3_ in the *hello* quick course....
+In this section, we'll dive into the core components of Red Hat JBoss Enterprise Application Platform (EAP) 8, focusing on data source and web subsystem, logging and JMS.
+
+== Objectives
+
+* Exploring the Data Source Subsystem
+* Configuring Logging
+* Configuring Messaging (JMS)
+* Configuring the Web Subsystem

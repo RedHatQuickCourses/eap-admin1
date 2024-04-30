@@ -1,10 +1,10 @@
-= Installation
+= Introduction to Red Hat JBoss EAP 8
 
-Copy the structure of chapter home page from the RHOAI and DevHub quick courses. At minimum, it lists the objectives of this chapter
+This chapter introduces the instructions for installing and uninstalling Red Hat JBoss EAP 8 on your system. You will also learn about the managing JBoss EAP and have an overview on subsystems, extensions, and profiles available in Red Hat JBoss EAP 8.
 
 == Objectives
 
-* Install JBoss EAP
-* Upgrade JBoss EAP
-* Uninstall JBoss EAP
-* Describe JBoss EAP Subsystems, Extensions and Profiles
+* Install Red Hat JBoss EAP 8
+* Uninstall Red Hat JBoss EAP 8
+* Manage Red Hat JBoss EAP 8
+* Describe Red Hat JBoss EAP 8 Subsystems, Extensions and Profiles

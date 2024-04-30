@@ -2,7 +2,7 @@
 
 == Configuring the Root Web Application
 
-* Any application you deploy on JBoss EAP 8 uses a standard HTTP address.
+* Any application you deploy on Red Hat JBoss EAP 8 uses a standard HTTP address.
 
 * For example, an application called **app.war** is available, by default, at http://<server>:8080/app.
 
@@ -129,7 +129,7 @@ version-host:remove()
 
 * HTTPS is a protocol that encrypts network traffic.
 
-* JBoss EAP 8 can encrypt the traffic in both HTTP ports: the management port, and the application serving port.
+* Red Hat JBoss EAP 8 can encrypt the traffic in both HTTP ports: the management port, and the application serving port.
 
 === HTTPS Configuration with the Legacy Security Subsystem
 
@@ -185,7 +185,11 @@ Remember to open the HTTPS port in the firewall. The default port for HTTPS is 8
 
 == Lab: Configuring the Web Subsystem
 
-**Outcome:** You should be able to access JBoss EAP 8 by using a secure connection from a browser, enable AJP, and set a maximum number of HTTP concurrent connections.
+**Outcome:** In this lab, you access Red Hat JBoss EAP 8 by using a secure connection from a browser, enable AJP, and set a maximum number of HTTP concurrent connections.
+
+**Pre-requisites**: Download the two applications (WAR files) we will deploy in this exercise under /opt directory:
+
+https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/temperature-converter.war
 
 * Start the JBoss EAP standalone server.
 +
@@ -439,4 +443,4 @@ default-server/http-listener=default:read-attribute(name=max-connections)
 }
 ----
 
-* Exit the management CLI, and stop JBoss EAP 8 the instance by pressing **Ctrl+C** in the terminal window.
+* Exit the management CLI, and stop Red Hat JBoss EAP 8 the instance by pressing **Ctrl+C** in the terminal window.
