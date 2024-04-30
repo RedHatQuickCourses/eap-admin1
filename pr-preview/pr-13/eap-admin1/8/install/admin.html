@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Managing Red Hat JBoss EAP 8 :: Red Hat JBoss EAP Administration I</title>
+    <link rel="prev" href="install.html">
+    <link rel="next" href="extensions.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img
+          src="../../../_/img/redhat-logo.png"
+          height="40px"
+          alt="Red Hat"
+        /></a>
+      <a
+        class="navbar-item"
+        style="font-size: 24px; color: white"
+        href="../../.."
+      >Red Hat JBoss EAP Administration I</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a
+          class="navbar-item"
+          href="https://github.com/RedHatQuickCourses/eap-admin1/issues"
+          target="_blank"
+        >Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="eap-admin1" data-version="8">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Red Hat JBoss EAP Administration I</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Introduction to Red Hat JBoss EAP 8</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="install.html">Red Hat JBoss Enterprise Application Platform 8 Installation Methods</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="admin.html">Managing Red Hat JBoss EAP 8</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="extensions.html">Interpreting Extensions, Subsystems, and Profiles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../config/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-config.html">Red Hat JBoss EAP 8 Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-cli.html">Red Hat JBoss EAP 8 CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/deploy.html">Deploying Applications to a Standalone Server</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../subsystems/index.html">Subsystems</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/database.html">Exploring the Data Source Subsystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/logging.html">Configuring Logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/messaging.html">Configuring Messaging (JMS)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/web.html">Configuring the Web Subsystem</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Red Hat JBoss EAP Administration I</span>
+    <span class="version">8</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Red Hat JBoss EAP Administration I</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">8</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Red Hat JBoss EAP Administration I</a></li>
+    <li><a href="index.html">Introduction to Red Hat JBoss EAP 8</a></li>
+    <li><a href="admin.html">Managing Red Hat JBoss EAP 8</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Managing Red Hat JBoss EAP 8</h1>
+<div class="sect1">
+<h2 id="_red_hat_jboss_eap_8_management_options"><a class="anchor" href="#_red_hat_jboss_eap_8_management_options"></a>Red Hat JBoss EAP 8 Management Options</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The Red Hat JBoss EAP 8 has multiple subsystems that you can customize to support Jakarta EE application requirements, such as database connectivity, batch processing, and integration tools.</p>
+</li>
+<li>
+<p>The JBoss EAP configuration is maintained in the <code>standalone.xml</code> file for the standalone mode, and the <code>domain.xml</code> file for a managed domain mode.</p>
+</li>
+<li>
+<p>These configuration files can be customized using three different approaches:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Management console</strong>: As a system administrator, you can manage most of the capabilities of your standalone or managed domain deployments by using a JBoss EAP web console or Management console.</p>
+</li>
+<li>
+<p><strong>Management Command Line Interface(CLI)</strong>:
+The CLI offers a management model for viewing and modifying attributes and for performing operations, on a standalone server or a managed domain.</p>
+</li>
+<li>
+<p><strong>Edit XML configuration files manually</strong>:
+The settings of a standalone server or a managed domain are maintained in XML-based configuration files, which can be modified directly.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Warning: Editing XML files directly should be avoided as much as possible! The CLI or the web console is preferred method for configuration files customization.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administrative_users"><a class="anchor" href="#_administrative_users"></a>Administrative Users</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The JBoss EAP installer creates an administrative user during the installation process.</p>
+</li>
+<li>
+<p>If additional administrative users are required, or if the installation was NOT done using the JBoss EAP installer, then you can create new users.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_types_of_users"><a class="anchor" href="#_types_of_users"></a>Types of users</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>You can add two different types of users:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Management user</strong>: They are responsible for accessing the administrative tools from JBoss EAP.</p>
+</li>
+<li>
+<p><strong>Application user</strong>: They are used by Jakarta EE applications.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You can create these users by using the <code>add-user.sh</code> script in interactive as well as non-interactive mode.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lab_managing_administrator_account"><a class="anchor" href="#_lab_managing_administrator_account"></a>Lab: Managing Administrator Account</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Start the JBoss EAP 8 server as the jboss user.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/standalone.sh</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Modify existing <code>admin</code> user&#8217;s password to <code>redhat123</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In a new terminal window, run the <code>add-user.sh</code> script as the jboss user and enter the values highlighted in bold as shown in below command output.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ sudo -u jboss /opt/jboss-eap-7.4/bin/add-user.sh
+What type of user do you wish to add?
+ a) Management User (mgmt-users.properties)
+ b) Application User (application-users.properties)
+(a): <strong>a</strong>
+
+Enter the details of the new user to add.
+Using realm 'ManagementRealm' as discovered from the existing property files.
+Username : <strong>admin</strong>
+User 'admin' already exists and is enabled, would you like to...
+ a) Update the existing user password and roles
+ b) Disable the existing user
+ c) Type a new username
+(a): <strong>a</strong>
+Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
+ - The password should be different from the username
+ - The password should not be one of the following restricted values {root, admin, administrator}
+ - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
+Password : <strong>redhat123</strong>
+WFLYDM0102: Password should have at least 1 non-alphanumeric symbol.
+Are you sure you want to use the password entered yes/no? yes
+Re-enter Password : <strong>redhat123</strong>
+What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]: <strong>Press Enter</strong>
+Updated user 'admin' to file '/opt/EAP-8.0.0/standalone/configuration/mgmt-users.properties'
+Updated user 'admin' to file '/opt/EAP-8.0.0/domain/configuration/mgmt-users.properties'
+Updated user 'admin' with groups  to file '/opt/EAP-8.0.0/standalone/configuration/mgmt-groups.properties'
+Updated user 'admin' with groups  to file '/opt/EAP-8.0.0/domain/configuration/mgmt-groups.properties'</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Verify that you have a user named <code>admin</code> in <code>/opt/EAP-8.0.0/standalone/configuration/mgmt-users.properties</code> and <code>/opt/EAP-8.0.0/domain/configuration/mgmt-users.properties</code> file, and the user has a hashed password.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ sudo cat /opt/EAP-8.0.0/standalone/configuration/mgmt-users.properties  | grep -v "<mark>"
+admin=fa522cb75d2d2ac01fb09f2ab21e4302
+
+[vagrant@server ~]$ sudo cat /opt/EAP-8.0.0/domain/configuration/mgmt-users.properties  | grep -v "</mark>"
+admin=fa522cb75d2d2ac01fb09f2ab21e4302</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Log in to the management console using web browser to <a href="http://localhost:9990/" class="bare">http://localhost:9990/</a>, as the <code>admin</code> user and <code>redhat123</code> as the password. You should see the home page of the JBoss EAP 8 management console as shown in the screenshot below.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/console.png" alt="console">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Create a new management user named <code>newadmin</code> and password <code>redhat123</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Run the <code>add-user.sh</code> script as the jboss user and enter the values highlighted in bold as shown in below command output.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ sudo -u jboss /opt/EAP-8.0.0/bin/add-user.sh
+What type of user do you wish to add?
+ a) Management User (mgmt-users.properties)
+ b) Application User (application-users.properties)
+(a): <strong>a</strong>
+
+Enter the details of the new user to add.
+Using realm 'ManagementRealm' as discovered from the existing property files.
+Username : <strong>newadmin</strong>
+Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
+ - The password should be different from the username
+ - The password should not be one of the following restricted values {root, admin, administrator}
+ - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
+Password : <strong>redhat123</strong>
+WFLYDM0102: Password should have at least 1 non-alphanumeric symbol.
+Are you sure you want to use the password entered yes/no? <strong>yes</strong>
+Re-enter Password : <strong>redhat123</strong>
+What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]: <strong>Press enter</strong>
+About to add user 'newadmin' for realm 'ManagementRealm'
+Is this correct yes/no? <strong>yes</strong>
+Added user 'newadmin' to file '/opt/EAP-8.0.0/standalone/configuration/mgmt-users.properties'
+Added user 'newadmin' to file '/opt/EAP-8.0.0/domain/configuration/mgmt-users.properties'
+Added user 'newadmin' with groups  to file '/opt/EAP-8.0.0/standalone/configuration/mgmt-groups.properties'
+Added user 'newadmin' with groups  to file '/opt/EAP-8.0.0/domain/configuration/mgmt-groups.properties'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Log in to the management console using web browser to <a href="http://localhost:9990/" class="bare">http://localhost:9990/</a>, as the <code>newadmin</code> user and <code>redhat123</code> as the password. You should see the home page of the JBoss EAP 8 management console.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="install.html">Red Hat JBoss Enterprise Application Platform 8 Installation Methods</a></span>
+  <span class="next"><a href="extensions.html">Interpreting Extensions, Subsystems, and Profiles</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
