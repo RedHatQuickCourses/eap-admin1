@@ -216,7 +216,7 @@ They are provided so a standalone server instance can easily be started with mor
 
 or
 
-[student@workstation ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml
+[vagrant@server ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml
 ----
 
 * Start the JBoss EAP instance using the `standalone-ha.xml` to start clustering capabilities.

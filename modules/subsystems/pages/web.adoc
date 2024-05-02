@@ -14,9 +14,12 @@
             <buffer-cache name="default"/>
             <server name="default-server">
 ...output omitted...
+            <server name="default-server">
+                <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/>
+                <https-listener name="https" socket-binding="https" ssl-context="applicationSSC" enable-http2="true"/>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
-                    <http-invoker security-realm="ApplicationRealm"/>
+                    <http-invoker http-authentication-factory="application-http-authentication"/>
                 </host>
             </server>
 ...output omitted...
@@ -35,9 +38,8 @@
 == Configure Server Listeners
 
 * The undertow subsystem can start several web servers or web containers in a single JBoss EAP instance.
-* Each **<server>** tag starts an instance of the undertow web engine.
 
-* A listener handles requests according to the request protocol.
+* Each **<server>** tag starts an instance of the undertow web engine.
 
 * Three listener types are available for each server:
 
@@ -45,85 +47,6 @@
 . **HTTPS**: This listener type handles HTTPS requests.
 . **AJP**: This listener type handles Apache Java Protocol (AJP) requests. The AJP protocol communicates JBoss EAP instances with the load balancer.
 
-* Each server can define more than one listener for each listener type. The following command creates an HTTP listener:
-+
-[subs="+quotes,+macros"]
-----
-/subsystem=undertow/server=default-server/http-listener=\
-new-http:add(socket-binding=http-other)
-----
-
-* The previous command generates the following XML configuration:
-+
-[subs="+quotes,+macros"]
-----
-<subsystem xmlns="urn:jboss:domain:undertow:12.0" ...>
-...output omitted...
-  <server name="default-server">
-    <http-listener name="default" redirect-socket="https" socket-binding="http" />
-    **<http-listener name="new-http" socket-binding="http-other" />**
-    <host name="default-host" alias="localhost">
-      <location name="/" handler="welcome-content" />
-    </host>
-  </server>
-...output omitted...
-</subsystem>
-----
-
-* You must define a different socket-binding to avoid a port conflict.
-
-* The server's host configuration manages virtual hosts, grouping web applications by DNS names. The following management CLI adds a host to the server:
-+
-[subs="+quotes,+macros"]
-----
-/subsystem=undertow/server=default-server/host=\
-version-host:add(alias=[version.myapp.com])
-----
-
-* You can publish a default web application on a host listening to multiple addresses. The following command defines the default web application for the new host:
-+
-[subs="+quotes,+macros"]
-----
-/subsystem=undertow/server=default-server/host=\
-version-host:write-atribute(name=default-web-module, value=version.war)
-----
-
-* In the previous example, the version.war application serves the requests to **http://version.myapp.com**. The following XML reflects the previous modification:
-+
-[subs="+quotes,+macros"]
-----
-<subsystem xmlns="urn:jboss:domain:undertow:12.0" ...>
-...output omitted...
-  <server name="default-server">
-    <http-listener name="default" redirect-socket="https" socket-binding="http" />
-    <http-listener name="new-http" socket-binding="http-other" />
-    <host name="default-host" alias="localhost">
-      <location name="/" handler="welcome-content" />
-    </host>
-    **<host name="version-host" default-web-module="version.war" alias="version.myapp.com"/>**
-  </server>
-...output omitted...
-</subsystem>
-----
-
-* From the application perspective, you must use the **$WEBAPP/WEB-INF/jboss-web.xml** file within the application to define the application context root, and to reference the virtual host and the server instance:
-+
-[subs="+quotes,+macros"]
-----
-<jboss-web>
-  <context-root>/</context-root>
-  <virtual-host>version-host</virtual-host>
-  <server-instance>default-server</server-instance>
-</jboss-web>
-----
-
-* If the new host is no longer required, then you can delete it with the following command:
-+
-[subs="+quotes,+macros"]
-----
-/subsystem=undertow/server=default-server/host=\
-version-host:remove()
-----
 
 == Configure SSL Connections
 
@@ -131,9 +54,7 @@ version-host:remove()
 
 * Red Hat JBoss EAP 8 can encrypt the traffic in both HTTP ports: the management port, and the application serving port.
 
-=== HTTPS Configuration with the Legacy Security Subsystem
-
-* The Java Standard Edition (Java SE) defines the format of the Java KeyStore.
+=== Java KeyStore (JKS)
 
 * A Java KeyStore (JKS) is a storage facility for cryptographic keys and certificates.
 
@@ -141,53 +62,37 @@ version-host:remove()
 
 * The Java Development Kit (JDK) provides the keytool command to manage JKS repositories.
 
-* To create a new JKS by importing a CA signed certificate, use the following command:
+* You will need to generate a new RSA key pair, store it in a keystore file. Use the following command for same.
 +
 [subs="+quotes,+macros"]
 ----
-keytool -v -importkeystore -srckeystore signed-cert.p12 -srcstoretype PKCS12 -destkeystore identity.jks -deststoretype JKS
+keytool --genkeypair -alias server -keysize 2048 -keyalg RSA -keystore application.keystore
 ----
 
-* After creating the keystore, you must create a security realm for each host:
-+
-[subs="+quotes,+macros"]
-----
-/host=servera/core-service=management/security-realm=HTTPSRealm:add()
-----
-
-* Configure the security realm to load the JKS:
-+
-[subs="+quotes,+macros"]
-----
-/host=servera/core-service=management/security-realm=HTTPSRealm/server-identity=\
-ssl:add(keystore-path=/path/identity.jks,keystore-password=changeit,alias=appserver)
-----
-
-* Reload the server to apply the changes:
-+
-[subs="+quotes,+macros"]
-----
-/:reload-servers
-----
-
-* Create a HTTPS listener, which uses the new security realm:
-+
-[subs="+quotes,+macros"]
-----
-/profile=full/subsystem=undertow/server=default-server/https-listener=https:\
-add(socket-binding=https,security-realm=HTTPSRealm)
-----
-
-[Note]
+[NOTE]
 ====
 Remember to open the HTTPS port in the firewall. The default port for HTTPS is 8443.
 ====
 
-== Lab: Configuring the Web Subsystem
+* The SSL certificate need to be placed under **jboss.server.config.dir** as mentioned in **$JBoss_HOME/standalone/configuration/standalone.xml** in below snippets.
++
+[subs="+quotes,+macros"]
+----
+...<output_omitted>...
+    <security-realms>
+      <identity-realm name="local" identity="$local"/>
+      <properties-realm name="ApplicationRealm">
+        <users-properties path="application-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ApplicationRealm"/>
+          <groups-properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
+      </properties-realm>
+...<output_omitted>...
+----
 
-**Outcome:** In this lab, you access Red Hat JBoss EAP 8 by using a secure connection from a browser, enable AJP, and set a maximum number of HTTP concurrent connections.
+== Lab: Configuring the Web Application using HTTPS listener
 
-**Pre-requisites**: Download the two applications (WAR files) we will deploy in this exercise under /opt directory:
+**Outcome:** In this lab, you deploy a web application that can be accessed using a secure connection from a browser using Red Hat JBoss EAP 8.
+
+**Pre-requisites**: Download the applications (WAR file) we will deploy in this exercise under /opt directory:
 
 https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/temperature-converter.war
 
@@ -196,8 +101,7 @@ https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/temp
 [subs="+quotes,+macros"]
 ----
 [vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
-[vagrant@server bin]$ ./standalone.sh \
--b server.example.com
+[vagrant@server bin]$ ./standalone.sh
 ----
 
 * Deploy the temperature converter application.
@@ -211,236 +115,64 @@ https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/temp
 [standalone@localhost:9990 /]
 ----
 
-. Deploy the /opt/temperature-converter.war application file:
+. Deploy the **/opt/temperature-converter.war** application file:
 +
 [subs="+quotes,+macros"]
 ----
-[standalone@localhost:9990 /] deploy \
-/opt/temperature-converter.war
+[standalone@localhost:9990 /] deploy /opt/temperature-converter.war
 ----
 
-. Open a web browser on the server and navigate to http://server.example.com:8080/temperature-converter to validate the deployment. The application front page shows.
-+
-image::new7.png[align="center"]
-
-. Open a web browser on the workstation and navigate to https://server.example.com:8443/temperature-converter to validate the HTTPS connection. The browser self-signed certificate security warning shows.
-
-* Create a Java Key Store (JKS) by importing the certificate that the exercise provides.
-
-. In a new terminal, change to the exercise working directory, and import the **workstation.p12** private certificate into a new **identity.jks** by using the keytool command.
+* Generate a new key pair and store it in a keystore file named **application.keystore** using command shown below.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ cd /opt/
-[vagrant@server opt]$ keytool -v -importkeystore \
--srckeystore workstation.p12 -srcstoretype PKCS12 \
--destkeystore identity.jks -deststoretype JKS
-Importing keystore workstation.p12 to identity.jks...
-Enter destination keystore password:
-Re-enter new password:
-Enter source keystore password:
-Entry for alias 1 successfully imported.
-Import command completed:  1 entries successfully imported, 0 entries failed or cancelled
-[Storing identity.jks]
+[vagrant@server ~]$ cd
+/opt/EAP-8.0.0/standalone/configuration
 
-Warning:
-The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore identity.jks -destkeystore identity.jks -deststoretype pkcs12".
+[vagrant@server configuration]$ keytool --genkeypair -alias server -keysize 2048 -keyalg RSA -keystore application.keystore
+Enter keystore password: <Enter New Password>
+Re-enter new password: <Enter New Password>
+What is your first and last name?
+  [Unknown]:  jboss
+What is the name of your organizational unit?
+  [Unknown]:  jboss
+What is the name of your organization?
+  [Unknown]:  jboss
+What is the name of your City or Locality?
+  [Unknown]:  Mumbai
+What is the name of your State or Province?
+  [Unknown]:  MAH
+What is the two-letter country code for this unit?
+  [Unknown]:  IN
+Is CN=jboss, OU=jboss, O=jboss, L=Mumbai, ST=MAH, C=IN correct?
+  [no]:  yes
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 90 days
+	for: CN=jboss, OU=jboss, O=jboss, L=Mumbai, ST=MAH, C=IN
 ----
 
-. You can safely ignore the warning about the JKS format.
-
-. Verify that the certificates that are available in the **identity.jks** keystore. Use the password value as the keystore password.
+* Confirm **application.keystore** is created successfully.
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server opt]$ keytool -list -v \
- -keystore /opt/identity.jks
-
-Enter keystore password:
-Keystore type: JKS
-Keystore provider: SUN
-
-Your keystore contains 1 entry
-
-Alias name: 1
-Creation date: Oct 23, 2023
-Entry type: PrivateKeyEntry
-Certificate chain length: 1
-Certificate[1]:
-Owner: CN=server.example.com, O=EXAMPLE.COM
-Issuer: CN=Red Hat Training Certificate Authority, O=EXAMPLE.COM
-Serial number: 1c
-Valid from: Thu Apr 25 15:55:36 EDT 2024 until: Tue Apr 25 15:55:36 EDT 2029
-...output omitted...
-#6: ObjectId: 2.5.29.17 Criticality=false
-SubjectAlternativeName [
-  DNSName: server.example.com
-  DNSName: *.server.example.com
-]
-...output omitted...
+[vagrant@server configuration]$ ll
+...<output_omitted>...
+-rw-r--r--.  1 jboss jboss  2712 May  2 07:53 application.keystore
+...<output_omitted>...
 ----
 
-* Create the SSL connection configuration. Configure the https listener in the undertow subsystem by using the management CLI. To do this, create a HTTPSRealm security realm to store the certificate information.
-
-. Return to the management CLI and add an HTTPSRealm security realm to the management core service:
+* Open port **8443** for SSL connection to be accessible.
 +
 [subs="+quotes,+macros"]
 ----
-[standalone@localhost:9990 /] /core-service=\
-management/security-realm=HTTPSRealm:add()
-{"outcome" => "success"}
+[vagrant@server configuration]$ sudo firewall-cmd --permanent --add-port=8443/tcp
+[vagrant@server configuration]$ sudo firewall-cmd --reload
 ----
 
-. Configure the HTTPSRealm realm to load the **/opt/identity.jks** keystore file. Use the password value as the password, and 1 as the alias.
+* The SSL connection should now be available for all applications including the root application. Navigate to https://localhost:8443/ and test the SSL connection for the root application.
+
+* Similarly, navigate to **https://localhost:8443/temperature-converter** and test the SSL connection for the application. Accept the SSL certificate and you should be able to view the application as shown in below screenshot.
 +
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /core-service=management/security-realm=\
-HTTPSRealm/server-identity=ssl:add\
-(keystore-path=/opt/identity.jks, \
-keystore-password=password, alias=1)
-{
-    "outcome" => "success",
-    "response-headers" => {
-        "operation-requires-reload" => true,
-        "process-state" => "reload-required"
-    }
-}
-----
-
-. Reload the server to enable the new realm:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] reload
-----
-
-* Configure the HTTPS listener.
-
-. Modify the HTTPS listener to use the HTTPSRealm security realm.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /subsystem=undertow/server=default-server/\
-https-listener=https:write-attribute(name=security-realm,value=HTTPSRealm)
-{
-    "outcome" => "success",
-    "response-headers" => {
-        "operation-requires-reload" => true,
-        "process-state" => "reload-required"
-    }
-}
-----
-
-. Reload the server to enable the new realm in the https connector:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] reload
-Open a web browser and navigate to https://server.example.com:8443/temperature-converter to test the SSL connection.
-----
-
-. The SSL connection is available for all applications including the root application. Navigate to https://server.example.com:8443/ and test the SSL connection for the root application.
-
-* Enable the AJP protocol.
-
-. To enable the AJP protocol, you must configure the AJP listener. Run the following command to enable the AJP protocol:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /subsystem=undertow/server=\
-default-server/ajp-listener=ajp:add(socket-binding=ajp)
-{"outcome" => "success"}
-----
-
-. Verify that the AJP listener is configured by reading its properties:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /subsystem=undertow/server=\
-default-server/ajp-listener=ajp:read-resource
-{
-    "outcome" => "success",
-    "result" => {
-        "allow-encoded-slash" => false,
-        "allow-equals-in-cookie-value" => false,
-        "allow-unescaped-characters-in-url" => false,
-        "always-set-keep-alive" => true,
-        "buffer-pipelined-data" => false,
-        "buffer-pool" => "default",
-        "decode-url" => true,
-        "disallowed-methods" => ["TRACE"],
-        "enabled" => true,
-        "max-ajp-packet-size" => 8192,
-        "max-buffered-request-size" => 16384,
-        "max-connections" => undefined,
-        "max-cookies" => 200,
-        "max-header-size" => 1048576,
-        "max-headers" => 200,
-        "max-parameters" => 1000,
-        "max-post-size" => 10485760L,
-        "no-request-timeout" => 60000,
-        "read-timeout" => undefined,
-        "receive-buffer" => undefined,
-        "record-request-start-time" => false,
-        "redirect-socket" => undefined,
-        "request-parse-timeout" => undefined,
-        "resolve-peer-address" => false,
-        "rfc6265-cookie-validation" => false,
-        "scheme" => undefined,
-        "secure" => false,
-        "send-buffer" => undefined,
-        "socket-binding" => "ajp",
-        "tcp-backlog" => 10000,
-        "tcp-keep-alive" => undefined,
-        "url-charset" => "UTF-8",
-        "worker" => "default",
-        "write-timeout" => undefined
-    }
-}
-----
-
-* Tuning the HTTP listener.
-
-. By default, the maximum connections number of all the listeners is unlimited. To avoid excessive compute resources usage, and to have a predictable capacity, set the maximum possible connections for the HTTP listener.
-
-. You can update the number of connections by using the default server within the undertow subsystem. Set the maximum possible connections to 200 in the http-listener section:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /subsystem=undertow/server=\
-default-server/http-listener=default:\
-write-attribute(name=max-connections, value=200)
-{
-    "outcome" => "success",
-    "response-headers" => {
-        "operation-requires-reload" => true,
-        "process-state" => "reload-required"
-    }
-}
-----
-
-. Reload the server to enable the maximum connections value:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] reload
-{
-    "outcome" => "success",
-    "result" => undefined
-}
-----
-
-. Verify that the max-connections attribute was changed:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 /] /subsystem=undertow/server=\
-default-server/http-listener=default:read-attribute(name=max-connections)
-{
-    "outcome" => "success",
-    "result" => 200
-}
-----
+image::im44.png[align="center"]
 
 * Exit the management CLI, and stop Red Hat JBoss EAP 8 the instance by pressing **Ctrl+C** in the terminal window.
