@@ -59,13 +59,13 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../install/index.html">Installation</a>
+    <a class="nav-link" href="../install/index.html">Introduction to Red Hat JBoss EAP 8</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../install/install.html">install.adoc</a>
+    <a class="nav-link" href="../install/install.html">Red Hat JBoss Enterprise Application Platform 8 Installation Methods</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../install/admin.html">Managing JBoss EAP</a>
+    <a class="nav-link" href="../install/admin.html">Managing Red Hat JBoss EAP 8</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../install/extensions.html">Interpreting Extensions, Subsystems, and Profiles</a>
@@ -81,13 +81,10 @@
     <a class="nav-link" href="../config/index.html">Configuration</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../config/eap-config.html">JBoss EAP 8 Configuration</a>
+    <a class="nav-link" href="../config/eap-config.html">Red Hat JBoss EAP 8 Configuration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../config/eap-web-console.html">JBoss EAP Web Console</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../config/eap-cli.html">JBoss EAP CLI</a>
+    <a class="nav-link" href="../config/eap-cli.html">Red Hat JBoss EAP 8 CLI</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../config/deploy.html">Deploying Applications to a Standalone Server</a>
@@ -177,21 +174,6 @@
 <p>Data sources securely provide access to databases without exposing sensitive information.</p>
 </li>
 <li>
-<p>To connect to a database, the application uses a name bound to the data source via the application server.</p>
-</li>
-<li>
-<p>For a Jakarta EE application server, the name is defined by the Java Naming and Directory Interface (JNDI) specification.</p>
-</li>
-<li>
-<p>Fine-tuning for efficiency and load management is achieved through Java Database Connectivity (JDBC) APIs tailored to specific database systems.</p>
-</li>
-<li>
-<p>Configuring data sources involves installing the JDBC driver and defining the data source in the server&#8217;s configuration.</p>
-</li>
-<li>
-<p>Data sources are configured through the Datasource Subsystem.</p>
-</li>
-<li>
 <p>Declaring a new data source consists of two separate steps:</p>
 <div class="olist arabic">
 <ol class="arabic">
@@ -214,7 +196,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>When creating a datasource in the JBoss EAP 8 management interface, you choose between two types:</p>
+<p>When creating a datasource in the Red Hat JBoss EAP 8 management interface, you choose between two types:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -239,13 +221,10 @@
 <p>Managing data sources involves handling traffic and concurrent connections to the database, which can become a bottleneck during peak loads.</p>
 </li>
 <li>
-<p>JBoss EAP optimizes data access by creating a database connection pool, providing instant connections to the application.</p>
+<p>Red Hat JBoss EAP 8 optimizes data access by creating a database connection pool, providing instant connections to the application.</p>
 </li>
 <li>
 <p>This eliminates the need to open and close connections for every request.</p>
-</li>
-<li>
-<p>The pool size is adjustable for each data source.</p>
 </li>
 </ul>
 </div>
@@ -266,170 +245,33 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_datasources"><a class="anchor" href="#_configuring_datasources"></a>Configuring Datasources</h2>
+<h2 id="_configuring_jdbc_drivers"><a class="anchor" href="#_configuring_jdbc_drivers"></a>Configuring JDBC Drivers</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_understanding_data_source_configuration"><a class="anchor" href="#_understanding_data_source_configuration"></a>Understanding Data Source configuration</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>In JBoss EAP 8, you can find datasoure configurations within the datasource subsystem, in the <strong>domain.xml</strong> or <strong>standalone.xml</strong> files.</p>
-</li>
-<li>
-<p>The data source subsystem has the following structure:</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/im1.png" alt="im1">
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The JNDI name used to look up the data source.</p>
-</li>
-<li>
-<p>The name of the management pool for the datasource.</p>
-</li>
-<li>
-<p>Dictates whether the data source is enabled or disabled.</p>
-</li>
-<li>
-<p>Dictates whether to bind the data source to global JNDI.</p>
-</li>
-<li>
-<p>The JDBC driver connection URL.</p>
-</li>
-<li>
-<p>The connection pool settings.</p>
-</li>
-<li>
-<p>Security credentials for connecting to the database.</p>
-</li>
-<li>
-<p>The validation strategies for the data source connections.</p>
-</li>
-<li>
-<p>Contains child elements which are timeout settings.</p>
-</li>
-<li>
-<p>Describes the configuration for the behavior of prepared statements.</p>
-</li>
-<li>
-<p>The available drivers definitions.</p>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>More on data source configuration sections:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>&lt;datasources&gt; and &lt;datasource&gt; section</strong>:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Multiple &lt;datasource&gt; entries can be defined within the &lt;datasources&gt; subsystem, each requiring a unique JNDI name specified by the jndi-name attribute.</p>
-</li>
-<li>
-<p>Components retrieve database connections using this JNDI name.</p>
-</li>
-<li>
-<p>Valid JNDI names start with "java:" or "java:/jboss", like "java:/jboss/datasources/bookstore".</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p><strong>&lt;pool&gt; section</strong>:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Pool configurations in the &lt;pool&gt; section include &lt;min-pool-size&gt;, &lt;max-pool-size&gt;, and &lt;prefill&gt;, where &lt;prefill&gt; populates the connection pool initially.</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p><strong>&lt;validation&gt; section</strong>:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The &lt;validation&gt; section offers settings for validating database connections.</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p><strong>&lt;statement&gt; section</strong>:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>In the &lt;statement&gt; section, &lt;prepared-statement-cache-size&gt; dictates the number of cached prepared statements per connection, while &lt;share-prepared-statements&gt; determines if non-closed prepared statements can be reused.</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p><strong>&lt;drivers&gt; section</strong>:</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The &lt;drivers&gt; section is for defining JDBC drivers that are deployed as modules.</p>
-</li>
-<li>
-<p>The name attribute for the driver corresponds to the value used in the <strong>&lt;datasource&gt;</strong> definition.</p>
-</li>
-<li>
-<p>The module attribute must be assigned to a deployed module on the server.</p>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configuring_jdbc_drivers"><a class="anchor" href="#_configuring_jdbc_drivers"></a>Configuring JDBC Drivers</h3>
 <div class="ulist">
 <ul>
 <li>
 <p>Java Database Connectivity (JDBC) is a Java API to communicate with relational databases.</p>
 </li>
 <li>
-<p>A JDBC driver is a component that implements the JDBC API.</p>
-</li>
-<li>
 <p>Java applications use the JDBC driver to perform database operations.</p>
-</li>
-<li>
-<p>A JDBC driver is packaged in a Java Archive (JAR) file, and contains a class file with the driver definition.</p>
 </li>
 <li>
 <p>JDBC drivers are available from database vendors, such as from MariaDB or PostgreSQL.</p>
 </li>
 <li>
-<p>To use a JDBC driver in JBoss EAP 8, you first need install the driver as a module on the server.</p>
+<p>To use a JDBC driver in Red Hat JBoss EAP 8, you first need install the driver as a module on the server.</p>
 </li>
 <li>
-<p>You can add the JDBC driver module manually or with the management CLI.</p>
-</li>
-<li>
-<p>The module add management CLI command requires the user to provide:</p>
+<p>Ways to add the JDBC driver module:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Name</strong>: A name based on a Java package name that JBoss EAP uses to store the JAR file and a module configuration file. The name must be unique and cannot conflict with the existing libraries available at the $JBOSS_HOME/modules directory.</p>
+<p>Manually</p>
 </li>
 <li>
-<p><strong>Resources</strong>: Refers to the location that stores the JAR file.</p>
-</li>
-<li>
-<p><strong>Dependencies</strong>: Identify which JBoss EAP modules are used by the JDBC driver.</p>
-</li>
+<p>Using management CLI</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>The syntax for the module add command is:</p>
 <div class="listingblock">
@@ -441,41 +283,6 @@
 </div>
 </div>
 </li>
-</ol>
-</div>
-</li>
-<li>
-<p>For example, the following command in the management CLI creates the JDBC PostreSQL module by using the file postgresql-42.x.y.jar that the database vendor provides:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[disconnected /] module add \
---name=com.postgresql \
---resources=/path/to/postgresql-42.x.y.jar \
---dependencies=javaee.api,sun.jdk,ibm.jdk,javax.api,javax.transaction.api</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>You can run this command in the management CLI disconnected mode.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>This command creates the <strong>$JBOSS_HOME/modules/com/postgresql/main</strong> directory with the JDBC JAR file and a module.xml with the dependencies you specify in the command.</p>
-</li>
 <li>
 <p>If you need to remove a module from JBoss EAP, then you can stop the server, and run the following command:</p>
 <div class="listingblock">
@@ -484,17 +291,26 @@
 </div>
 </div>
 </li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="_defining_drivers"><a class="anchor" href="#_defining_drivers"></a>Defining Drivers</h4>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_defining_drivers"><a class="anchor" href="#_defining_drivers"></a>Defining Drivers</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
 <p>After adding the driver as a module, the next step is to create a &lt;driver&gt; definition in the &lt;drivers&gt; section of the data source subsystem in the JBoss EAP configuration file.</p>
 </li>
 <li>
-<p>You can use the following management CLI operation to add the &lt;driver&gt; definition on a standalone server:</p>
+<p>Use the following management CLI operation to add the &lt;driver&gt; definition on a standalone server:</p>
 <div class="listingblock">
 <div class="content">
 <pre>/subsystem=datasources/jdbc-driver=&lt;driver_name&gt;:add\
@@ -532,164 +348,11 @@
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_creating_data_sources_with_the_management_console"><a class="anchor" href="#_creating_data_sources_with_the_management_console"></a>Creating Data Sources with the Management Console</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>The EAP management console simplifies datasource creation by offering preconfigured templates for various database vendors.</p>
-</li>
-<li>
-<p>Follow these steps to create a non-XA datasource in a standalone server using the management console.</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Click <strong>Configuration</strong> from the top of the management console and naviagate to <strong>Subsystems&gt;Datasources &amp; Drivers&gt;Datasources</strong> to access the non-XA data source page.</p>
-</li>
-<li>
-<p>Then click Add Datasource in the <strong>+</strong> drop-down menu.</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/im3.png" alt="im3">
-</div>
-</div>
-</li>
-<li>
-<p>Select a database template and click <strong>Next</strong>. If none of them are valid, then select the Custom option and see the JDBC driver documentation to complete the following steps.</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/im4.png" alt="im4">
-</div>
-</div>
-</li>
-<li>
-<p>Enter the datasource attributes and click <strong>Next</strong>.</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/im5.png" alt="im5">
-</div>
-</div>
-</li>
-<li>
-<p>Select a database driver in the Driver Name drop-down menu and click <strong>Next</strong>.</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/newone.png" alt="newone">
-</div>
-</div>
-</li>
-<li>
-<p>Enter the connection URL, username, and password for the database and click Next.</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/im7.png" alt="im7">
-</div>
-</div>
-</li>
-<li>
-<p>Click <strong>Test Connection</strong> to verify that the datasource can connect to the database. Note that if you test the connection at this step, then the management console creates the datasource. You can click <strong>Next</strong> and test the connection later.</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>On the final step, notice that the connection URL is formatted for the correct MySQL syntax. Click <strong>Done</strong> to finish creating the data source.</p>
-</li>
-<li>
-<p>Finally, a window with a configuration summary shows and you can click <strong>Finish</strong>.</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/im8.png" alt="im8">
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="_testing_the_data_source"><a class="anchor" href="#_testing_the_data_source"></a>Testing the Data Source</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>The management console provides a <strong>Test Connection</strong> button to verify that the connections from a connection pool can access the database.</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/newtwo.png" alt="newtwo">
-</div>
-</div>
-</li>
-<li>
-<p>Likewise, the management CLI can be used to test if the data source was correctly configured. To validate it, use the following command:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost /] /subsystem=datasources/\
-data-source=datasource_name:test-connection-in-pool</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_creating_dataources_with_the_eap_management_cli"><a class="anchor" href="#_creating_dataources_with_the_eap_management_cli"></a>Creating Dataources with the EAP Management CLI</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>You can create data sources by using the management CLI.</p>
-</li>
-<li>
-<p>For example, the following command creates a MySQL datasource, called MySqlDS, with connection validation configured:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[standalone@localhost] data-source add --name=MySqlDS --jndi-name=java:jboss/MySqlDS \
---driver-name=mysql \
---connection-url=jdbc:mysql://localhost:3306/jbossdb \
---user-name=admin --password=admin \
---validate-on-match=true --background-validation=false \
---valid-connection-checker-class-name=\
-org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker \
---exception-sorter-class-name=\
-org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter</pre>
-</div>
-</div>
-</li>
-<li>
-<p>The previous command generates the following datasource configuration in the datasource subsystem:</p>
-<div class="imageblock text-center">
-<div class="content">
-<img src="_images/newthree.png" alt="newthree">
-</div>
-</div>
-</li>
-<li>
-<p>Explaination</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The JNDI name that would be used to look up the data source by a component on the EAP server.</p>
-</li>
-<li>
-<p>The name that refers to the driver that is defined in the &lt;drivers&gt; section below the data source.</p>
-</li>
-<li>
-<p>The credentials used to access the MySQL database.</p>
-</li>
-<li>
-<p>Both validate on match and background validation are defined, but only one of them can be enabled.</p>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="_lab_1_configuring_jdbc_drivers"><a class="anchor" href="#_lab_1_configuring_jdbc_drivers"></a>Lab 1: Configuring JDBC Drivers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Outcome</strong>: Install the MariaDB JDBC driver as a module, and enable it in the server configuration.</p>
+<p><strong>Outcome</strong>: In this lab, you install the MariaDB JDBC driver as a module, and enable it in the server configuration.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -836,7 +499,7 @@ You are disconnected at the moment. Type 'connect' to connect to the server or '
 <h2 id="_lab_2_creating_data_sources_with_the_management_console"><a class="anchor" href="#_lab_2_creating_data_sources_with_the_management_console"></a>Lab 2: Creating Data Sources with the Management Console</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Outcome</strong>: You should be able to create and test a data source based on the MariaDB driver.</p>
+<p><strong>Outcome</strong>: In this lab, you create and test a data source based on the MariaDB driver.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1106,7 +769,7 @@ test-ds:read-resource
 <h2 id="_lab_3_creating_data_sources_using_eap_cli"><a class="anchor" href="#_lab_3_creating_data_sources_using_eap_cli"></a>Lab 3: Creating Data Sources using EAP CLI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Outcome</strong>: Create and test data sources by using the management CLI.</p>
+<p><strong>Outcome</strong>: In this lab, you create and test data sources by using the management CLI.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">

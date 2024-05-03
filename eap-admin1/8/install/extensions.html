@@ -59,13 +59,13 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Installation</a>
+    <a class="nav-link" href="index.html">Introduction to Red Hat JBoss EAP 8</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="install.html">install.adoc</a>
+    <a class="nav-link" href="install.html">Red Hat JBoss Enterprise Application Platform 8 Installation Methods</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="admin.html">Managing JBoss EAP</a>
+    <a class="nav-link" href="admin.html">Managing Red Hat JBoss EAP 8</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="extensions.html">Interpreting Extensions, Subsystems, and Profiles</a>
@@ -81,13 +81,10 @@
     <a class="nav-link" href="../config/index.html">Configuration</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../config/eap-config.html">JBoss EAP 8 Configuration</a>
+    <a class="nav-link" href="../config/eap-config.html">Red Hat JBoss EAP 8 Configuration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../config/eap-web-console.html">JBoss EAP Web Console</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../config/eap-cli.html">JBoss EAP CLI</a>
+    <a class="nav-link" href="../config/eap-cli.html">Red Hat JBoss EAP 8 CLI</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../config/deploy.html">Deploying Applications to a Standalone Server</a>
@@ -147,7 +144,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Red Hat JBoss EAP Administration I</a></li>
-    <li><a href="index.html">Installation</a></li>
+    <li><a href="index.html">Introduction to Red Hat JBoss EAP 8</a></li>
     <li><a href="extensions.html">Interpreting Extensions, Subsystems, and Profiles</a></li>
   </ul>
 </nav>
@@ -163,7 +160,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>JBoss EAP 8.0 provides implementations of the Jakarta EE 10 APIs and Jakarta EE 10 <a href="https://jakarta.ee/specifications/webprofile/10/">Web Profile</a>, <a href="https://jakarta.ee/specifications/coreprofile/10/">Core Profile</a>, and the Full <a href="https://jakarta.ee/specifications/platform/10/">Platform</a> standards.</p>
+<p>The Red Hat JBoss EAP 8 provides implementations of the Jakarta EE 10 APIs and Jakarta EE 10 <a href="https://jakarta.ee/specifications/webprofile/10/">Web Profile</a>, <a href="https://jakarta.ee/specifications/coreprofile/10/">Core Profile</a>, and the Full <a href="https://jakarta.ee/specifications/platform/10/">Platform</a> standards.</p>
 </li>
 <li>
 <p>JBoss EAP 7.4, supported Jakarta EE 8. However, Jakarta EE 10 has undergone several changes, the most significant being the modification of the package namespace for Jakarta EE APIs from javax to jakarta.</p>
@@ -176,12 +173,12 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_modules_in_jboss_eap"><a class="anchor" href="#_modules_in_jboss_eap"></a>Modules in JBoss EAP</h2>
+<h2 id="_modules_in_red_hat_jboss_eap_8"><a class="anchor" href="#_modules_in_red_hat_jboss_eap_8"></a>Modules in Red Hat JBoss EAP 8</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>JBoss EAP 8 is based on a core infrastructure provided by the <a href="https://access.redhat.com/solutions/21906">WildFly 28</a> Core project that, manages the loading and activation of modules, following the architecture provided by the JBoss Modules project.</p>
+<p>Red Hat JBoss EAP 8 is based on a core infrastructure provided by the <a href="https://access.redhat.com/solutions/21906">WildFly 28</a> Core project that, manages the loading and activation of modules, following the architecture provided by the JBoss Modules project.</p>
 </li>
 <li>
 <p>A module basically provides Java code to be used by JBoss EAP services and by applications.</p>
@@ -459,7 +456,7 @@ total 23112
 
 or
 
-[student@workstation ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml</pre>
+[vagrant@server ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml</pre>
 </div>
 </div>
 </li>
@@ -519,7 +516,7 @@ or
 <h2 id="_lab_1_configuring_subsystems"><a class="anchor" href="#_lab_1_configuring_subsystems"></a>Lab 1: Configuring Subsystems</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Outcome</strong>: In this lab, you customize the subsystem of JBoss EAP 8 standalone server by updating the log level using management console.</p>
+<p><strong>Outcome</strong>: In this lab, you customize the subsystem of Red Hat JBoss EAP 8 standalone server by updating the log level using management console.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -591,7 +588,7 @@ VM Arguments: -D[Standalone] -Xlog:gc*:file=/opt/EAP-8.0.0/standalone/log/gc.log
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="admin.html">Managing JBoss EAP</a></span>
+  <span class="prev"><a href="admin.html">Managing Red Hat JBoss EAP 8</a></span>
   <span class="next"><a href="../config/index.html">Configuration</a></span>
 </nav>
 </article>
