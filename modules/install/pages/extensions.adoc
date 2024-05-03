@@ -1,12 +1,12 @@
 = Interpreting Extensions, Subsystems, and Profiles
 
-* JBoss EAP 8.0 provides implementations of the Jakarta EE 10 APIs and Jakarta EE 10 https://jakarta.ee/specifications/webprofile/10/[Web Profile], https://jakarta.ee/specifications/coreprofile/10/[Core Profile], and the Full https://jakarta.ee/specifications/platform/10/[Platform] standards.
+* The Red Hat JBoss EAP 8 provides implementations of the Jakarta EE 10 APIs and Jakarta EE 10 https://jakarta.ee/specifications/webprofile/10/[Web Profile], https://jakarta.ee/specifications/coreprofile/10/[Core Profile], and the Full https://jakarta.ee/specifications/platform/10/[Platform] standards.
 * JBoss EAP 7.4, supported Jakarta EE 8. However, Jakarta EE 10 has undergone several changes, the most significant being the modification of the package namespace for Jakarta EE APIs from javax to jakarta.
 * See the complete list of specifications in the https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/8.0/html-single/release_notes_for_red_hat_jboss_enterprise_application_platform_8.0/index#jakarta-ee-10-support_assembly-release-notes[release notes].
 
-== Modules in JBoss EAP
+== Modules in Red Hat JBoss EAP 8
 
-* JBoss EAP 8 is based on a core infrastructure provided by the https://access.redhat.com/solutions/21906[WildFly 28] Core project that, manages the loading and activation of modules, following the architecture provided by the JBoss Modules project.
+* Red Hat JBoss EAP 8 is based on a core infrastructure provided by the https://access.redhat.com/solutions/21906[WildFly 28] Core project that, manages the loading and activation of modules, following the architecture provided by the JBoss Modules project.
 
 * A module basically provides Java code to be used by JBoss EAP services and by applications.
 
@@ -216,7 +216,7 @@ They are provided so a standalone server instance can easily be started with mor
 
 or
 
-[student@workstation ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml
+[vagrant@server ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml
 ----
 
 * Start the JBoss EAP instance using the `standalone-ha.xml` to start clustering capabilities.
@@ -251,7 +251,7 @@ Be careful not to confuse a JBoss EAP profile with a Jakarta EE profile. A JBoss
 
 == Lab 1: Configuring Subsystems
 
-*Outcome*: In this lab, you customize the subsystem of JBoss EAP 8 standalone server by updating the log level using management console.
+*Outcome*: In this lab, you customize the subsystem of Red Hat JBoss EAP 8 standalone server by updating the log level using management console.
 
 * Navigate to the JBoss_Home directory.
 +

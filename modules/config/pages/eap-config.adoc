@@ -1,6 +1,6 @@
-= JBoss EAP 8 Configuration
+= Red Hat JBoss EAP 8 Configuration
 
-== Overview of JBoss EAP 8 Standalone mode
+== Overview of Red Hat JBoss EAP 8 Standalone mode
 
 * Standalone servers are perfect for running a single instance of Red Hat JBoss EAP.
 * You can run multiple standalone instances on the same server or across different servers. Each server is managed "standalone", that is, individually.
@@ -10,7 +10,7 @@
 . `JBOSS_HOME/standalone/configuration/standalone-full.xml` file
 . `JBOSS_HOME/standalone/configuration/standalone-full-ha.xml` file
 * Various subsystems like logging, messaging, and data sources can be configured within this file.
-* JBoss EAP 8 standalone server supports clustering and high availability, configurable through various files alongside `standalone.xml`.
+* Red Hat JBoss EAP 8 standalone server supports clustering and high availability, configurable through various files alongside `standalone.xml`.
 
 [WARNING]
 ====
@@ -24,14 +24,14 @@ The standalone server and managed domain modes differ primarily in how they mana
 
 == The Standalone Directory Structure
 
-* After installing a JBoss EAP 8 distribution, the standalone directory initially contains the following subdirectories:
+* After installing a Red Hat JBoss EAP 8 distribution, the standalone directory initially contains the following subdirectories:
 +
 [subs="+quotes,+macros"]
 ----
 [vagrant@server standalone]$ pwd
 /opt/EAP-8.0.0/standalone
 
-[vagrant@server ~]$ ls
+[vagrant@server standalone]$ ls
 configuration/
 deployments/
 lib/
@@ -52,7 +52,7 @@ lib/
 
 . **lib**: Contains common JAR files.
 
-* After running JBoss EAP 8 the first time, the following subdirectories of standalone are created:
+* After running the Red Hat JBoss EAP 8 the first time, the following subdirectories of standalone are created:
 +
 [subs="+quotes,+macros"]
 ----
@@ -69,7 +69,7 @@ tmp/
 . **tmp**:  For temporary files, like the shared-key mechanism for authenticating local users to the server's command-line interface (CLI).
 
 
-== JBoss EAP 8 Base Directory
+== Red Hat JBoss EAP 8 Base Directory
 
 * Users can separate the configuration and data directories from the JBoss EAP 8 installation directory, aiding easier upgrades.
 * This allows the binaries to be installed once and run multiple times on the same machine.

@@ -8,16 +8,6 @@ In this section, you interpret the database subsystem and connection pools.
 
 * Data sources securely provide access to databases without exposing sensitive information.
 
-* To connect to a database, the application uses a name bound to the data source via the application server.
-
-* For a Jakarta EE application server, the name is defined by the Java Naming and Directory Interface (JNDI) specification.
-
-* Fine-tuning for efficiency and load management is achieved through Java Database Connectivity (JDBC) APIs tailored to specific database systems.
-
-* Configuring data sources involves installing the JDBC driver and defining the data source in the server's configuration.
-
-* Data sources are configured through the Datasource Subsystem.
-
 * Declaring a new data source consists of two separate steps:
 
 . Installing the JDBC driver for a particular database server vendor.
@@ -26,7 +16,7 @@ In this section, you interpret the database subsystem and connection pools.
 
 == Datasource Types
 
-* When creating a datasource in the JBoss EAP 8 management interface, you choose between two types:
+* When creating a datasource in the Red Hat JBoss EAP 8 management interface, you choose between two types:
 . Non-XA datasources: For applications with single-database transactions.
 . XA datasources: For applications with multiple databases or XA resources in one transaction.
 
@@ -34,95 +24,29 @@ In this section, you interpret the database subsystem and connection pools.
 
 * Managing data sources involves handling traffic and concurrent connections to the database, which can become a bottleneck during peak loads.
 
-* JBoss EAP optimizes data access by creating a database connection pool, providing instant connections to the application.
+* Red Hat JBoss EAP 8 optimizes data access by creating a database connection pool, providing instant connections to the application.
 
 * This eliminates the need to open and close connections for every request.
-
-* The pool size is adjustable for each data source.
 
 [NOTE]
 ====
 Each application's database instance necessitates its own connection pool.
 ====
 
-== Configuring Datasources
-
-=== Understanding Data Source configuration
-
-* In JBoss EAP 8, you can find datasoure configurations within the datasource subsystem, in the **domain.xml** or **standalone.xml** files.
-
-* The data source subsystem has the following structure:
-+
-image::im1.png[align="center"]
-
-. The JNDI name used to look up the data source.
-
-. The name of the management pool for the datasource.
-
-. Dictates whether the data source is enabled or disabled.
-
-. Dictates whether to bind the data source to global JNDI.
-
-. The JDBC driver connection URL.
-
-. The connection pool settings.
-
-. Security credentials for connecting to the database.
-
-. The validation strategies for the data source connections.
-
-. Contains child elements which are timeout settings.
-
-. Describes the configuration for the behavior of prepared statements.
-
-. The available drivers definitions.
-
-More on data source configuration sections:
-
-* **<datasources> and <datasource> section**:
-. Multiple <datasource> entries can be defined within the <datasources> subsystem, each requiring a unique JNDI name specified by the jndi-name attribute.
-
-. Components retrieve database connections using this JNDI name.
-
-. Valid JNDI names start with "java:" or "java:/jboss", like "java:/jboss/datasources/bookstore".
-
-* **<pool> section**:
-. Pool configurations in the <pool> section include <min-pool-size>, <max-pool-size>, and <prefill>, where <prefill> populates the connection pool initially.
-
-* **<validation> section**:
-. The <validation> section offers settings for validating database connections.
-
-* **<statement> section**:
-. In the <statement> section, <prepared-statement-cache-size> dictates the number of cached prepared statements per connection, while <share-prepared-statements> determines if non-closed prepared statements can be reused.
-
-* **<drivers> section**:
-. The <drivers> section is for defining JDBC drivers that are deployed as modules.
-. The name attribute for the driver corresponds to the value used in the **<datasource>** definition.
-. The module attribute must be assigned to a deployed module on the server.
-
-=== Configuring JDBC Drivers
+== Configuring JDBC Drivers
 
 * Java Database Connectivity (JDBC) is a Java API to communicate with relational databases.
 
-* A JDBC driver is a component that implements the JDBC API.
-
 * Java applications use the JDBC driver to perform database operations.
-
-* A JDBC driver is packaged in a Java Archive (JAR) file, and contains a class file with the driver definition.
 
 * JDBC drivers are available from database vendors, such as from MariaDB or PostgreSQL.
 
-* To use a JDBC driver in JBoss EAP 8, you first need install the driver as a module on the server.
+* To use a JDBC driver in Red Hat JBoss EAP 8, you first need install the driver as a module on the server.
 
-* You can add the JDBC driver module manually or with the management CLI.
-
-* The module add management CLI command requires the user to provide:
-
-. **Name**: A name based on a Java package name that JBoss EAP uses to store the JAR file and a module configuration file. The name must be unique and cannot conflict with the existing libraries available at the $JBOSS_HOME/modules directory.
-. **Resources**: Refers to the location that stores the JAR file.
-. **Dependencies**: Identify which JBoss EAP modules are used by the JDBC driver.
-
-. The syntax for the module add command is:
+* Ways to add the JDBC driver module:
+. Manually
+. Using management CLI
+.. The syntax for the module add command is:
 +
 [subs="+quotes,+macros"]
 ----
@@ -132,35 +56,18 @@ More on data source configuration sections:
 --dependencies=<library1>,<library2>,...
 ----
 
-* For example, the following command in the management CLI creates the JDBC PostreSQL module by using the file postgresql-42.x.y.jar that the database vendor provides:
-+
-[subs="+quotes,+macros"]
-----
-[disconnected /] module add \
---name=com.postgresql \
---resources=/path/to/postgresql-42.x.y.jar \
---dependencies=javaee.api,sun.jdk,ibm.jdk,javax.api,javax.transaction.api
-----
-
-[NOTE]
-====
-You can run this command in the management CLI disconnected mode.
-====
-
-* This command creates the **$JBOSS_HOME/modules/com/postgresql/main** directory with the JDBC JAR file and a module.xml with the dependencies you specify in the command.
-
-* If you need to remove a module from JBoss EAP, then you can stop the server, and run the following command:
+.. If you need to remove a module from JBoss EAP, then you can stop the server, and run the following command:
 +
 [subs="+quotes,+macros"]
 ----
 [disconnected /] module remove --name=<module_name>
 ----
 
-==== Defining Drivers
+== Defining Drivers
 
 * After adding the driver as a module, the next step is to create a <driver> definition in the <drivers> section of the data source subsystem in the JBoss EAP configuration file.
 
-* You can use the following management CLI operation to add the <driver> definition on a standalone server:
+* Use the following management CLI operation to add the <driver> definition on a standalone server:
 +
 [subs="+quotes,+macros"]
 ----
@@ -184,88 +91,9 @@ You can run this command in the management CLI disconnected mode.
 
 * After defining the <driver> in the <drivers> section of the data source subsystem, the driver is referenced by its name attribute and users can create data sources that use the driver.
 
-=== Creating Data Sources with the Management Console
-
-* The EAP management console simplifies datasource creation by offering preconfigured templates for various database vendors.
-
-* Follow these steps to create a non-XA datasource in a standalone server using the management console.
-
-. Click **Configuration** from the top of the management console and naviagate to **Subsystems>Datasources & Drivers>Datasources** to access the non-XA data source page.
-
-. Then click Add Datasource in the **+** drop-down menu.
-+
-image::im3.png[align="center"]
-
-. Select a database template and click **Next**. If none of them are valid, then select the Custom option and see the JDBC driver documentation to complete the following steps.
-+
-image::im4.png[align="center"]
-
-. Enter the datasource attributes and click **Next**.
-+
-image::im5.png[align="center"]
-
-. Select a database driver in the Driver Name drop-down menu and click **Next**.
-+
-image::newone.png[align="center"]
-
-. Enter the connection URL, username, and password for the database and click Next.
-+
-image::im7.png[align="center"]
-
-. Click **Test Connection** to verify that the datasource can connect to the database. Note that if you test the connection at this step, then the management console creates the datasource. You can click **Next** and test the connection later.
-
-* On the final step, notice that the connection URL is formatted for the correct MySQL syntax. Click **Done** to finish creating the data source.
-
-* Finally, a window with a configuration summary shows and you can click **Finish**.
-+
-image::im8.png[align="center"]
-
-==== Testing the Data Source
-
-* The management console provides a **Test Connection** button to verify that the connections from a connection pool can access the database.
-+
-image::newtwo.png[align="center"]
-
-* Likewise, the management CLI can be used to test if the data source was correctly configured. To validate it, use the following command:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost /] /subsystem=datasources/\
-data-source=datasource_name:test-connection-in-pool
-----
-
-=== Creating Dataources with the EAP Management CLI
-
-* You can create data sources by using the management CLI.
-
-* For example, the following command creates a MySQL datasource, called MySqlDS, with connection validation configured:
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost] data-source add --name=MySqlDS --jndi-name=java:jboss/MySqlDS \
---driver-name=mysql \
---connection-url=jdbc:mysql://localhost:3306/jbossdb \
---user-name=admin --password=admin \
---validate-on-match=true --background-validation=false \
---valid-connection-checker-class-name=\
-org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker \
---exception-sorter-class-name=\
-org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter
-----
-
-* The previous command generates the following datasource configuration in the datasource subsystem:
-+
-image::newthree.png[align="center"]
-
-* Explaination
-. The JNDI name that would be used to look up the data source by a component on the EAP server.
-. The name that refers to the driver that is defined in the <drivers> section below the data source.
-. The credentials used to access the MySQL database.
-. Both validate on match and background validation are defined, but only one of them can be enabled.
-
 == Lab 1: Configuring JDBC Drivers
 
-**Outcome**: Install the MariaDB JDBC driver as a module, and enable it in the server configuration.
+**Outcome**: In this lab, you install the MariaDB JDBC driver as a module, and enable it in the server configuration.
 
 * Download the **mariadb-java-client-3.3.2.jar** files.
 +
@@ -382,7 +210,7 @@ Notice that the driver-module-name has the`com.mariadb` value from the module.xm
 
 == Lab 2: Creating Data Sources with the Management Console
 
-**Outcome**: You should be able to create and test a data source based on the MariaDB driver.
+**Outcome**: In this lab, you create and test a data source based on the MariaDB driver.
 
 * Install and configure mariadb server.
 
@@ -564,7 +392,7 @@ test-ds:read-resource
 
 == Lab 3: Creating Data Sources using EAP CLI
 
-**Outcome**: Create and test data sources by using the management CLI.
+**Outcome**: In this lab, you create and test data sources by using the management CLI.
 
 . Start the management CLI in a new terminal window:
 +

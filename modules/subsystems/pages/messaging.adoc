@@ -17,172 +17,77 @@
 
 * The **Java Message Service (JMS)** provides a standardized API for MOM access, including ConnectionFactories, Queues, and Topics.
 
-== Overview of the Java Messaging Service (JMS):
+== Overview of the Java Messaging Service (JMS)
 
-* JMS is a specification enabling Java components to exchange messages independently.
-
-* It offers a standardized API akin to JDBC for database access, reducing dependency on product nuances.
+* JMS enables Java components to exchange messages independently.
 
 * JMS includes:
 . **Connection Factories**: Facilitate MOM connections.
 . **Queues**: Support FIFO message retrieval, ideal for point-to-point communication.
 . **Topics**: Enable publish-subscribe communication, accommodating multiple subscribers; MOM retains messages for offline consumers.
 
-* Both queues and topics are referred to as destinations, accessible via JNDI names for seamless message redirection without altering application code.
-
-* JMS ConnectionFactories, referenced through JNDI names, enable dynamic MOM configuration for various environments, ensuring adaptability from development to production.
-
 === JMS Message Structure
 
 * JMS messages comprise:
-. **Headers**:
-.. Managed by the MOM, these define message attributes, primarily handled internally.
-.. Typically, application logic shouldn't rely heavily on these headers.
+. **Headers**: Managed by the MOM, these define message attributes, primarily handled internally. 
 
-. **Properties**:
-.. Producer-defined metadata facilitating communication between the MOM and consumers.
-.. For instance, properties can direct messages to specific consumers, useful for scenarios like routing orders to different payment processing systems.
+. **Properties**: Producer-defined metadata facilitating communication between the MOM and consumers.
 
-. **Bodies**:
-.. Contain application-specific data, distinct from MOM infrastructure handling.
-.. Regular client applications handle message transformation, ensuring MOM focuses on message delivery.
-
-== JBoss EAP Built-in Messaging
-
-* The following are the current messaging offerings from Red Hat:
-
-. **Red Hat AMQ**: Broker and clients for a MOM system based on ActiveMQ, ActiveMQ Artemis, HornetQ, QPid, and other consolidated open source message components.
-
-. **Red Hat AMQ Streams**: MOM system based on Apache Kafka.
-
-=== Red Hat AMQ
-
-* ActiveMQ is managed by using the management CLI and console.
-
-* Activating the messaging-activemq subsystem implies using either the standalone-full.xml or standalone-full-ha.xml configuration files for standalone server mode, or either the full or full-ha profiles for managed domains.
-
-* The subsystem contains two child objects in the default JBoss EAP 7 configuration, exemplified by the following CLI command:
-+
-[subs="+quotes,+macros"]
-----
-[domain@127.0.0.1:9990 /] /profile=full/subsystem=messaging-activemq:read-resource
-{
-    "outcome" => "success",
-    "result" => {
-        ...output omitted...
-        "jms-bridge" => undefined,
-        ...output omitted...
-        "server" => {"default" => undefined},
-        ...output omitted...
-    }
-}
-----
+. **Bodies**: Contain application-specific data, distinct from MOM infrastructure handling.
 
 == Configuring Messaging Resources
 
-=== ActiveMQ Connectors and Acceptors
-
 * JBoss EAP 8 includes an embedded ActiveMQ Artemis, referred to as ActiveMQ.
-
-* JBoss EAP configures network communication using:
-. **Acceptors**: Define protocols and parameters for incoming connections from messaging clients.
-. **Connectors**: Specify protocols and parameters for connecting to ActiveMQ servers.
-
-[Note]
-====
-ActiveMQ uses "connector" for client-side, differing from other JBoss EAP subsystems.
-====
-
-* JBoss EAP 8 serves as both server and client for ActiveMQ, with default configuration files encompassing definitions for both.
 
 * ActiveMQ provides two types of acceptors and connectors:
 
-. **HTTP variety**: Employs the native ActiveMQ protocol via an HTTP connection, accepted by the undertow subsystem. This setup avoids the need for JBoss EAP to open extra firewall ports for remote messaging clients.
-. **In-vm variety**: Allows messaging clients within the same JVM as the ActiveMQ server to connect without network overhead.
+. HTTP variety: Employs the native ActiveMQ protocol via an HTTP connection, accepted by the undertow subsystem. This setup avoids the need for JBoss EAP to open extra firewall ports for remote messaging clients.
 
-* ActiveMQ connector's networking parameters are indirectly defined by referencing an acceptor element.
+. In-vm variety: Allows messaging clients within the same JVM as the ActiveMQ server to connect without network overhead.
 
-* The connector connects to the IP address and TCP port accepted by the acceptor, aligning with ActiveMQ's remote client discovery mechanism.
+* Configuring messaging resources in JBoss EAP 8 involves several steps. Here's a general outline of the process:
 
-* The following listing shows the connectors and acceptors in the default JBoss EAP configuration files:
+. **Access JBoss EAP 8 Management Console or CLI**
+
+. **Navigate to Messaging Subsystem**: In the management console, navigate to the Messaging subsystem. It's usually located under the "Configuration -> Subsystem -> Messaging -> Server" section.
+. Add the server named **default** and select **Application Domain** under Elyton Domain and click Add.
 +
-image::new11.png[align="center"]
+image::im41.png[align="center"]
 
-. The **<http-connector>** element called http-connector uses the endpoint attribute to reference the **<http-acceptor>** element called **http-acceptor**.
-
-. The **<in-vm-connector>** element does not need to reference any **<in-vm-acceptor>** element because local clients do not need discovery to find the messaging server.
-
-. The **<http-acceptor>** element references the http-listener called default, which is defined by the undertow subsystem.
-
-=== JMS Connection Factories and Pooled-Connection Factories
-
-* Connection factory resources in the messaging-activemq subsystem refer to an ActiveMQ connector within the same subsystem.
-
-* Below is a snippet from the default JBoss EAP configuration files:
+.. Create "default" server as shown below:
 +
-image::new12.png[align="center"]
+image::im42.png[align="center"]
 
-. The **<connection-factory>** element named InVmConnectionFactory references the **<in-vm-connector>** element named in-vm, facilitating applications via the Java SE style JMS API within JBoss EAP. However, it's not intended for use by enterprise components like servlets and EJBs.
-
-. The **<connection-factory>** element named RemoteConnectionFactory points to the **<http-connector>** element named http-connector, catering to remote JMS clients connecting to the embedded ActiveMQ.
-
-* Each **<connection-factory>** element, bound to distinct JNDI names via the entries attribute, corresponds to a different connector.
-
-* For Jakarta EE applications, it's recommended to utilize a JMS PooledConnectionFactory instead of JMS ConnectionFactory resources. This PooledConnectionFactory offers connection reuse, XA transaction integration, and JAAS security context propagation.
-
-* Here's a snippet from the default JBoss EAP configuration files featuring the pooled-connection-factory resource:
-+
-image::new13.png[align="center"]
-
-* In this example, Jakarta EE applications utilize the pooled connection factory when no connection factory is declared, with the pooled connection factory referencing the in-vm connector.
-
-* The following CLI command creates the resource from the previous listing under the full profile for a JBoss EAP managed domain:
+. **Define Connection Factories**: Define connection factories for establishing connections to the messaging server. You can configure attributes such as connection parameters, security settings, and connection pool settings. Eg: To create a pooled-connection-factory that refers to the default **in-vm ActiveMQ** connector, use the following command.
 +
 [subs="+quotes,+macros"]
 ----
-[domain@localhost:9990 /] cd /profile=full/subsystem=messaging-activemq/​server=default
-[domain@localhost:9990 server=default] ./pooled-connection-factory=mycf:add(\
-connectors=[in-vm], entries=[java:/jms/MyCF])
+/subsystem=messaging-activemq/server=default/pooled-connection-factory=custom:add(connectors=[in-vm], entries=[<JNDI-NAME>])
 ----
 
-* The reason to use a pooled connection factory instead of a regular connection factory is the same as using a JDBC datasource instead of a driver manager.
-
-=== JMS Destinations
-
-* When employing JBoss EAP's embedded Message-oriented Middleware (MOM), creating JMS destination resources simultaneously generates the underlying MOM objects.
-
-* To create a destination by using the CLI, create either a jms-queue or a jms-topic resource.
-
-* For example, the following command create a topic called stocks that is bound to the JNDI name **java:/jms/broker/StockUpdates**:
+. **Create JMS Destinations** as per your Java application requirement. Eg: To create JMS queues, you can refer to below command.
 +
 [subs="+quotes,+macros"]
 ----
-[domain@localhost:9990 server=default] ./jms-topic=stocks:add(entries=[java:/jms/broker/StockUpdates])
+/subsystem=messaging-activemq/server=default/jms-queue=TestQueue:add (entries=[<JNDI-NAME>])
 ----
 
-* The previous command adds the following to the domain mode configuration files:
-+
-image::new14.png[align="center"]
+. **Configure Security Settings**: Configure security settings for accessing messaging resources if required. This may involve setting up authentication and authorization mechanisms.
 
-. The name attribute is the name of the managed object. This name is only administrative, as it is not used by applications that use the JMS API.
+. **Review and Apply Changes**: Review the configuration changes you've made and apply them to the server.
 
-. The entries attribute provides one or more JNDI names for the resource. These are the names visible to applications.
+. **Test Configuration**: After applying the changes, test the messaging resources to ensure they are functioning as expected. You can send and receive test messages to queues or topics to verify connectivity and message delivery.
 
 
 == Lab: Configuring Messaging Resources
 
-**Outcome**: You should be able to create a JMS connection factory and a queue, and deploy sample applications that make use of them.
+**Outcome**: In this lab, you create a JMS connection factory and a queue, and deploy sample applications that make use of them.
 
-* Download messaging subsystem with ActiveMQ Artemis using command shown below:
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ sudo wget -c /opt/messaging-activemq-subsystem.jar https://repo1.maven.org/maven2/org/wildfly/wildfly-messaging-activemq-subsystem/24.0.0.Final/wildfly-messaging-activemq-subsystem-24.0.0.Final.jar
+**Pre-requisites**: Download the applications (WAR files) we will deploy in this exercise under /opt directory:
 
-[vagrant@server ~]$ sudo mv /opt/wildfly-messaging-activemq-subsystem-24.0.0.Final.jar  /opt/messaging-activemq.jar
-----
+https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/mdb-client.war
 
-* Start a JBoss EAP 8 standalone server instance.
+* Start the Red Hat JBoss EAP 8 standalone server instance.
 +
 [subs="+quotes,+macros"]
 ----
@@ -190,9 +95,7 @@ image::new14.png[align="center"]
 [vagrant@server bin]$ ./standalone.sh
 ----
 
-* Create the connection factory and queue by using the JNDI name expected by the applications.
-
-. Open a new terminal and run the management CLI script.
+* Open a new terminal and run the management CLI script.
 +
 [subs="+quotes,+macros"]
 ----
@@ -200,27 +103,81 @@ image::new14.png[align="center"]
 [vagrant@server bin]$ ./jboss-cli.sh -c
 ----
 
-. Add the **messaging subsystem** module using below command:
+* Add the **messaging-activemq subsystem** module using below command:
 +
 [subs="+quotes,+macros"]
 ----
-[standalone@localhost:9990 /] module add --name=messaging-activemq --resources=/opt/messaging-activemq.jar
+[standalone@localhost:9990 /] /extension=org.wildfly.extension.messaging-activemq:add()
+{"outcome" => "success"}
+
+[standalone@localhost:9990 /]
+[standalone@localhost:9990 /] /subsystem=messaging-activemq:add
+{
+    "outcome" => "success",
+    "response-headers" => {
+        "operation-requires-reload" => true,
+        "process-state" => "reload-required"
+    }
+}
+
+[standalone@localhost:9990 /] /:reload
+{
+    "outcome" => "success",
+    "result" => undefined
+}
 ----
 
-. Create a pooled-connection-factory that refers to the default in-vm ActiveMQ connector. Assign the JNDI name java:/jms/CustomCF to the factory.
+* Create a server named "default" under messaging-activemq subsystem:
+
+. Navigate to management console at **http://localhost:9990** and select **Configuration -> Subsystem -> Messaging -> Server** and select "+".
+
+. Add the server named **default** and select **Application Domain** under Elyton Domain and click **Add**.
++
+image::im41.png[align="center"]
+
+. You should be able to see the default server as shown below:
++
+image::im42.png[align="center"]
+
+. Execute below command to further configure messaging subsystem.
 +
 [subs="+quotes,+macros"]
 ----
 [standalone@localhost:9990 /] cd /subsystem=messaging-activemq/server=default
 
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/security-setting=#:add
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/address-setting=#:add(dead-letter-address="jms.queue.DLQ", expiry-address="jms.queue.ExpiryQueue", expiry-delay=-1L, max-delivery-attempts="10", max-size-bytes="10485760", page-size-bytes="2097152", message-counter-history-day-limit="10")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-connector=http-connector:add(socket-binding="http", endpoint="http-acceptor")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-connector=http-connector-throughput:add(socket-binding="http", endpoint="http-acceptor-throughput" ,params={batch-delay="50"})
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/in-vm-connector=in-vm:add(server-id="0")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-acceptor=http-acceptor:add(http-listener="default")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-acceptor=http-acceptor-throughput:add(http-listener="default", params={batch-delay="50", direct-deliver="false"})
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/in-vm-acceptor=in-vm:add(server-id="0")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/jms-queue=ExpiryQueue:add(entries=["java:/jms/queue/ExpiryQueue"])
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/jms-queue=DLQ:add(entries=["java:/jms/queue/DLQ"])
+----
+
+* Create a pooled-connection-factory that refers to the default **in-vm ActiveMQ** connector. Assign the JNDI name **java:/jms/CustomCF** to the factory.
++
+[subs="+quotes,+macros"]
+----
 [standalone@localhost:9990 server=default] ./pooled-connection-factory=\
 custom:add(connectors=[in-vm], entries=[java:/jms/CustomCF])
 {"outcome" => "success"}
 ----
 
-. Leave this terminal window open with the management CLI connected.
+* Leave this terminal window open with the management CLI connected.
 
-. Create a queue called TestQueue with java:/jms/queue/TestQueue as an assigned JNDI name.
+* Create a queue called **TestQueue** with **java:/jms/queue/TestQueue** as an assigned JNDI name.
 +
 [subs="+quotes,+macros"]
 ----
@@ -248,7 +205,7 @@ custom:add(connectors=[in-vm], entries=[java:/jms/CustomCF])
 
 * Deploy and use the test application to produce messages.
 
-. Use the management CLI to deploy the mdb-client.war application.
+. Use the management CLI to deploy the **mdb-client.war** application.
 +
 [subs="+quotes,+macros"]
 ----
@@ -278,103 +235,6 @@ custom:add(connectors=[in-vm], entries=[java:/jms/CustomCF])
         ...output omitted...
         "message-count" => 1L,
         "messages-added" => 1L,
-        ...output omitted...
-    }
-}
-----
-
-. Inspect the headers and properties for messages published but not yet consumed.
-
-. Notice that the message's Copy and Labels attributes match what came from the publisher test application.
-
-. The message body is not visible with the list-messages operation.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 server=default] ./jms-queue=TestQueue:list-messages
-{
-    "outcome" => "success",
-    "result" => [{
-        ...output omitted...
-        "address" => "jms.queue.TestQueue",
-        ...output omitted...
-        "Copy" => 1,
-        "Label" => "first",
-        ...output omitted...
-    }]
-}
-----
-
-* Deploy the message consumer test application and verify that it consumes the queued messages.
-
-. Use the management CLI to deploy the helloworld-mdb.jar application.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 bin]$ deploy \
-/opt/helloworld-mdb.jar
-----
-
-. The consumer test application includes an MDB that immediately starts consuming and logging messages. In the terminal window running JBoss EAP, verify that the log entries are similar to the following:
-+
-[subs="+quotes,+macros"]
-----
-...output omitted...
-... INFO  [class ...HelloWorldQueueMDB] ... Received Message from queue: test message body
-... INFO  [class ...HelloWorldQueueMDB] ... Message Properties: Copy #1 [first]
-... INFO  [class ...HelloWorldQueueMDB] ... Message Body: test message body
-----
-
-. In the terminal where the management CLI is connected, verify that messages-added is still one, but message-count is back down to zero.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 server=default] ./jms-queue=TestQueue\
-:read-resource(include-runtime=true)
-{
-    "outcome" => "success",
-    "result" => {
-        ...output omitted...
-        "message-count" => 0L,
-        "messages-added" => 1L,
-        ...output omitted...
-    }
-}
-----
-
-* Publish a message and verify that the running consumer immediately reads it.
-
-. In the curl terminal window, send another HTTP request to the server.
-+
-[subs="+quotes,+macros"]
-----
-[vagrant@server ~]$ curl --data "count=1" --data "label=second" \
---data "message=test message body" http://localhost:8080/mdb-client/queue
-...output omitted...
-----
-
-. In the terminal window running JBoss EAP, verify that the log entries are similar to the following:
-+
-[subs="+quotes,+macros"]
-----
-...output omitted...
-... INFO  [class ...HelloWorldQueueMDB] ... Received Message from queue: test message body
-... INFO  [class ...HelloWorldQueueMDB] ... Message Properties: Copy #1 [second]
-... INFO  [class ...HelloWorldQueueMDB] ... Message Body: test message body
-----
-
-. In the management CLI terminal window, verify that messages-added incremented and that message-count is still zero.
-+
-[subs="+quotes,+macros"]
-----
-[standalone@localhost:9990 server=default] ./jms-queue=TestQueue\
-:read-resource(include-runtime=true)
-{
-    "outcome" => "success",
-    "result" => {
-        ...output omitted...
-        "message-count" => 0L,
-        "messages-added" => 2L,
         ...output omitted...
     }
 }

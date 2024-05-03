@@ -1,4 +1,4 @@
-== Red Hat JBoss Enterprise Application Platform 8 Installation Methods
+= Red Hat JBoss Enterprise Application Platform 8 Installation Methods
 
 You can install JBoss EAP 8.0 by using one of the following installation methods:
 

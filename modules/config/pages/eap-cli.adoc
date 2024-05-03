@@ -1,8 +1,8 @@
-= JBoss EAP CLI
+= Red Hat JBoss EAP 8 CLI
 
-* JBoss EAP 8 employs XML files for configuration, offering three methods:
+* Red Hat JBoss EAP 8 employs XML files for configuration, offering three methods:
 
-. **Management console**: JBoss EAP 8 offers an easy to use web console to configure various subsystems of JBoss EAP.
+. **Management console**: Red Hat JBoss EAP 8 offers an easy to use web console to configure various subsystems of JBoss EAP.
 . **Management CLI**: A command-line tool for configuration and scripting.
 . **Manual XML editing**: It's typically advised to avoid directly modifying XML configuration files, although there are situations where it may become necessary.
 
@@ -58,9 +58,9 @@ Password: XXXXXXX
 --user=XXXXX --password=XXXXX
 ----
 
-=== JBoss EAP 8 Commands
+=== Red Hat JBoss EAP 8 Commands
 
-* The management CLI for JBoss EAP 8 offers user-friendly commands that translate into operation requests.
+* The management CLI for Red Hat JBoss EAP 8 offers user-friendly commands that translate into operation requests.
 
 * Basic supported commands include:
 . **connect**: Connect to the server or domain controller.
@@ -146,9 +146,8 @@ deployment-overlay    path                  system-property
 * Scripts can be executed using text files, and batch commands support multiple operations in one atomic unit, ensuring rollback if any operation fails.
 * External scripts can integrate with the CLI using the `--command` or `--commands` attribute.
 
-[Tip]
+[TIP]
 ====
-* Tip:
 . Start typing interface after the / character, and press Tab.
 . The management CLI not only completes the interface sub-level, but it adds an equals sign, because an equals sign is the only possible value after /interface.
 . Press Tab again and all the interfaces display:
@@ -162,7 +161,7 @@ management  public
 
 === Running a Management CLI Script File
 
-* JBoss EAP 8 supports script files for CLI management, aiding in repetitive tasks.
+* The Red Hat JBoss EAP 8 supports script files for CLI management, aiding in repetitive tasks.
 
 * For instance, you can configure a data source and test its connection by create a script as shown below:
 +
@@ -204,7 +203,7 @@ xa-data-source
 installed-drivers=[{"driver-name" => "h2","deployment-name" => undefined,"driver-module-name" => "com.h2database.h2","module-slot" => "main","driver-datasource-class-name" => "","driver-xa-datasource-class-name" => "org.h2.jdbcx.JdbcDataSource","datasource-class-info" => [{"org.h2.jdbcx.JdbcDataSource" => {"URL" => "java.lang.String","description" => "java.lang.String","loginTimeout" => "int","password" => "java.lang.String","url" => "java.lang.String","user" => "java.lang.String"}}],"driver-class-name" => "org.h2.Driver","driver-major-version" => 2,"driver-minor-version" => 1,"jdbc-compliant" => true}]
 ----
 
-== Lab: Executing JBoss EAP 8 commands
+== Lab: Executing Red Hat JBoss EAP 8 commands
 
 **Outcome**: In this lab, you execute different JBoss EAP 8 commands.
 
