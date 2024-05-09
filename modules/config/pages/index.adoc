@@ -1,9 +1,9 @@
 = Configuration
 
-In this section, we'll delve into the essential aspects of managing Red Hat JBoss Enterprise Application Platform (EAP) 8, focusing on configuration, command-line interface (CLI) operations, and deploying applications to standalone servers.
+In this section, we will delve into the essential aspects of managing Red Hat JBoss Enterprise Application Platform (EAP) 8, focusing on configuration, command-line interface (CLI) operations, and deploying applications to standalone servers.
 
 == Objectives
 
-* Red Hat JBoss EAP 8 Configuration
-* Red Hat JBoss EAP 8 CLI
-* Deploying Applications to a Standalone Server
+* Know about Red Hat JBoss EAP 8 Configuration
+* Understand the working of Red Hat JBoss EAP 8 CLI
+* Deploy Applications to a Standalone Server

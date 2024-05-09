@@ -41,7 +41,7 @@ Each application's database instance necessitates its own connection pool.
 
 * JDBC drivers are available from database vendors, such as from MariaDB or PostgreSQL.
 
-* To use a JDBC driver in Red Hat JBoss EAP 8, you first need install the driver as a module on the server.
+* To use a JDBC driver in Red Hat JBoss EAP 8, you first need to install the driver as a module on the server.
 
 * Ways to add the JDBC driver module:
 . Manually
