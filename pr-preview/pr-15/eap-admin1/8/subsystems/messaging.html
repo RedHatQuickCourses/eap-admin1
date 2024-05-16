@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Configuring Messaging (JMS) :: Red Hat JBoss EAP Administration I</title>
+    <link rel="prev" href="logging.html">
+    <link rel="next" href="web.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img
+          src="../../../_/img/redhat-logo.png"
+          height="40px"
+          alt="Red Hat"
+        /></a>
+      <a
+        class="navbar-item"
+        style="font-size: 24px; color: white"
+        href="../../.."
+      >Red Hat JBoss EAP Administration I</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a
+          class="navbar-item"
+          href="https://github.com/RedHatQuickCourses/eap-admin1/issues"
+          target="_blank"
+        >Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="eap-admin1" data-version="8">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Red Hat JBoss EAP Administration I</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../install/index.html">Introduction to Red Hat JBoss EAP 8</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/install.html">Red Hat JBoss Enterprise Application Platform 8 Installation Methods</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/admin.html">Managing Red Hat JBoss EAP 8</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/extensions.html">Interpreting Extensions, Subsystems, and Profiles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../config/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-config.html">Red Hat JBoss EAP 8 Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-cli.html">Red Hat JBoss EAP 8 CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/deploy.html">Deploying Applications to a Standalone Server</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Subsystems</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="database.html">Exploring the Data Source Subsystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="logging.html">Configuring Logging</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="messaging.html">Configuring Messaging (JMS)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="web.html">Configuring the Web Subsystem</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Red Hat JBoss EAP Administration I</span>
+    <span class="version">8</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Red Hat JBoss EAP Administration I</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">8</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Red Hat JBoss EAP Administration I</a></li>
+    <li><a href="index.html">Subsystems</a></li>
+    <li><a href="messaging.html">Configuring Messaging (JMS)</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Configuring Messaging (JMS)</h1>
+<div class="sect1">
+<h2 id="_messaging_concepts"><a class="anchor" href="#_messaging_concepts"></a>Messaging Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Messaging provides a loosely-coupled communication mechanism for software components, enabling asynchronous processing.</p>
+</li>
+<li>
+<p>For example, consider the checkout process for a web store that triggers the following actions:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Authorization and payment confirmation</p>
+</li>
+<li>
+<p>Addition and removal of inventory</p>
+</li>
+<li>
+<p>Delivery scheduling</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>These actions take time to process, so executing within a checkout request means users might have a long wait for order confirmation.</p>
+</li>
+<li>
+<p>Hence they can be performed asynchronously.</p>
+</li>
+<li>
+<p><strong>Message-Oriented Middleware (MOM)</strong> manages message delivery and provides features like security and transactions.</p>
+</li>
+<li>
+<p>The <strong>Java Message Service (JMS)</strong> provides a standardized API for MOM access, including ConnectionFactories, Queues, and Topics.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_overview_of_the_java_messaging_service_jms"><a class="anchor" href="#_overview_of_the_java_messaging_service_jms"></a>Overview of the Java Messaging Service (JMS)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>JMS enables Java components to exchange messages independently.</p>
+</li>
+<li>
+<p>JMS includes:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Connection Factories</strong>: Facilitate MOM connections.</p>
+</li>
+<li>
+<p><strong>Queues</strong>: Support FIFO message retrieval, ideal for point-to-point communication.</p>
+</li>
+<li>
+<p><strong>Topics</strong>: Enable publish-subscribe communication, accommodating multiple subscribers; MOM retains messages for offline consumers.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_jms_message_structure"><a class="anchor" href="#_jms_message_structure"></a>JMS Message Structure</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>JMS messages comprise:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Headers</strong>: Managed by the MOM, these define message attributes, primarily handled internally.</p>
+</li>
+<li>
+<p><strong>Properties</strong>: Producer-defined metadata facilitating communication between the MOM and consumers.</p>
+</li>
+<li>
+<p><strong>Bodies</strong>: Contain application-specific data, distinct from MOM infrastructure handling.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_messaging_resources"><a class="anchor" href="#_configuring_messaging_resources"></a>Configuring Messaging Resources</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>JBoss EAP 8 includes an embedded ActiveMQ Artemis, referred to as ActiveMQ.</p>
+</li>
+<li>
+<p>ActiveMQ provides two types of acceptors and connectors:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>HTTP variety: Employs the native ActiveMQ protocol via an HTTP connection, accepted by the undertow subsystem. This setup avoids the need for JBoss EAP to open extra firewall ports for remote messaging clients.</p>
+</li>
+<li>
+<p>In-vm variety: Allows messaging clients within the same JVM as the ActiveMQ server to connect without network overhead.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Configuring messaging resources in JBoss EAP 8 involves several steps. Here&#8217;s a general outline of the process:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Access JBoss EAP 8 Management Console or CLI</strong></p>
+</li>
+<li>
+<p><strong>Navigate to Messaging Subsystem</strong>: In the management console, navigate to the Messaging subsystem. It&#8217;s usually located under the "Configuration &#8594; Subsystem &#8594; Messaging &#8594; Server" section.</p>
+</li>
+<li>
+<p>Add the server named <strong>default</strong> and select <strong>Application Domain</strong> under Elyton Domain and click Add.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/im41.png" alt="im41">
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Create "default" server as shown below:</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/im42.png" alt="im42">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Define Connection Factories</strong>: Define connection factories for establishing connections to the messaging server. You can configure attributes such as connection parameters, security settings, and connection pool settings. Eg: To create a pooled-connection-factory that refers to the default <strong>in-vm ActiveMQ</strong> connector, use the following command.</p>
+<div class="listingblock">
+<div class="content">
+<pre>/subsystem=messaging-activemq/server=default/pooled-connection-factory=custom:add(connectors=[in-vm], entries=[&lt;JNDI-NAME&gt;])</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Create JMS Destinations</strong> as per your Java application requirement. Eg: To create JMS queues, you can refer to below command.</p>
+<div class="listingblock">
+<div class="content">
+<pre>/subsystem=messaging-activemq/server=default/jms-queue=TestQueue:add (entries=[&lt;JNDI-NAME&gt;])</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Configure Security Settings</strong>: Configure security settings for accessing messaging resources if required. This may involve setting up authentication and authorization mechanisms.</p>
+</li>
+<li>
+<p><strong>Review and Apply Changes</strong>: Review the configuration changes you&#8217;ve made and apply them to the server.</p>
+</li>
+<li>
+<p><strong>Test Configuration</strong>: After applying the changes, test the messaging resources to ensure they are functioning as expected. You can send and receive test messages to queues or topics to verify connectivity and message delivery.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lab_configuring_messaging_resources"><a class="anchor" href="#_lab_configuring_messaging_resources"></a>Lab: Configuring Messaging Resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Outcome</strong>: In this lab, you create a JMS connection factory and a queue, and deploy sample applications that make use of them.</p>
+</div>
+<div class="paragraph">
+<p><strong>Pre-requisites</strong>: Download the applications (WAR files) we will deploy in this exercise under /opt directory:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/mdb-client.war" class="bare">https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/mdb-client.war</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Start the Red Hat JBoss EAP 8 standalone server instance.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin/
+[vagrant@server bin]$ ./standalone.sh</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open a new terminal and run the management CLI script.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
+[vagrant@server bin]$ ./jboss-cli.sh -c</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the <strong>messaging-activemq subsystem</strong> module using below command:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] /extension=org.wildfly.extension.messaging-activemq:add()
+{"outcome" =&gt; "success"}
+
+[standalone@localhost:9990 /]
+[standalone@localhost:9990 /] /subsystem=messaging-activemq:add
+{
+    "outcome" =&gt; "success",
+    "response-headers" =&gt; {
+        "operation-requires-reload" =&gt; true,
+        "process-state" =&gt; "reload-required"
+    }
+}
+
+[standalone@localhost:9990 /] /:reload
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; undefined
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a server named "default" under messaging-activemq subsystem:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to management console at <strong><a href="http://localhost:9990" class="bare">http://localhost:9990</a></strong> and select <strong>Configuration &#8594; Subsystem &#8594; Messaging &#8594; Server</strong> and select "+".</p>
+</li>
+<li>
+<p>Add the server named <strong>default</strong> and select <strong>Application Domain</strong> under Elyton Domain and click <strong>Add</strong>.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/im41.png" alt="im41">
+</div>
+</div>
+</li>
+<li>
+<p>You should be able to see the default server as shown below:</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/im42.png" alt="im42">
+</div>
+</div>
+</li>
+<li>
+<p>Execute below command to further configure messaging subsystem.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] cd /subsystem=messaging-activemq/server=default
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/security-setting=<mark>:add
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/address-setting=</mark>:add(dead-letter-address="jms.queue.DLQ", expiry-address="jms.queue.ExpiryQueue", expiry-delay=-1L, max-delivery-attempts="10", max-size-bytes="10485760", page-size-bytes="2097152", message-counter-history-day-limit="10")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-connector=http-connector:add(socket-binding="http", endpoint="http-acceptor")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-connector=http-connector-throughput:add(socket-binding="http", endpoint="http-acceptor-throughput" ,params={batch-delay="50"})
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/in-vm-connector=in-vm:add(server-id="0")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-acceptor=http-acceptor:add(http-listener="default")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/http-acceptor=http-acceptor-throughput:add(http-listener="default", params={batch-delay="50", direct-deliver="false"})
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/in-vm-acceptor=in-vm:add(server-id="0")
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/jms-queue=ExpiryQueue:add(entries=["java:/jms/queue/ExpiryQueue"])
+
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/jms-queue=DLQ:add(entries=["java:/jms/queue/DLQ"])</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Create a pooled-connection-factory that refers to the default <strong>in-vm ActiveMQ</strong> connector. Assign the JNDI name <strong>java:/jms/CustomCF</strong> to the factory.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 server=default] ./pooled-connection-factory=\
+custom:add(connectors=[in-vm], entries=[java:/jms/CustomCF])
+{"outcome" =&gt; "success"}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Leave this terminal window open with the management CLI connected.</p>
+</li>
+<li>
+<p>Create a queue called <strong>TestQueue</strong> with <strong>java:/jms/queue/TestQueue</strong> as an assigned JNDI name.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 server=default]$ ./jms-queue=TestQueue:add\
+(entries=["java:/jms/queue/TestQueue"])
+{"outcome" =&gt; "success"}</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Observe that the new queue has not received any messages.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 server=default] ./jms-queue=TestQueue\
+:read-resource(include-runtime=true)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        ...output omitted...
+        "message-count" =&gt; 0L,
+        "messages-added" =&gt; 0L,
+        ...output omitted...
+    }
+}</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Deploy and use the test application to produce messages.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Use the management CLI to deploy the <strong>mdb-client.war</strong> application.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 server=default]$ deploy \
+/opt/mdb-client.war
+[standalone@localhost:9990 server=default]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>In a new terminal window, send an HTTP request to the server to create a new JMS message.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ curl --data "count=1" --data "label=first" \
+--data "message=test message body" <a href="http://localhost:8080/mdb-client/queue" class="bare">http://localhost:8080/mdb-client/queue</a>
+...output omitted...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the terminal where the management CLI is connected, verify that the messages were queued by viewing the messages-added value. Additionally, the message-count indicates that there are two messages waiting in the queue.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 server=default] ./jms-queue=TestQueue\
+:read-resource(include-runtime=true)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        ...output omitted...
+        "message-count" =&gt; 1L,
+        "messages-added" =&gt; 1L,
+        ...output omitted...
+    }
+}</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Shut down the server and close the management CLI connection.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the management CLI terminal window, stop the JBoss EAP standalone server instance.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 server=default] /:shutdown
+{
+  "outcome" =&gt; "success",
+  "result" =&gt; undefined
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Exit the JBoss EAP management CLI client.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 server=default]$ exit</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="logging.html">Configuring Logging</a></span>
+  <span class="next"><a href="web.html">Configuring the Web Subsystem</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

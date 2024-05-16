@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Interpreting Extensions, Subsystems, and Profiles :: Red Hat JBoss EAP Administration I</title>
+    <link rel="prev" href="admin.html">
+    <link rel="next" href="../config/index.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img
+          src="../../../_/img/redhat-logo.png"
+          height="40px"
+          alt="Red Hat"
+        /></a>
+      <a
+        class="navbar-item"
+        style="font-size: 24px; color: white"
+        href="../../.."
+      >Red Hat JBoss EAP Administration I</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a
+          class="navbar-item"
+          href="https://github.com/RedHatQuickCourses/eap-admin1/issues"
+          target="_blank"
+        >Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="eap-admin1" data-version="8">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Red Hat JBoss EAP Administration I</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Introduction to Red Hat JBoss EAP 8</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="install.html">Red Hat JBoss Enterprise Application Platform 8 Installation Methods</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="admin.html">Managing Red Hat JBoss EAP 8</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="extensions.html">Interpreting Extensions, Subsystems, and Profiles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../config/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-config.html">Red Hat JBoss EAP 8 Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-cli.html">Red Hat JBoss EAP 8 CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/deploy.html">Deploying Applications to a Standalone Server</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../subsystems/index.html">Subsystems</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/database.html">Exploring the Data Source Subsystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/logging.html">Configuring Logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/messaging.html">Configuring Messaging (JMS)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../subsystems/web.html">Configuring the Web Subsystem</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Red Hat JBoss EAP Administration I</span>
+    <span class="version">8</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Red Hat JBoss EAP Administration I</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">8</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Red Hat JBoss EAP Administration I</a></li>
+    <li><a href="index.html">Introduction to Red Hat JBoss EAP 8</a></li>
+    <li><a href="extensions.html">Interpreting Extensions, Subsystems, and Profiles</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Interpreting Extensions, Subsystems, and Profiles</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The Red Hat JBoss EAP 8 provides implementations of the Jakarta EE 10 APIs and Jakarta EE 10 <a href="https://jakarta.ee/specifications/webprofile/10/">Web Profile</a>, <a href="https://jakarta.ee/specifications/coreprofile/10/">Core Profile</a>, and the Full <a href="https://jakarta.ee/specifications/platform/10/">Platform</a> standards.</p>
+</li>
+<li>
+<p>JBoss EAP 7.4, supported Jakarta EE 8. However, Jakarta EE 10 has undergone several changes, the most significant being the modification of the package namespace for Jakarta EE APIs from javax to jakarta.</p>
+</li>
+<li>
+<p>See the complete list of specifications in the <a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/8.0/html-single/release_notes_for_red_hat_jboss_enterprise_application_platform_8.0/index#jakarta-ee-10-support_assembly-release-notes">release notes</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_modules_in_red_hat_jboss_eap_8"><a class="anchor" href="#_modules_in_red_hat_jboss_eap_8"></a>Modules in Red Hat JBoss EAP 8</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Red Hat JBoss EAP 8 is based on a core infrastructure provided by the <a href="https://access.redhat.com/solutions/21906">WildFly 28</a> Core project that, manages the loading and activation of modules, following the architecture provided by the JBoss Modules project.</p>
+</li>
+<li>
+<p>A module basically provides Java code to be used by JBoss EAP services and by applications.</p>
+</li>
+<li>
+<p>The modules are located at the <code>JBOSS_HOME/modules/system/layers/base/</code> directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ ls -l /opt/EAP-8.0.0/modules/system/layers/base/
+total 16
+drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 asm
+drwxr-xr-x. 15 jboss jboss 4096 Apr  9 04:13 com
+drwxr-xr-x.  3 jboss jboss   20 Apr  9 04:13 gnu
+drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 ibm
+drwxr-xr-x.  3 jboss jboss   19 Apr  9 04:13 internal
+drwxr-xr-x.  6 jboss jboss   68 Apr  9 04:13 io
+drwxr-xr-x. 23 jboss jboss 4096 Apr  9 04:13 jakarta
+drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 javaee
+drwxr-xr-x. 29 jboss jboss 4096 Apr  9 04:13 javax
+drwxr-xr-x.  4 jboss jboss   35 Apr  9 04:13 net
+drwxr-xr-x. 29 jboss jboss 4096 Apr  9 04:13 org
+drwxr-xr-x.  4 jboss jboss   34 Apr  9 04:13 sun
+drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 wildflyee</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_extensions"><a class="anchor" href="#_extensions"></a>Extensions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>A module that provides features and capabilities to the application server is called an extension.</p>
+</li>
+<li>
+<p>An extension does not only provide code, but also provides a management model, which enables the extension to be configured by the core.</p>
+</li>
+<li>
+<p>Extensions are added by using the &lt;extension&gt; element, at the beginning of the JBoss EAP main configuration file: <code>JBOSS_HOME/standalone/configuration/standalone.xml</code> or <code>JBOSS_HOME/domain/configuration/domain.xml</code>.</p>
+</li>
+<li>
+<p>These file define multiple &lt;extension&gt; tags.</p>
+</li>
+<li>
+<p>The general structure of <code>standalone.xml</code> or <code>domain.xml</code> is similar to the following content:</p>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;server xmlns="urn:jboss:domain:16.0"&gt;
+    &lt;extensions&gt;
+	    ...list of extensions here
+    &lt;/extensions&gt;
+
+    &lt;system-properties&gt;
+        ...system properties defined here
+    &lt;/system-properties&gt;
+
+    &lt;management&gt;
+	    ...management interfaces defined here
+    &lt;/management&gt;
+
+    &lt;profile&gt;
+	    ...list of subsystems and their configurations
+    &lt;/profile&gt;
+
+    &lt;interfaces&gt;
+	    ...interface definitions
+    &lt;/interfaces&gt;
+
+    &lt;socket-binding-group&gt;
+	    ...socket binding definitions
+    &lt;/socket-binding-group&gt;
+
+    &lt;deployments&gt;
+	    ...deployed applications go here
+    &lt;/deployments&gt;
+&lt;/server&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>For example, the following excerpt describes a list of extensions available to a server, including ejb3, which is responsible for providing the Enterprise Java Beans (EJB) runtime:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ less /opt/EAP-8.0.0/standalone/configuration/standalone.xml
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;server xmlns="urn:jboss:domain:20.0"&gt;
+    ...
+    &lt;extensions&gt;
+        &lt;!-- list all extensions that you want made available to this server --&gt;
+        &lt;extension module="org.jboss.as.clustering.infinispan"/&gt;
+        &lt;extension module="org.jboss.as.deployment-scanner"/&gt;
+        &lt;extension module="org.jboss.as.ejb3"/&gt;
+        &lt;extension module="org.jboss.as.jpa"/&gt;
+    &lt;/extensions&gt;
+    ...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>JBoss EAP uses the module name to find extension module. For example, to locate the <code>org.jboss.as.jpa</code> module, JBoss EAP searches for the <code>org/jboss/as/jpa/</code> directory in the <code>JBOSS_HOME/modules</code> directory.</p>
+</li>
+<li>
+<p>The JBoss EAP core loads and activates modules/extensions only when necessary, so that inactive features do not consume memory or CPU resources unnecessarily.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_subsystems_and_profiles"><a class="anchor" href="#_the_subsystems_and_profiles"></a>The Subsystems and Profiles</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>A profile is a collection of subsystems.</p>
+</li>
+<li>
+<p>A subsystem is where you configure the extensions of the JBoss EAP instance.</p>
+</li>
+<li>
+<p>JBoss EAP profiles are supposed to be customized to a particular application and environment needs, so two real-world standalone server instances probably have different profiles, containing different subsystem configurations.</p>
+</li>
+<li>
+<p>Adding a subsystem to a profile has two purposes:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When the subsystem is inside a profile, then that subsystem is available to the server using that profile.</p>
+</li>
+<li>
+<p>The subsystem enables to configure the extension to suit the user&#8217;s specific needs.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The &lt;profile&gt; element includes a collection of &lt;subsystem&gt; child elements, and each &lt;subsystem&gt; entry consists of the unique configuration settings of that particular extension.</p>
+</li>
+<li>
+<p>The general structure of <code>profile</code> and <code>subsystem</code> is similar to the following content:</p>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;server xmlns="urn:jboss:domain:16.0"&gt;
+    &lt;extensions&gt;
+	    ...list of extensions here
+    &lt;/extensions&gt;
+    ....
+    &lt;profile&gt;
+        &lt;subsystem&gt;
+	    ...list of subsystems and their configurations
+        &lt;/subsystem&gt;
+    &lt;/profile&gt;
+    ....
+&lt;/server&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Subsystems might include many configuration settings, such as the datasources subsystem. This subsystem configuration, in the default <code>standalone.xml</code> configuration file, looks like:</p>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;profile&gt;
+     &lt;subsystem xmlns="urn:jboss:domain:datasources:6.0"&gt;
+            &lt;datasources&gt;
+                &lt;datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}"&gt;
+                    &lt;connection-url&gt;jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE&lt;/connection-url&gt;
+                    &lt;driver&gt;h2&lt;/driver&gt;
+                    &lt;security&gt;
+                        &lt;user-name&gt;sa&lt;/user-name&gt;
+                        &lt;password&gt;sa&lt;/password&gt;
+                    &lt;/security&gt;
+                &lt;/datasource&gt;
+                &lt;drivers&gt;
+                    &lt;driver name="h2" module="com.h2database.h2"&gt;
+                        &lt;xa-datasource-class&gt;org.h2.jdbcx.JdbcDataSource&lt;/xa-datasource-class&gt;
+                    &lt;/driver&gt;
+                &lt;/drivers&gt;
+            &lt;/datasources&gt;
+        &lt;/subsystem&gt;
+&lt;/profile&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Each subsystem has its own XML schema to define what is allowed within its &lt;subsystem&gt; element. All JBoss EAP 8 subsystem schema definitions can be found in the <code>JBOSS_HOME/docs/schema</code> directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ ls -l /opt/EAP-8.0.0/docs/schema/ | head -10
+total 23112
+-rw-r--r--. 1 jboss jboss    866 Apr  9 04:14 README.md
+-rw-r--r--. 1 jboss jboss  12120 Apr  9 04:14 application-client_10.xsd
+-rw-r--r--. 1 jboss jboss  12174 Apr  9 04:14 application-client_6.xsd
+-rw-r--r--. 1 jboss jboss  13310 Apr  9 04:14 application-client_7.xsd
+-rw-r--r--. 1 jboss jboss  13092 Apr  9 04:14 application-client_8.xsd
+-rw-r--r--. 1 jboss jboss  12112 Apr  9 04:14 application-client_9.xsd
+-rw-r--r--. 1 jboss jboss  14802 Apr  9 04:14 application_10.xsd
+-rw-r--r--. 1 jboss jboss   9058 Apr  9 04:14 application_1_4.xsd
+-rw-r--r--. 1 jboss jboss   9803 Apr  9 04:14 application_5.xsd</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Subsystems can be configured using Management Console or CLI, so there is no need to edit the XML directly to configure a subsystem. Below screenshot shows the subsystem configuration in Management Console.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/sub.png" alt="sub">
+</div>
+</div>
+</li>
+<li>
+<p>If a subsystem does not require any specific settings, an empty &lt;subsystem&gt; entry is still required in the configuration file. For example, the jaxrs subsystem is configured by default, without any specific settings:</p>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;subsystem xmlns="urn:jboss:domain:jaxrs:1.0"/&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The JBoss EAP standalone server instance configuration file <code>standalone.xml</code> contains a single, anonymous, profile definition.</p>
+</li>
+<li>
+<p>The <code>domain.xml</code> managed domain configuration file contains four pre-defined profiles by defauilt:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>default</strong>: Is the most commonly used subsystems, including logging, security, datasources, infinispan, weld, webservices, and ejb3. The default implements not only the Jakarta EE Web Profile, but also most of the Jakarta EE Full Profile.</p>
+</li>
+<li>
+<p><strong>ha</strong>: Contains the exact same subsystems as the default profile, with the addition of clustering capabilities, provided mainly by the jgroups subsystem.</p>
+</li>
+<li>
+<p><strong>full</strong>: Is similar to the default profile, but notably adds the messaging (messaging-activemq) and a few other less used subsystems.</p>
+</li>
+<li>
+<p><strong>full-ha</strong>: Is the same as the full profile, but with the addition of clustering capabilities.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Look in the <code>JBOSS_HOME/standalone/configuration</code> directory. Notice there are four standalone configuration files:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>standalone.xml</strong>: Compares to the default profile in domain.xml.</p>
+</li>
+<li>
+<p><strong>standalone-ha.xml</strong>: Compares to the ha profile in domain.xml.</p>
+</li>
+<li>
+<p><strong>standalone-full.xml</strong>: Compares to the full profile in domain.xml.</p>
+</li>
+<li>
+<p><strong>standalone-full-ha.xml</strong>: Compares to the full-ha profile in domain.xml.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>They are provided so a standalone server instance can easily be started with more or less subsystems available.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Start the JBoss EAP instance using the default <code>standalone.xml</code> to start most commonly used subsystems. To use a different configuration file, the <code>--server-config</code> or <code>-c</code> parameter can be used as follows:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone.xml
+
+or
+
+[vagrant@server ~]$ sudo -u jboss /bin/sh /opt/EAP-8.0.0/bin/standalone.sh  --server-config standalone.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start clustering capabilities.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-ha.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start messaging-activemq capabilities.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the JBoss EAP instance using the <code>standalone-ha.xml</code> to start messaging-activemq and clustering capabilities.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone-full-ha.xml</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Be careful not to confuse a JBoss EAP profile with a Jakarta EE profile. A JBoss EAP profile is a collection of subsystem configurations that are used to define the capabilities and services of a JBoss EAP server instance. A Jakarta EE profile is a collection of Java EE standards.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In a managed domain, the administrator can create new profiles, either from scratch, or cloned from the ones provided, and then customize the new profiles before associating them to their respective groups.</p>
+</li>
+<li>
+<p>A profile can also be a child of another profile, thus inheriting the subsystem configuration from its parent profile, so common configurations can be shared and maintained in a single place.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lab_1_configuring_subsystems"><a class="anchor" href="#_lab_1_configuring_subsystems"></a>Lab 1: Configuring Subsystems</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Outcome</strong>: In this lab, you customize the subsystem of Red Hat JBoss EAP 8 standalone server by updating the log level using management console.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to the JBoss_Home directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin/
+[vagrant@server bin]$</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the JBoss EAP instance using the default <code>standalone.xml</code> to start most commonly used subsystems.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone.xml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Then, navigate to the management console at <code><a href="http://localhost:9990" class="bare">http://localhost:9990</a></code>. Use <code>admin</code> as username and <code>redhat123</code> as password.</p>
+</li>
+<li>
+<p>Update the log level of the <code>CONSOLE</code> handler and set it to <code>DEBUG</code>.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click Configuration at the top of the management console. In the first column, click Subsystems and then in the second column click Logging. Click Configuration in the third column, and then View.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/handle.png" alt="handle">
+</div>
+</div>
+</li>
+<li>
+<p>Click Handler at the first column, and then click Console Handler to access the configuration page for the Console handler.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/con.png" alt="con">
+</div>
+</div>
+</li>
+<li>
+<p>Select the CONSOLE row in the table. Click Edit. Change the Level from INFO to DEBUG. Then click Save.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/new.png" alt="new">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Observe the additional debug information provided by the server in the console that reflects the log level change made in the management console.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server bin]$ sudo -u jboss /bin/sh ./standalone.sh -c standalone.xml
+<code>...output omitted...</code>
+08:40:19,689 DEBUG [org.jboss.as.config] (MSC service thread 1-3)
+VM Arguments: -D[Standalone] -Xlog:gc*:file=/opt/EAP-8.0.0/standalone/log/gc.log:time,uptimemillis:filecount=5,filesize=3M -Djdk.serialFilter=maxbytes=10485760;maxdepth=128;maxarray=100000;maxrefs=300000 -Xms1303m -Xmx1303m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss
+<code>...output omitted...</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="admin.html">Managing Red Hat JBoss EAP 8</a></span>
+  <span class="next"><a href="../config/index.html">Configuration</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
