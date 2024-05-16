@@ -187,7 +187,7 @@
 <p>In this method, the JBoss EAP 8 is distributed as a zip or archive file that you can extract and execute on an operating system (OS) with  OpenJDK 17 installed.</p>
 </li>
 <li>
-<p>These file contains all the libraries, configuration files, and scripts needed to start JBoss EAP, <strong>without</strong> further customization.</p>
+<p>These file contain all the libraries, configuration files, and scripts needed to start JBoss EAP, <strong>without</strong> further customization.</p>
 </li>
 <li>
 <p>This method is preferred when:</p>
@@ -282,7 +282,7 @@
 <p>Recommended to download all installation file under /opt partition.</p>
 </li>
 <li>
-<p>Recommended to ensure there is enough space under /opt partition (minimum 800MB).</p>
+<p>Recommended to ensure that there is enough space under /opt partition (minimum 800MB).</p>
 </li>
 </ul>
 </div>
@@ -331,7 +331,7 @@
 <p>In the Version drop-down list, select <code>8.0</code>.</p>
 </li>
 <li>
-<p>Find <code>Red Hat JBoss Enterprise Application Platform 8.0 Installation Manager</code> in the list if you want to download zip file or find <code>Red Hat JBoss Enterprise Application Platform 8.0.0</code> in the list if you want to download archive file and click the <code>Download</code> link. This lab assumes you have downloaded the zip file.</p>
+<p>Find <code>Red Hat JBoss Enterprise Application Platform 8.0 Installation Manager</code> in the list if you want to download zip file or find <code>Red Hat JBoss Enterprise Application Platform 8.0.0</code> in the list if you want to download archive file and click the <code>Download</code> link. This lab assumes that you have downloaded the zip file.</p>
 </li>
 <li>
 <p>The file would get downloaded under your <code>~/Downloads</code> directory.</p>
@@ -413,7 +413,7 @@ Operation completed in 541.33 seconds.</pre>
 </div>
 </li>
 <li>
-<p>Navigate to the JBoss EAP console at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code> using browser and confirm you are able to see the JBoss EAP home page.</p>
+<p>Navigate to the JBoss EAP console at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code> using the browser and confirm that you are able to see the JBoss EAP home page.</p>
 <div class="imageblock text-center">
 <div class="content">
 <img src="_images/ui.png" alt="ui">
@@ -449,7 +449,7 @@ Operation completed in 541.33 seconds.</pre>
 <h2 id="_lab_2_installing_jboss_eap_using_rpm_method"><a class="anchor" href="#_lab_2_installing_jboss_eap_using_rpm_method"></a>Lab 2: Installing JBoss EAP using RPM method</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Outcome</strong>: In this lab, you subscribe your RHEL9 server and install JBoss EAP package. You configure the JBoss EAP server as a standalone server that can be access at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>.</p>
+<p><strong>Outcome</strong>: In this lab, you subscribe your RHEL9 server and install JBoss EAP package. You configure the JBoss EAP server as a standalone server that can be accessed at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -518,7 +518,7 @@ The default <code>EAP_HOME</code> path for the RPM installation is <code>/opt/rh
 <h2 id="_lab_3_installing_jboss_eap_using_gui_method_and_as_a_rhel_service"><a class="anchor" href="#_lab_3_installing_jboss_eap_using_gui_method_and_as_a_rhel_service"></a>Lab 3: Installing JBoss EAP using GUI method and as a RHEL service</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Outcome</strong>: In this lab, you download <code>jboss-eap-8.0.0-installer.jar</code> file and install JBoss EAP as a standalone server that can be access at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>. You further configure JBoss EAP to run as a service in RHEL to enable the JBoss EAP service to start automatically when the RHEL server starts.</p>
+<p><strong>Outcome</strong>: In this lab, you download <code>jboss-eap-8.0.0-installer.jar</code> file and install JBoss EAP as a standalone server that can be accessed at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>. You further configure JBoss EAP to run as a service in RHEL to enable the JBoss EAP service to start automatically when the RHEL server starts.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -772,7 +772,7 @@ initscripts-service.noarch          ...</pre>
 </div>
 </li>
 <li>
-<p>Edit the <code>/opt/EAP-8.0.0/bin/init.d/jboss-eap.conf</code> file and remove the <code>#</code> in front of each of the following variable and update the following environment variables. Substitude the <code>JAVA_HOME</code> value to <code>/usr/lib/jvm/java-17-openjdk-17.0.10.0.7-2.el9.x86_64/bin/java</code> or the value you got from the previous step. Similarly, substitute other environment variables as per your environment.</p>
+<p>Edit the <code>/opt/EAP-8.0.0/bin/init.d/jboss-eap.conf</code> file and remove the <code>#</code> in front of each of the following variable and update the following environment variables. Substitute the <code>JAVA_HOME</code> value to <code>/usr/lib/jvm/java-17-openjdk-17.0.10.0.7-2.el9.x86_64/bin/java</code> or the value you got from the previous step. Similarly, substitute other environment variables as per your environment.</p>
 <div class="listingblock">
 <div class="content">
 <pre>[vagrant@server ~]$ cat /opt/EAP-8.0.0/bin/init.d/jboss-eap.conf
@@ -832,7 +832,7 @@ Executing: /usr/lib/systemd/systemd-sysv-install enable jboss-eap</pre>
 </div>
 </li>
 <li>
-<p>Navigate to the JBoss EAP console at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code> using browser and confirm you are able to see the JBoss EAP home page.</p>
+<p>Navigate to the JBoss EAP console at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code> using browser and confirm that you are able to see the JBoss EAP home page.</p>
 <div class="imageblock text-center">
 <div class="content">
 <img src="_images/ui.png" alt="ui">
@@ -858,7 +858,7 @@ Executing: /usr/lib/systemd/systemd-sysv-install enable jboss-eap</pre>
 <p>The zip installation method installs JBoss EAP in a single directory. Delete the installation directory to uninstall JBoss EAP.</p>
 </li>
 <li>
-<p>Also delete any other scripts that depended on JBoss EAP being installed on your machine.</p>
+<p>Also delete any other scripts that are dependent on JBoss EAP being installed on your machine.</p>
 </li>
 </ul>
 </div>
