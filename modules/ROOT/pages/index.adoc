@@ -14,7 +14,7 @@ This course is the `second` in a series of `seven` courses about Red Hat JBoss E
 6. Developing Applications for Red Hat JBoss EAP 8 (_Under Development_)
 7. Red Hat JBoss EAP 8 Workshop (_Under Development_)
 
-This course covers the install, updates and uninstall process for Red Hat JBoss EAP 8. You also learn about the basics of EAP 8 configuration, how to configure database connectivity, and deploy basic web applications.
+This course covers the install and uninstall process for Red Hat JBoss EAP 8. You also learn about the basics of EAP 8 configuration, how to configure database connectivity, and deploy basic web applications.
 
 NOTE: The hands-on labs for this course have been tested on *JBoss EAP 8.0*. The labs should mostly work in minor update releases of EAP 8. If you encounter any issues, please open a GitHub issue in the course repository.
 
@@ -30,37 +30,33 @@ The PTL team acknowledges the valuable contributions of the following Red Hat as
 
 == Classroom Environment
 
-=== For Red Hat Associates
+This course does *NOT* have JBoss EAP 8 pre-installed. You will install and configure a basic JBoss EAP 8 instance in this course, and then continue using this instance in labs throughout this course. Other courses may instruct you to install more instances to avoid overwriting configuration files from other exercises.
 
-Red Hat associates and others who have access to the Red Hat Demo Platform (RHDP) should use the _TBD_ catalog item.
+This training includes detailed lab instructions for learners to follow. Please note that there is no separate lab environment provided; learners are expected to execute the instructions on their local machines or in their preferred development environments.
 
-This classroom does *NOT* have JBoss EAP 8 pre-installed. You will install and configure a basic JBoss EAP 8 instance in this course, and then continue using this instance in other courses in the learning path.
+[NOTE]
+====
+There are plans to create a classroom environment in Red Hat Demo Platform (RHDP). Leave a https://github.com/RedHatQuickCourses/eap-admin1/issues/16#issue-2300120102[comment or +1 this issue] to upvote.
+====
 
-=== For Red Hat Partners
+=== Infrastructure Details:
 
-Red Hat partners and others who do not have access to RHDP, should provision the following on their own infrastructure:
+Learner would need single RHEL 9 instance with at least:
 
-* 2 RHEL 9 or CentOS Stream 9 VMs - each with at least 8 vCPU, 16GB RAM, 2 NICs and 80GB hard disk
-* An OpenShift Container Platform cluster with at least 8vCPU, 16GB RAM, 100GB disk. You can provision a cluster using any of the below listed modalities:
-** Bare metal, VMs or on OpenStack
-** Single Node OpenShift (SNO) cluster
-** OpenShift Local
-** Red Hat Hybrid Cloud Console (https://console.redhat.com)
-** OpenShift on Hyperscaler clouds - ROSA or ARO
-
-NOTE: TODO: Add more details of DNS names, IPs and a nice network diagram
+* 8 vCPU
+* 16GB RAM
+* 2 NICs
+* 80GB hard disk
 
 == Prerequisites
 
 * Basic knowledge of Linux administration
 * Basic knowledge of Java and deploying applications on the Java Virtual Machine (JVM)
-* Knowledge of building Docker or Podman containers
-* Basics of deploying applications on OpenShift Container Platform
-* Sign up for a free Red Hat Developer account if you don't have one at https://developer.redhat.com
+* Sign up for a free https://developer.redhat.com[Red Hat Developer] account if you don't have one.
 
 == Objectives
 
 The overall objectives of this course include:
 
-* Install, Upgrade and Uninstall Red Hat JBoss EAP
+* Install and uninstall Red Hat JBoss EAP
 * Perform basic configuration of JBoss EAP

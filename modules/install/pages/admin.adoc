@@ -16,9 +16,9 @@ The CLI offers a management model for viewing and modifying attributes and for p
 ** **Edit XML configuration files manually**:
 The settings of a standalone server or a managed domain are maintained in XML-based configuration files, which can be modified directly.
 
-[Warning]
+[WARNING]
 ====
-Warning: Editing XML files directly, should be avoided as much as possible! The CLI or the web console is a preferred method for the customization of the configuration files.
+Editing XML files directly, should be avoided as much as possible! The CLI or the web console is a preferred method for the customization of the configuration files.
 ====
 
 == Administrative Users
@@ -84,10 +84,10 @@ Updated user 'admin' with groups  to file '/opt/EAP-8.0.0/domain/configuration/m
 +
 [subs="+quotes,+macros"]
 ----
-[vagrant@server ~]$ sudo cat /opt/EAP-8.0.0/standalone/configuration/mgmt-users.properties  | grep -v "#"
+[vagrant@server ~]$ sudo grep "admin=" /opt/EAP-8.0.0/standalone/configuration/mgmt-users.properties
 admin=fa522cb75d2d2ac01fb09f2ab21e4302
 
-[vagrant@server ~]$ sudo cat /opt/EAP-8.0.0/domain/configuration/mgmt-users.properties  | grep -v "#"
+[vagrant@server ~]$ sudo grep "admin=" /opt/EAP-8.0.0/domain/configuration/mgmt-users.properties
 admin=fa522cb75d2d2ac01fb09f2ab21e4302
 ----
 
