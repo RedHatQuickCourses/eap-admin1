@@ -82,10 +82,10 @@ image::new9.png[align="center"]
 
 . **Add Unmanaged Deployment**
 .. This option requires specifying a path to the application archive.
-.. It called unmanaged because JBoss EAP 8 doesn't store the application in the deployment cache, allowing any user with permission to the configuration file to remove it.
+.. It is called unmanaged because JBoss EAP 8 doesn't store the application in the deployment cache, allowing any user with permission to the configuration file to remove it.
 
 . **Create Empty Deployment**
-. This option creates an empty deployment in an directory with the same structure of an enterprise application archive (EAR), or a web application archive (WAR).
+.. This option creates an empty deployment in an directory with the same structure of an enterprise application archive (EAR), or a web application archive (WAR).
 .. You can test deployments by copying individual files to that directory.
 
 * You can upload the application file by using the Upload Deployment option. You can select a file from your local file system, or drag and drop the application file.

@@ -39,7 +39,7 @@ drwxr-xr-x.  3 jboss jboss   17 Apr  9 04:13 wildflyee
 
 * Extensions are added by using the <extension> element, at the beginning of the JBoss EAP main configuration file: `JBOSS_HOME/standalone/configuration/standalone.xml` or `JBOSS_HOME/domain/configuration/domain.xml`.
 
-* These file defines multiple <extension> tags.
+* These file define multiple <extension> tags.
 
 * The general structure of `standalone.xml` or `domain.xml` is similar to the following content:
 +

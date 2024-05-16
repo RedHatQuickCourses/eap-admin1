@@ -6,7 +6,7 @@
 
 * Red Hat JBoss EAP 8's logging subsystem, consistent with its modular design, is managed by a subsystem and configured in `domain.xml` for managed domain mode and `standalone.xml` for standalone servers.
 
-* The subsystem comprises three key components:
+* The subsystem comprises of three key components:
 
 . **Handlers**:
 .. These dictate where and how server events are logged.
