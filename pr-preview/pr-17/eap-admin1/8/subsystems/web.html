@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Configuring the Web Subsystem :: Red Hat JBoss EAP Administration I</title>
+    <link rel="prev" href="messaging.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img
+          src="../../../_/img/redhat-logo.png"
+          height="40px"
+          alt="Red Hat"
+        /></a>
+      <a
+        class="navbar-item"
+        style="font-size: 24px; color: white"
+        href="../../.."
+      >Red Hat JBoss EAP Administration I</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a
+          class="navbar-item"
+          href="https://github.com/RedHatQuickCourses/eap-admin1/issues"
+          target="_blank"
+        >Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="eap-admin1" data-version="8">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Red Hat JBoss EAP Administration I</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../install/index.html">Introduction to Red Hat JBoss EAP 8</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/install.html">Red Hat JBoss Enterprise Application Platform 8 Installation Methods</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/admin.html">Managing Red Hat JBoss EAP 8</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/extensions.html">Interpreting Extensions, Subsystems, and Profiles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../config/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-config.html">Red Hat JBoss EAP 8 Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/eap-cli.html">Red Hat JBoss EAP 8 CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../config/deploy.html">Deploying Applications to a Standalone Server</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Subsystems</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="database.html">Exploring the Data Source Subsystem</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="logging.html">Configuring Logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="messaging.html">Configuring Messaging (JMS)</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="web.html">Configuring the Web Subsystem</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Red Hat JBoss EAP Administration I</span>
+    <span class="version">8</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Red Hat JBoss EAP Administration I</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">8</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Red Hat JBoss EAP Administration I</a></li>
+    <li><a href="index.html">Subsystems</a></li>
+    <li><a href="web.html">Configuring the Web Subsystem</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Configuring the Web Subsystem</h1>
+<div class="sect1">
+<h2 id="_configuring_the_root_web_application"><a class="anchor" href="#_configuring_the_root_web_application"></a>Configuring the Root Web Application</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Any application you deploy on Red Hat JBoss EAP 8 uses a standard HTTP address.</p>
+</li>
+<li>
+<p>For example, an application called <strong>app.war</strong> is available, by default, at <a href="http://&lt;server&gt;:8080/app" class="bare">http://&lt;server&gt;:8080/app</a>.</p>
+</li>
+<li>
+<p>The <strong>/app</strong> is defined as the context path according to the Jakarta Enterprise Edition (Jakarta EE) specifications. If a HTTP request does not provide a context path , then JBoss EAP displays a default JBoss welcome application.</p>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;subsystem xmlns="urn:jboss:domain:undertow:12.0" ...&gt;
+            &lt;buffer-cache name="default"/&gt;
+            &lt;server name="default-server"&gt;
+...output omitted...
+            &lt;server name="default-server"&gt;
+                &lt;http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/&gt;
+                &lt;https-listener name="https" socket-binding="https" ssl-context="applicationSSC" enable-http2="true"/&gt;
+                &lt;host name="default-host" alias="localhost"&gt;
+                    &lt;location name="/" handler="welcome-content"/&gt;
+                    &lt;http-invoker http-authentication-factory="application-http-authentication"/&gt;
+                &lt;/host&gt;
+            &lt;/server&gt;
+...output omitted...
+            &lt;handlers&gt;
+                &lt;file name="welcome-content" path="${jboss.home.dir}/welcome-content"/&gt;
+            &lt;/handlers&gt;
+        &lt;/subsystem&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Notice that the / root path uses a handler called welcome-content, and that this welcome-content handler defines the location of the JBoss welcome application.</p>
+</li>
+<li>
+<p>The default application can be replaced in one of two ways:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Changing the welcome-content file handler.</p>
+</li>
+<li>
+<p>Changing the default-web-module attribute on the default-host tag in the undertow subsystem.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_server_listeners"><a class="anchor" href="#_configure_server_listeners"></a>Configure Server Listeners</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The undertow subsystem can start several web servers or web containers in a single JBoss EAP instance.</p>
+</li>
+<li>
+<p>Each <strong>&lt;server&gt;</strong> tag starts an instance of the undertow web engine.</p>
+</li>
+<li>
+<p>Three listener types are available for each server:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>HTTP</strong>: This listener type handles HTTP requests.</p>
+</li>
+<li>
+<p><strong>HTTPS</strong>: This listener type handles HTTPS requests.</p>
+</li>
+<li>
+<p><strong>AJP</strong>: This listener type handles Apache Java Protocol (AJP) requests. The AJP protocol communicates JBoss EAP instances with the load balancer.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_ssl_connections"><a class="anchor" href="#_configure_ssl_connections"></a>Configure SSL Connections</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>HTTPS is a protocol that encrypts network traffic.</p>
+</li>
+<li>
+<p>Red Hat JBoss EAP 8 can encrypt the traffic in both HTTP ports: the management port, and the application serving port.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_java_keystore_jks"><a class="anchor" href="#_java_keystore_jks"></a>Java KeyStore (JKS)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>A Java KeyStore (JKS) is a storage facility for cryptographic keys and certificates.</p>
+</li>
+<li>
+<p>A JKS can store several types of public and private keys, such as the certificates used for a HTTPS connection.</p>
+</li>
+<li>
+<p>The Java Development Kit (JDK) provides the keytool command to manage JKS repositories.</p>
+</li>
+<li>
+<p>You will need to generate a new RSA key pair, store it in a keystore file. Use the following command for same.</p>
+<div class="listingblock">
+<div class="content">
+<pre>keytool --genkeypair -alias server -keysize 2048 -keyalg RSA -keystore application.keystore</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Remember to open the HTTPS port in the firewall. The default port for HTTPS is 8443.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The SSL certificate need to be placed under <strong>jboss.server.config.dir</strong> as mentioned in <strong>$JBoss_HOME/standalone/configuration/standalone.xml</strong> in below snippets.</p>
+<div class="listingblock">
+<div class="content">
+<pre>...&lt;output_omitted&gt;...
+    &lt;security-realms&gt;
+      &lt;identity-realm name="local" identity="$local"/&gt;
+      &lt;properties-realm name="ApplicationRealm"&gt;
+        &lt;users-properties path="application-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ApplicationRealm"/&gt;
+          &lt;groups-properties path="application-roles.properties" relative-to="jboss.server.config.dir"/&gt;
+      &lt;/properties-realm&gt;
+...&lt;output_omitted&gt;...</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lab_configuring_the_web_application_using_https_listener"><a class="anchor" href="#_lab_configuring_the_web_application_using_https_listener"></a>Lab: Configuring the Web Application using HTTPS listener</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Outcome:</strong> In this lab, you deploy a web application that can be accessed using a secure connection from a browser using Red Hat JBoss EAP 8.</p>
+</div>
+<div class="paragraph">
+<p><strong>Pre-requisites</strong>: Download the applications (WAR file) we will deploy in this exercise under /opt directory:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/temperature-converter.war" class="bare">https://github.com/RedHatQuickCourses/eap-qc-apps/releases/download/eap8-lp/temperature-converter.war</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Start the JBoss EAP standalone server.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
+[vagrant@server bin]$ ./standalone.sh</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the temperature converter application.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open a new terminal window and run the following commands to start the management CLI connection to your JBoss EAP instance:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd /opt/EAP-8.0.0/bin
+[vagrant@server bin]$ sudo -u jboss ./jboss-cli.sh -c
+[standalone@localhost:9990 /]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Deploy the <strong>/opt/temperature-converter.war</strong> application file:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] deploy /opt/temperature-converter.war</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Generate a new key pair and store it in a keystore file named <strong>application.keystore</strong> using command shown below.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server ~]$ cd
+/opt/EAP-8.0.0/standalone/configuration
+
+[vagrant@server configuration]$ keytool --genkeypair -alias server -keysize 2048 -keyalg RSA -keystore application.keystore
+Enter keystore password: &lt;Enter New Password&gt;
+Re-enter new password: &lt;Enter New Password&gt;
+What is your first and last name?
+  [Unknown]:  jboss
+What is the name of your organizational unit?
+  [Unknown]:  jboss
+What is the name of your organization?
+  [Unknown]:  jboss
+What is the name of your City or Locality?
+  [Unknown]:  Mumbai
+What is the name of your State or Province?
+  [Unknown]:  MAH
+What is the two-letter country code for this unit?
+  [Unknown]:  IN
+Is CN=jboss, OU=jboss, O=jboss, L=Mumbai, ST=MAH, C=IN correct?
+  [no]:  yes
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 90 days
+	for: CN=jboss, OU=jboss, O=jboss, L=Mumbai, ST=MAH, C=IN</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Confirm <strong>application.keystore</strong> is created successfully.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server configuration]$ ll
+...&lt;output_omitted&gt;...
+-rw-r--r--.  1 jboss jboss  2712 May  2 07:53 application.keystore
+...&lt;output_omitted&gt;...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open port <strong>8443</strong> for SSL connection to be accessible.</p>
+<div class="listingblock">
+<div class="content">
+<pre>[vagrant@server configuration]$ sudo firewall-cmd --permanent --add-port=8443/tcp
+[vagrant@server configuration]$ sudo firewall-cmd --reload</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The SSL connection should now be available for all applications including the root application. Navigate to <a href="https://localhost:8443/" class="bare">https://localhost:8443/</a> and test the SSL connection for the root application.</p>
+</li>
+<li>
+<p>Similarly, navigate to <strong><a href="https://localhost:8443/temperature-converter" class="bare">https://localhost:8443/temperature-converter</a></strong> and test the SSL connection for the application. Accept the SSL certificate and you should be able to view the application as shown in below screenshot.</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/im44.png" alt="im44">
+</div>
+</div>
+</li>
+<li>
+<p>Exit the management CLI, and stop Red Hat JBoss EAP 8 the instance by pressing <strong>Ctrl+C</strong> in the terminal window.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="messaging.html">Configuring Messaging (JMS)</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
