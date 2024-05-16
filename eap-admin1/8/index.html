@@ -186,7 +186,7 @@ This course is the <code>second</code> in a series of <code>seven</code> courses
 </ol>
 </div>
 <div class="paragraph">
-<p>This course covers the install, updates and uninstall process for Red Hat JBoss EAP 8. You also learn about the basics of EAP 8 configuration, how to configure database connectivity, and deploy basic web applications.</p>
+<p>This course covers the install and uninstall process for Red Hat JBoss EAP 8. You also learn about the basics of EAP 8 configuration, how to configure database connectivity, and deploy basic web applications.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -232,48 +232,11 @@ The hands-on labs for this course have been tested on <strong>JBoss EAP 8.0</str
 <div class="sect1">
 <h2 id="_classroom_environment"><a class="anchor" href="#_classroom_environment"></a>Classroom Environment</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_for_red_hat_associates"><a class="anchor" href="#_for_red_hat_associates"></a>For Red Hat Associates</h3>
 <div class="paragraph">
-<p>Red Hat associates and others who have access to the Red Hat Demo Platform (RHDP) should use the <em>TBD</em> catalog item.</p>
+<p>This course does <strong>NOT</strong> have JBoss EAP 8 pre-installed. You will install and configure a basic JBoss EAP 8 instance in this course, and then continue using this instance in labs throughout this course. Other courses may instruct you to install more instances to avoid overwriting configuration files from other exercises.</p>
 </div>
 <div class="paragraph">
-<p>This classroom does <strong>NOT</strong> have JBoss EAP 8 pre-installed. You will install and configure a basic JBoss EAP 8 instance in this course, and then continue using this instance in other courses in the learning path.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_for_red_hat_partners"><a class="anchor" href="#_for_red_hat_partners"></a>For Red Hat Partners</h3>
-<div class="paragraph">
-<p>Red Hat partners and others who do not have access to RHDP, should provision the following on their own infrastructure:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>2 RHEL 9 or CentOS Stream 9 VMs - each with at least 8 vCPU, 16GB RAM, 2 NICs and 80GB hard disk</p>
-</li>
-<li>
-<p>An OpenShift Container Platform cluster with at least 8vCPU, 16GB RAM, 100GB disk. You can provision a cluster using any of the below listed modalities:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Bare metal, VMs or on OpenStack</p>
-</li>
-<li>
-<p>Single Node OpenShift (SNO) cluster</p>
-</li>
-<li>
-<p>OpenShift Local</p>
-</li>
-<li>
-<p>Red Hat Hybrid Cloud Console (<a href="https://console.redhat.com" class="bare">https://console.redhat.com</a>)</p>
-</li>
-<li>
-<p>OpenShift on Hyperscaler clouds - ROSA or ARO</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
+<p>This training includes detailed lab instructions for learners to follow. Please note that there is no separate lab environment provided; learners are expected to execute the instructions on their local machines or in their preferred development environments.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -282,10 +245,33 @@ The hands-on labs for this course have been tested on <strong>JBoss EAP 8.0</str
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO: Add more details of DNS names, IPs and a nice network diagram
+<div class="paragraph">
+<p>There are plans to create a classroom environment in Red Hat Demo Platform (RHDP). Leave a <a href="https://github.com/RedHatQuickCourses/eap-admin1/issues/16#issue-2300120102">comment or +1 this issue</a> to upvote.</p>
+</div>
 </td>
 </tr>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_infrastructure_details"><a class="anchor" href="#_infrastructure_details"></a>Infrastructure Details:</h3>
+<div class="paragraph">
+<p>Learner would need single RHEL 9 instance with at least:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>8 vCPU</p>
+</li>
+<li>
+<p>16GB RAM</p>
+</li>
+<li>
+<p>2 NICs</p>
+</li>
+<li>
+<p>80GB hard disk</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -302,13 +288,7 @@ TODO: Add more details of DNS names, IPs and a nice network diagram
 <p>Basic knowledge of Java and deploying applications on the Java Virtual Machine (JVM)</p>
 </li>
 <li>
-<p>Knowledge of building Docker or Podman containers</p>
-</li>
-<li>
-<p>Basics of deploying applications on OpenShift Container Platform</p>
-</li>
-<li>
-<p>Sign up for a free Red Hat Developer account if you don&#8217;t have one at <a href="https://developer.redhat.com" class="bare">https://developer.redhat.com</a></p>
+<p>Sign up for a free <a href="https://developer.redhat.com">Red Hat Developer</a> account if you don&#8217;t have one.</p>
 </li>
 </ul>
 </div>
@@ -323,7 +303,7 @@ TODO: Add more details of DNS names, IPs and a nice network diagram
 <div class="ulist">
 <ul>
 <li>
-<p>Install, Upgrade and Uninstall Red Hat JBoss EAP</p>
+<p>Install and uninstall Red Hat JBoss EAP</p>
 </li>
 <li>
 <p>Perform basic configuration of JBoss EAP</p>
