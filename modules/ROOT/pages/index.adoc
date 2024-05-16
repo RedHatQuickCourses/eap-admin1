@@ -36,7 +36,8 @@ This training includes detailed lab instructions for learners to follow. Please 
 
 [NOTE]
 ====
-There are plans to create a classroom environment in Red Hat Demo Platform (RHDP). Leave a https://github.com/RedHatQuickCourses/eap-admin1/issues/16#issue-2300120102[comment or +1 this issue] to upvote.
+There are plans to create a classroom environment in Red Hat Demo Platform (RHDP). Leave a https://github.com/RedHatQuickCourses/eap-admin1/issues/16#issue-2300120102[comment or +1 this issue^] to upvote.
+
 ====
 
 === Infrastructure Details:
@@ -52,7 +53,7 @@ Learner would need single RHEL 9 instance with at least:
 
 * Basic knowledge of Linux administration
 * Basic knowledge of Java and deploying applications on the Java Virtual Machine (JVM)
-* Sign up for a free https://developer.redhat.com[Red Hat Developer] account if you don't have one.
+* Sign up for a free https://developer.redhat.com[Red Hat Developer^] account if you don't have one.
 
 == Objectives
 

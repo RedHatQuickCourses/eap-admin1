@@ -37,16 +37,16 @@ Let us see each of these methods in detail.
 
 == Pre-requisites
 
-* You have installed https://access.redhat.com/articles/6961381[Red Hat supported OpenJDK 17] on RHEL 9 server.
+* You have installed https://access.redhat.com/articles/6961381[Red Hat supported OpenJDK 17^] on RHEL 9 server.
 * Recommended to create a separate *jboss* user account with no shell access (/sbin/nologin).
 * Recommended to download all installation file under /opt partition.
 * Recommended to ensure that there is enough space under /opt partition (minimum 800MB).
 
 == (Optional) Pre-configured RHEL9 settings using Vagrant
 
-* You can install https://developer.hashicorp.com/vagrant/docs/installation[vagrant] on your host machine.
+* You can install https://developer.hashicorp.com/vagrant/docs/installation[vagrant^] on your host machine.
 
-* You can refer https://github.com/RedHatQuickCourses/eap-qc-apps[EAP8 vagrant settings] repository using *Vagrantfile* present at "admin1/eap8-vagrant/" to configure the RHEL 9 server for JBoss to get started.
+* You can refer https://github.com/RedHatQuickCourses/eap-qc-apps[EAP8 vagrant settings^] repository using *Vagrantfile* present at "admin1/eap8-vagrant/" to configure the RHEL 9 server for JBoss to get started.
 
 == Lab 1: Installing JBoss EAP using the Zip file
 
@@ -56,7 +56,7 @@ Let us see each of these methods in detail.
 
 * Download the zip or archive file by following below steps:
 ** Open a firefox browser.
-** Log in to the https://access.redhat.com/[Red Hat Customer Portal].
+** Log in to the https://access.redhat.com/[Red Hat Customer Portal^].
 ** Click Downloads.
 ** Select `Red Hat JBoss Enterprise Application Platform` from the `Product Downloads` list.
 ** In the Version drop-down list, select `8.0`.
@@ -201,7 +201,7 @@ sudo systemctl isolate graphical.target
 If you don't have GUI access, you can take access using X11 forwarding on your local machine.
 
 * Download the `jboss-eap-8.0.0-installer.jar` by following below steps:
-** Log in to the https://access.redhat.com/[Red Hat Customer Portal].
+** Log in to the https://access.redhat.com/[Red Hat Customer Portal^].
 ** Click Downloads.
 ** Select `Red Hat JBoss Enterprise Application Platform` from the `Product Downloads` list.
 ** In the Version drop-down list, select `8.0`.
@@ -465,4 +465,4 @@ image::uninstall.png[align="center"]
 
 == References
 
-* https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/8.0/html/red_hat_jboss_enterprise_application_platform_installation_methods/index[Red Hat JBoss Enterprise Application Platform Installation Methods]
+* https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/8.0/html/red_hat_jboss_enterprise_application_platform_installation_methods/index[Red Hat JBoss Enterprise Application Platform Installation Methods^]
