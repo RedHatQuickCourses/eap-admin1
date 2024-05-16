@@ -44,11 +44,13 @@ Let us see each of these methods in detail.
 
 == (Optional) Pre-configured RHEL9 settings using Vagrant
 
-* You can refer https://github.com/RedHatQuickCourses/eap-qc-apps[EAP8 vagrant settings] to configure the RHEL 9 server to get started.
+* You can install https://developer.hashicorp.com/vagrant/docs/installation[vagrant] on your host machine.
+
+* You can refer https://github.com/RedHatQuickCourses/eap-qc-apps[EAP8 vagrant settings] repository using *Vagrantfile* present at "admin1/eap8-vagrant/" to configure the RHEL 9 server for JBoss to get started.
 
 == Lab 1: Installing JBoss EAP using the Zip file
 
-*Outcome*: In this lab, you download `jboss-eap-8.0.0-installation-manager.zip` file and install JBoss EAP as a standalone server that can be access at `http://localhost:8080`.
+*Outcome*: In this lab, you download `jboss-eap-8.0.0-installation-manager.zip` file and install JBoss EAP as a standalone server that can be accessed at `http://localhost:8080`.
 
 * Take GUI access of RHEL 9 server.
 
@@ -167,7 +169,10 @@ Password:XXXX
 [vagrant@server ~]$ sudo dnf groupinstall jboss-eap8 -y
 ----
 
-NOTE: The default `EAP_HOME` path for the RPM installation is `/opt/rh/eap8/root/usr/share/wildfly`.
+[NOTE]
+====
+The default `EAP_HOME` path for the RPM installation is `/opt/rh/eap8/root/usr/share/wildfly`.
+====
 
 * Execute the JBoss EAP standalone server script present at `EAP_HOME/bin/standalone.sh` as a sudo user.
 +
