@@ -30,9 +30,14 @@ The PTL team acknowledges the valuable contributions of the following Red Hat as
 
 == Classroom Environment
 
-This course does *NOT* have JBoss EAP 8 pre-installed. You will install and configure a basic JBoss EAP 8 instance in this course, and then continue using this instance in other courses in the learning path.
+This course does *NOT* have JBoss EAP 8 pre-installed. You will install and configure a basic JBoss EAP 8 instance in this course, and then continue using this instance in labs throughout this course. Other courses may instruct you to install more instances to avoid overwriting configuration files from other exercises.
 
 This training includes detailed lab instructions for learners to follow. Please note that there is no separate lab environment provided; learners are expected to execute the instructions on their local machines or in their preferred development environments.
+
+[NOTE]
+====
+There are plans to create a classroom environment in Red Hat Demo Platform (RHDP). Leave a https://github.com/RedHatQuickCourses/eap-admin1/issues/16#issue-2300120102[comment or +1 this issue] to upvote.
+====
 
 === Infrastructure Details:
 
