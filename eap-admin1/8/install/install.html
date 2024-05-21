@@ -166,6 +166,9 @@
 <p><strong>Using the zip or archive file</strong></p>
 </li>
 <li>
+<p><strong>Using the new EAP 8 Installation Manager (IM)</strong></p>
+</li>
+<li>
 <p><strong>Using the RPM installation method</strong></p>
 </li>
 <li>
@@ -213,6 +216,61 @@
 </div>
 </div>
 <div class="sect1">
+<h2 id="_installing_jboss_eap_using_the_installation_manager_im"><a class="anchor" href="#_installing_jboss_eap_using_the_installation_manager_im"></a>Installing JBoss EAP using the Installation Manager (IM)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>In this method, the JBoss EAP 8 is distributed as a smaller sized zip or archive file that you can extract and execute the installation manager JAR file on an operating system (OS) with  OpenJDK 17 installed.</p>
+</li>
+<li>
+<p>The installation manager program fetches the JBoss EAP distribution files from Red Hat servers and installs it on your system.</p>
+</li>
+<li>
+<p>This method is preferred when:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You can download a smaller sized installer compared to the full distribution of JBoss EAP like in the zip file.</p>
+</li>
+<li>
+<p>You don&#8217;t have GUI support for the EAP 8 installation.</p>
+</li>
+<li>
+<p>You want to control the EAP components you want to install on your system</p>
+</li>
+<li>
+<p>You want to install multiple copies of EAP on your systems</p>
+</li>
+<li>
+<p>You need text based console for the EAP 8 installation.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Due to its portable nature, you can use it on multiple platforms(like Windows, Linux, etc.) and it requires OpenJDK 17 installed on the host OS.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The installation manager distribution is also distributed as a zip file on the Red Hat Customer Portal. Check the size and name of the file before downloading!
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/eap-install-types.png" alt="EAP 8 Download Options"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_installing_jboss_eap_by_using_the_rpm_installation_method"><a class="anchor" href="#_installing_jboss_eap_by_using_the_rpm_installation_method"></a>Installing JBoss EAP by using the RPM installation method</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -221,10 +279,10 @@
 <p>JBoss EAP 8 is available as an RPM package for users with a valid subscription to the JBoss Enterprise Application Platform sub-channel, in the JBoss Enterprise Application Platform group.</p>
 </li>
 <li>
-<p>The yum command downloads all the RPMs to the host OS, and automatically installs all the files needed to start and manage JBoss EAP.</p>
+<p>The <strong>yum</strong> command downloads all the RPMs to the host OS, and automatically installs all the files needed to start and manage JBoss EAP.</p>
 </li>
 <li>
-<p>The RPM installation method is only valid for Red Hat Enterprise Linux (RHEL) operating system and not for Windows server.</p>
+<p>The RPM installation method is only valid for Red Hat Enterprise Linux (RHEL) operating system and not for Windows server or macOS.</p>
 </li>
 <li>
 <p>This method is preferred when you want JBoss EAP service files to be installed for the RHEL operating system.</p>
@@ -255,7 +313,7 @@
 <p>You need either graphical interface or a text based console.</p>
 </li>
 <li>
-<p>You want to customise JBoss EAP installation.</p>
+<p>You want to customize the JBoss EAP installation.</p>
 </li>
 </ul>
 </div>
@@ -276,7 +334,7 @@
 <p>You have installed <a href="https://access.redhat.com/articles/6961381" target="_blank" rel="noopener">Red Hat supported OpenJDK 17</a> on RHEL 9 server.</p>
 </li>
 <li>
-<p>Recommended to create a separate <strong>jboss</strong> user account with no shell access (/sbin/nologin).</p>
+<p>Recommended to create a separate <strong>jboss</strong> user account, ideally with no shell access (/sbin/nologin).</p>
 </li>
 <li>
 <p>Recommended to download all installation file under /opt partition.</p>
@@ -297,14 +355,14 @@
 <p>You can install <a href="https://developer.hashicorp.com/vagrant/docs/installation" target="_blank" rel="noopener">vagrant</a> on your host machine.</p>
 </li>
 <li>
-<p>You can refer <a href="https://github.com/RedHatQuickCourses/eap-qc-apps" target="_blank" rel="noopener">EAP8 vagrant settings</a> repository using <strong>Vagrantfile</strong> present at "admin1/eap8-vagrant/" to configure the RHEL 9 server for JBoss to get started.</p>
+<p>You can refer <a href="https://github.com/RedHatQuickCourses/eap-qc-apps/tree/main/admin1/eap8-vagrant" target="_blank" rel="noopener">EAP8 vagrant settings</a> to configure the RHEL 9 server for JBoss to get started.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_lab_1_installing_jboss_eap_using_the_zip_file"><a class="anchor" href="#_lab_1_installing_jboss_eap_using_the_zip_file"></a>Lab 1: Installing JBoss EAP using the Zip file</h2>
+<h2 id="_lab_1_installing_jboss_eap_using_the_eap_8_installation_manager"><a class="anchor" href="#_lab_1_installing_jboss_eap_using_the_eap_8_installation_manager"></a>Lab 1: Installing JBoss EAP using the EAP 8 Installation Manager</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Outcome</strong>: In this lab, you download <code>jboss-eap-8.0.0-installation-manager.zip</code> file and install JBoss EAP as a standalone server that can be accessed at <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>.</p>
@@ -312,17 +370,11 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Take GUI access of RHEL 9 server.</p>
-</li>
-<li>
-<p>Download the zip or archive file by following below steps:</p>
+<p>Download the installation manager zip file by following below steps:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Open a firefox browser.</p>
-</li>
-<li>
-<p>Log in to the <a href="https://access.redhat.com/" target="_blank" rel="noopener">Red Hat Customer Portal</a>.</p>
+<p>Navigate to the <a href="https://access.redhat.com/" target="_blank" rel="noopener">Red Hat Customer Portal</a>.</p>
 </li>
 <li>
 <p>Click Downloads.</p>
@@ -334,10 +386,10 @@
 <p>In the Version drop-down list, select <code>8.0</code>.</p>
 </li>
 <li>
-<p>Find <code>Red Hat JBoss Enterprise Application Platform 8.0 Installation Manager</code> in the list if you want to download zip file or find <code>Red Hat JBoss Enterprise Application Platform 8.0.0</code> in the list if you want to download archive file and click the <code>Download</code> link. This lab assumes that you have downloaded the zip file.</p>
+<p>Find <code>Red Hat JBoss Enterprise Application Platform 8.0 Installation Manager</code> in the list, and click the <code>Download</code> link. This lab assumes that you have downloaded the zip file.</p>
 </li>
 <li>
-<p>The file would get downloaded under your <code>~/Downloads</code> directory.</p>
+<p>The file would get downloaded under your <code>~/Downloads</code> directory. Copy the installation manager zip file to your VM.</p>
 </li>
 </ul>
 </div>
