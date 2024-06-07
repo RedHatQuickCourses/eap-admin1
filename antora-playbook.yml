@@ -1,5 +1,5 @@
 site:
-  title: Red Hat JBoss EAP Administration I
+  title: Red Hat JBoss EAP 8 Administration I
   start_page: eap-admin1::index.adoc
 
 content:

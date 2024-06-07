@@ -1,5 +1,5 @@
 name: eap-admin1
-title: Red Hat JBoss EAP Administration I
+title: Red Hat JBoss EAP 8 Administration I
 version: 8
 nav:
   - modules/ROOT/nav.adoc
