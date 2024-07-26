@@ -453,10 +453,12 @@ Operation completed in 541.33 seconds.</pre>
 </div>
 </li>
 <li>
-<p>Start the JBoss EAP standalone server using the start script present under <code>/opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8/bin/standalone.sh</code>.</p>
+<p>Change the user and group ownership of <code>/opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8</code> to <code>jboss</code> and start the JBoss EAP standalone server using the start script present under <code>/opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8/bin/standalone.sh</code>.</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vagrant@server bin]$ sudo -u jboss /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8/bin/standalone.sh
+<pre>[vagrant@server bin]$ chown jboss:jboss -R /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8/
+
+[vagrant@server bin]$ sudo -u jboss /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8/bin/standalone.sh
 =========================================================================
   JBoss Bootstrap Environment
   JBOSS_HOME: /opt/jboss-eap-installation-manager-1.1.6.Final-redhat-00001/bin/eap-8
