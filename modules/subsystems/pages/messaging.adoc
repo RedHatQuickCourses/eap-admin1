@@ -145,7 +145,7 @@ image::im42.png[align="center"]
 ----
 [standalone@localhost:9990 /] cd /subsystem=messaging-activemq/server=default
 
-[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/security-setting=#:add
+[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/security-setting=\#:add
 
 [standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/address-setting=#:add(dead-letter-address="jms.queue.DLQ", expiry-address="jms.queue.ExpiryQueue", expiry-delay=-1L, max-delivery-attempts="10", max-size-bytes="10485760", page-size-bytes="2097152", message-counter-history-day-limit="10")
 
